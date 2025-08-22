@@ -9,6 +9,11 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     
+    stylix.url = "github:nix-community/stylix";
+    stylix.inputs.nixpkgs.follows = "nixpkgs";
+    
+    nix-colors.url = "github:misterio77/nix-colors";
+    
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
     # Optional: Declarative tap management
     homebrew-core = {
@@ -21,7 +26,7 @@
     };
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs, home-manager, nix-homebrew, homebrew-core, homebrew-cask, ... }:
+  outputs = inputs@{ self, nix-darwin, nixpkgs, home-manager, stylix, nix-colors, nix-homebrew, homebrew-core, homebrew-cask, ... }:
   let
     username = "alevsk";
     system = "aarch64-darwin";
@@ -60,7 +65,12 @@
     # Separate Home Manager configuration
     homeConfigurations.${username} = home-manager.lib.homeManagerConfiguration {
       pkgs = nixpkgs.legacyPackages.${system};
-      modules = [ ./home.nix ];
+      modules = [ 
+        stylix.homeModules.stylix
+        nix-colors.homeManagerModules.default
+        ./home.nix 
+      ];
+      extraSpecialArgs = { inherit nix-colors; };
     };
     
     darwinPackages = self.darwinConfigurations."cloud".pkgs;

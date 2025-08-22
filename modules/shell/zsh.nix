@@ -1,4 +1,4 @@
-{ config, pkgs, terminalTheme, ... }:
+{ config, pkgs, ... }:
 
 {
   programs.zsh = {
@@ -76,14 +76,16 @@
       typeset -g POWERLEVEL9K_PROMPT_CHAR_OK_VIINS_FOREGROUND=76
       typeset -g POWERLEVEL9K_PROMPT_CHAR_ERROR_VIINS_FOREGROUND=196
       
-      # Dynamic theme colors from themes/ folder
-      typeset -g POWERLEVEL9K_DIR_FOREGROUND=${terminalTheme.p10k.colors.dir_foreground}
-      typeset -g POWERLEVEL9K_DIR_BACKGROUND=${terminalTheme.p10k.colors.dir_background}
-      
-      # VCS colors
-      typeset -g POWERLEVEL9K_VCS_CLEAN_FOREGROUND=76
-      typeset -g POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND=178
-      typeset -g POWERLEVEL9K_VCS_MODIFIED_FOREGROUND=178
+      # Dynamic theme colors from Stylix/nix-colors
+      typeset -g POWERLEVEL9K_DIR_FOREGROUND='#${config.lib.stylix.colors.base05}'
+      typeset -g POWERLEVEL9K_DIR_BACKGROUND='#${config.lib.stylix.colors.base01}'
+      typeset -g POWERLEVEL9K_VCS_CLEAN_FOREGROUND='#${config.lib.stylix.colors.base00}'
+      typeset -g POWERLEVEL9K_VCS_CLEAN_BACKGROUND='#${config.lib.stylix.colors.base0B}'
+      typeset -g POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND='#${config.lib.stylix.colors.base00}'
+      typeset -g POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND='#${config.lib.stylix.colors.base09}'
+      typeset -g POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='#${config.lib.stylix.colors.base00}'
+      typeset -g POWERLEVEL9K_VCS_MODIFIED_BACKGROUND='#${config.lib.stylix.colors.base09}'
+      typeset -g POWERLEVEL9K_TIME_FOREGROUND='#${config.lib.stylix.colors.base04}'
     '';
   };
   

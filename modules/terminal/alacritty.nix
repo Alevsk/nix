@@ -1,4 +1,4 @@
-{ config, pkgs, terminalTheme, ... }:
+{ config, pkgs, ... }:
 
 {
   programs.alacritty = {
@@ -50,25 +50,6 @@
       selection = {
         save_to_clipboard = true;
       };
-      
-      font = {
-        normal = {
-          family = "JetBrainsMono Nerd Font";
-          style = "Regular";
-        };
-        bold = {
-          family = "JetBrainsMono Nerd Font";
-          style = "Bold";
-        };
-        italic = {
-          family = "JetBrainsMono Nerd Font";
-          style = "Italic";
-        };
-        size = 14.0;
-      };
-      
-      # Dynamic theme colors from themes/ folder
-      colors = terminalTheme.alacritty_colors;
     };
   };
 }

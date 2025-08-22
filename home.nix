@@ -1,11 +1,20 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, nix-colors, ... }:
 
 let
   # CHANGE THIS LINE TO SWITCH THEMES
-  currentThemeName = "nord"; # Options: default, dracula, cyberpunk, ocean, tokyonight, nord
+  currentThemeName = "nord"; # Available: dracula, nord, tokyonight, ocean, default
   
-  # Import the selected theme
-  currentTheme = import (./modules/terminal/themes + "/${currentThemeName}.nix");
+  # Theme mapping for nix-colors schemes
+  themeMap = {
+    "nord" = nix-colors.colorSchemes.nord;
+    "dracula" = nix-colors.colorSchemes.dracula;
+    "tokyonight" = nix-colors.colorSchemes.tokyo-night-dark;
+    "ocean" = nix-colors.colorSchemes.ocean;
+    "default" = nix-colors.colorSchemes.catppuccin-mocha;
+  };
+  
+  # Get the selected theme
+  selectedTheme = themeMap.${currentThemeName};
 in {
   imports = [
     ./modules/shell/zsh.nix
@@ -16,8 +25,37 @@ in {
     ./modules/git/git.nix
   ];
 
-  # Make theme available to modules
-  _module.args.terminalTheme = currentTheme;
+  # Set nix-colors colorScheme (used by nix-colors modules)
+  colorScheme = selectedTheme;
+
+  # Enable Stylix with nix-colors integration
+  stylix = {
+    enable = true;
+    base16Scheme = selectedTheme;
+    
+    # Configure fonts
+    fonts = {
+      monospace = {
+        package = pkgs.nerd-fonts.fira-code;
+        name = "FiraCode Nerd Font Mono";
+      };
+      sansSerif = {
+        package = pkgs.dejavu_fonts;
+        name = "DejaVu Sans";
+      };
+      serif = {
+        package = pkgs.dejavu_fonts;
+        name = "DejaVu Serif";
+      };
+    };
+    
+    # Set cursor theme
+    cursor = {
+      package = pkgs.bibata-cursors;
+      name = "Bibata-Modern-Classic";
+      size = 24;
+    };
+  };
 
   # Home Manager needs a bit of information about you and the paths it should manage.
   home.username = "alevsk";
