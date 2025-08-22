@@ -1,4 +1,4 @@
-# Ocean theme configuration for p10k
+# Ocean theme configuration
 {
   name = "ocean";
   description = "Calm ocean blues and teals";
@@ -7,7 +7,7 @@
   p10k = {
     # Left prompt elements
     left_prompt_elements = [
-      "context"
+      "os_icon"
       "dir"
       "vcs"
     ];
@@ -16,7 +16,7 @@
     right_prompt_elements = [
       "status"
       "command_execution_time"
-      "load"
+      "background_jobs"
       "time"
     ];
     
@@ -29,16 +29,14 @@
       vcs_dirty_foreground = "15";
       vcs_dirty_background = "166"; # Orange
       time_foreground = "81";  # Light blue
-      context_foreground = "15";
-      context_background = "31";
     };
     
     # Icons
     icons = {
       left_segment_separator = "";
       right_segment_separator = "";
-      left_subsegment_separator = "│";
-      right_subsegment_separator = "│";
+      left_subsegment_separator = "";
+      right_subsegment_separator = "";
     };
   };
   

@@ -1,4 +1,4 @@
-# Dracula theme configuration for p10k
+# Dracula theme configuration
 {
   name = "dracula";
   description = "Popular dark theme with purple accents";
@@ -17,7 +17,6 @@
       "status"
       "command_execution_time"
       "background_jobs"
-      "battery"
       "time"
     ];
     
@@ -30,8 +29,6 @@
       vcs_dirty_foreground = "0";
       vcs_dirty_background = "215"; # Orange
       time_foreground = "117"; # Light purple
-      os_icon_foreground = "15";
-      os_icon_background = "212";
     };
     
     # Icons

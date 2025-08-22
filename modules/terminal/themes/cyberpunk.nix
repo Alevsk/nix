@@ -1,4 +1,4 @@
-# Cyberpunk theme configuration for p10k
+# Cyberpunk theme configuration
 {
   name = "cyberpunk";
   description = "Neon cyberpunk theme with bright colors";
@@ -10,8 +10,6 @@
       "os_icon"
       "dir"
       "vcs"
-      "newline"
-      "prompt_char"
     ];
     
     # Right prompt elements  
@@ -19,7 +17,6 @@
       "status"
       "command_execution_time"
       "background_jobs"
-      "ram"
       "time"
     ];
     
@@ -32,11 +29,9 @@
       vcs_dirty_foreground = "0";
       vcs_dirty_background = "11";  # Bright yellow
       time_foreground = "14";  # Bright cyan
-      prompt_char_ok_foreground = "10";
-      prompt_char_error_foreground = "9";
     };
     
-    # Icons - More aggressive separators
+    # Icons
     icons = {
       left_segment_separator = "";
       right_segment_separator = "";

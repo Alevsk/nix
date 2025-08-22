@@ -2,7 +2,7 @@
 
 let
   # CHANGE THIS LINE TO SWITCH THEMES
-  currentThemeName = "ocean"; # Options: default, dracula, cyberpunk, ocean, tokyonight, nord
+  currentThemeName = "nord"; # Options: default, dracula, cyberpunk, ocean, tokyonight, nord
   
   # Import the selected theme
   currentTheme = import (./modules/terminal/themes + "/${currentThemeName}.nix");

@@ -1,4 +1,4 @@
-# Default theme configuration for p10k
+# Default theme configuration
 {
   name = "default";
   description = "Clean and minimal theme";
@@ -20,12 +20,14 @@
       "time"
     ];
     
-    # Colors
+    # Colors - Default palette
     colors = {
       dir_foreground = "31";
       dir_background = "237";
       vcs_clean_foreground = "76";
+      vcs_clean_background = "237";
       vcs_dirty_foreground = "178";
+      vcs_dirty_background = "237";
       time_foreground = "66";
     };
     
