@@ -1,0 +1,106 @@
+{ pkgs, config, ... }:
+
+{
+  system.primaryUser = "alevsk";
+
+  nixpkgs.config.allowUnfree = true;
+
+  environment.systemPackages = with pkgs; [
+    alacritty
+    mkalias
+    tmux
+    neovim
+    ncurses
+    vscode
+    windsurf
+    telegram-desktop
+    git
+  ];
+
+  environment.extraOutputsToInstall = [ "terminfo" ];
+
+  fonts.packages = with pkgs; [
+    nerd-fonts.jetbrains-mono
+  ];
+
+  homebrew = {
+    enable = true;
+    brews = [
+      "mas"
+    ];
+    casks = [
+      "1password"
+      "hammerspoon"
+      "firefox"
+      "iina"
+      "the-unarchiver"
+      "sublime-text"
+      "rectangle"
+      "google-chrome"
+    ];
+    onActivation.cleanup = "zap";
+    onActivation.autoUpdate = true;
+    onActivation.upgrade = true;
+  };
+
+  system.activationScripts.applications.text = let
+    env = pkgs.buildEnv {
+      name = "system-applications";
+      paths = config.environment.systemPackages;
+      pathsToLink = "/Applications";
+    };
+  in
+    pkgs.lib.mkForce ''
+    # Set up applications.
+    echo "setting up /Applications..." >&2
+    rm -rf /Applications/Nix\ Apps
+    mkdir -p /Applications/Nix\ Apps
+    find ${env}/Applications -maxdepth 1 -type l -exec readlink '{}' + |
+    while read -r src; do
+      app_name=$(basename "$src")
+      echo "copying $src" >&2
+      ${pkgs.mkalias}/bin/mkalias "$src" "/Applications/Nix Apps/$app_name"
+    done
+        '';
+
+  system.defaults = {
+    dock.autohide = false;
+    dock.persistent-apps = [
+      "/Applications/Google Chrome.app"
+      "${pkgs.alacritty}/Applications/Alacritty.app"
+      "${pkgs.windsurf}/Applications/Windsurf.app"
+      "/Applications/Sublime Text.app"
+      "${pkgs.telegram-desktop}/Applications/Telegram.app"
+      "/Applications/1Password 7 - Password Manager.app"
+      "/System/Applications/System Preferences.app"
+    ];
+    dock = {
+      show-process-indicators = true;
+      show-recents = false;
+      static-only = false;
+    };
+    finder.FXPreferredViewStyle = "clmv";
+    loginwindow.GuestEnabled = false;
+    NSGlobalDomain.AppleInterfaceStyle = "Dark";
+    NSGlobalDomain.KeyRepeat = 2;
+  };
+
+  # Necessary for using flakes on this system.
+  nix.settings.experimental-features = "nix-command flakes";
+
+  # Enable alternative shell support in nix-darwin.
+  programs = {
+    gnupg.agent.enable = true;
+    zsh.enable = true;  # default shell on catalina
+  };
+
+  # Set Git commit hash for darwin-version.
+  system.configurationRevision = null;
+
+  # Used for backwards compatibility, please read the changelog before changing.
+  # $ darwin-rebuild changelog
+  system.stateVersion = 6;
+
+  # The platform the configuration will be used on.
+  nixpkgs.hostPlatform = "aarch64-darwin";
+}
