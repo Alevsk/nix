@@ -19,22 +19,29 @@
   # introduces backwards incompatible changes.
   home.stateVersion = "24.05";
 
-  # User-specific packages
+  # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
-    # Development tools
+    # Terminal and shell utilities
+    bat
+    eza
+    fzf
+    ripgrep
+    fd
+    tree
+    htop
+    git
     curl
     wget
     jq
-    tree
-    htop
-    ripgrep
-    fd
-    bat
-    eza
+    ncurses
     
-    # Additional CLI tools
-    gh  # GitHub CLI
-    fzf
+    # Development tools
+    nodejs
+    python3
+    go
+    
+    # Fonts
+    (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
   ];
 
   # Let Home Manager install and manage itself.

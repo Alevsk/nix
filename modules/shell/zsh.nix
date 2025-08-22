@@ -36,6 +36,9 @@
     };
     
     initContent = ''
+      # Disable key repeat and input duplication fixes
+      unset zle_bracketed_paste
+      
       # History configuration
       export HISTSIZE=10000
       export SAVEHIST=10000
@@ -48,18 +51,12 @@
       setopt AUTO_PUSHD
       setopt PUSHD_IGNORE_DUPS
       
-      # Enable fzf key bindings and fuzzy completion
-      if command -v fzf >/dev/null 2>&1; then
-        source <(fzf --zsh)
-      fi
+      # Disable problematic zsh features that might cause duplication
+      unsetopt BEEP
+      unsetopt AUTO_MENU
       
       # Source powerlevel10k theme
       source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
-      
-      # Powerlevel10k instant prompt (disabled to prevent input issues)
-      # if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
-      #   source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
-      # fi
       
       # Source p10k configuration
       [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

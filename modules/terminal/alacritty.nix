@@ -17,10 +17,12 @@
         bindings = [];
       };
       
+      # Disable live config reload to prevent input issues
+      live_config_reload = false;
+      
       # Terminal settings to prevent input issues
       env = {
-        TERM = "alacritty";
-        # Disable key repeat to prevent duplication
+        TERM = "xterm-256color";
         TERM_PROGRAM = "Alacritty";
       };
       
