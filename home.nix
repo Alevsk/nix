@@ -7,6 +7,7 @@
     ./modules/editor/neovim.nix
     ./modules/multiplexer/tmux.nix
     ./modules/git/git.nix
+    ./modules/desktop/wallpaper.nix
   ];
 
   # Home Manager needs a bit of information about you and the paths it should manage.
