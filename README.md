@@ -9,7 +9,18 @@ A declarative macOS system configuration using Nix Darwin and Home Manager.
 ├── flake.nix                 # Main flake configuration with inputs
 ├── flake.lock               # Lock file for reproducible builds
 ├── darwin-configuration.nix  # System-level configuration (apps, settings, homebrew)
-├── home.nix                 # User-level configuration (dotfiles, shell, programs)
+├── home.nix                 # User-level configuration (imports modules)
+├── modules/                 # Modular Home Manager configurations
+│   ├── shell/
+│   │   └── zsh.nix          # Zsh configuration with aliases and prompt
+│   ├── terminal/
+│   │   └── alacritty.nix    # Alacritty terminal configuration
+│   ├── editor/
+│   │   └── neovim.nix       # Neovim editor configuration
+│   ├── multiplexer/
+│   │   └── tmux.nix         # Tmux terminal multiplexer configuration
+│   └── git/
+│       └── git.nix          # Git version control configuration
 └── README.md               # This file
 ```
 
@@ -27,18 +38,24 @@ A declarative macOS system configuration using Nix Darwin and Home Manager.
    git clone <your-repo> ~/nix
    cd ~/nix
    sudo darwin-rebuild switch --flake .#cloud
+   home-manager switch --flake .#alevsk
    ```
 
 ### Daily Usage
 
-- **Apply configuration changes**:
+- **Apply system configuration changes**:
   ```bash
   sudo darwin-rebuild switch --flake ~/nix#cloud
   ```
-  
-- **Quick rebuild alias** (available after first build):
+
+- **Apply user dotfiles changes**:
   ```bash
-  rebuild
+  home-manager switch --flake ~/nix#alevsk
+  ```
+  
+- **Apply both system and user changes**:
+  ```bash
+  sudo darwin-rebuild switch --flake ~/nix#cloud && home-manager switch --flake ~/nix#alevsk
   ```
 
 ## 🛠️ Configuration Management
@@ -108,12 +125,38 @@ homebrew.casks = [
 
 ### Modifying Dotfiles
 
-Edit the relevant program configuration in `home.nix`:
-- **Zsh**: `programs.zsh`
-- **Alacritty**: `programs.alacritty.settings`
-- **Neovim**: `programs.neovim.extraConfig`
-- **Git**: `programs.git`
-- **Tmux**: `programs.tmux.extraConfig`
+Edit the relevant module file:
+- **Zsh**: `modules/shell/zsh.nix`
+- **Alacritty**: `modules/terminal/alacritty.nix`
+- **Neovim**: `modules/editor/neovim.nix`
+- **Git**: `modules/git/git.nix`
+- **Tmux**: `modules/multiplexer/tmux.nix`
+
+### Adding New Program Modules
+
+1. **Create a new module directory** (e.g., `modules/browser/`):
+   ```bash
+   mkdir -p modules/browser
+   ```
+
+2. **Create the module file** (e.g., `modules/browser/firefox.nix`):
+   ```nix
+   { config, pkgs, ... }:
+   {
+     programs.firefox = {
+       enable = true;
+       # configuration here
+     };
+   }
+   ```
+
+3. **Import the module in `home.nix`**:
+   ```nix
+   imports = [
+     # existing imports...
+     ./modules/browser/firefox.nix
+   ];
+   ```
 
 ### System Settings
 
@@ -127,17 +170,27 @@ nix flake update
 
 # Garbage collection
 nix-collect-garbage -d
-# or use the alias:
-nix-gc
 
-# Check what will be built/downloaded
+# Check what will be built/downloaded (system)
 sudo darwin-rebuild build --flake ~/nix#cloud
 
-# Rollback to previous generation
+# Check what will be built/downloaded (user)
+home-manager build --flake ~/nix#alevsk
+
+# Rollback to previous generation (system)
 sudo darwin-rebuild rollback
 
-# List generations
+# Rollback to previous generation (user)
+home-manager rollback
+
+# List generations (system)
 sudo darwin-rebuild --list-generations
+
+# List generations (user)
+home-manager generations
+
+# Read Home Manager news
+home-manager news
 ```
 
 ## 🐛 Troubleshooting
@@ -182,3 +235,22 @@ nix search nixpkgs package-name
 - ✅ **Modular**: Separated system and user configs
 - ✅ **Modern tools**: Includes modern CLI replacements
 - ✅ **Custom dotfiles**: Managed through Home Manager
+- ✅ **Standalone Home Manager**: User configs independent from system
+
+## 📋 Architecture
+
+This setup uses a **two-tier approach**:
+
+1. **System Level** (`darwin-configuration.nix`): Managed by nix-darwin
+   - System packages and services
+   - Homebrew applications
+   - macOS system defaults
+   - Fonts and system-wide settings
+
+2. **User Level** (`home.nix`): Managed by Home Manager standalone
+   - User dotfiles (zsh, git, neovim, etc.)
+   - User-specific packages
+   - Application configurations (alacritty, tmux)
+   - Shell aliases and environment
+
+This separation provides better isolation and allows user configurations to be managed independently from system changes.

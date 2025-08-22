@@ -31,13 +31,13 @@
     ];
     casks = [
       "1password"
-      "hammerspoon"
       "firefox"
-      "iina"
-      "the-unarchiver"
-      "sublime-text"
-      "rectangle"
       "google-chrome"
+      "hammerspoon"
+      "iina"
+      "rectangle"
+      "sublime-text"
+      "the-unarchiver"
     ];
     onActivation.cleanup = "zap";
     onActivation.autoUpdate = true;
@@ -67,12 +67,12 @@
   system.defaults = {
     dock.autohide = false;
     dock.persistent-apps = [
-      "/Applications/Google Chrome.app"
       "${pkgs.alacritty}/Applications/Alacritty.app"
-      "${pkgs.windsurf}/Applications/Windsurf.app"
-      "/Applications/Sublime Text.app"
       "${pkgs.telegram-desktop}/Applications/Telegram.app"
+      "${pkgs.windsurf}/Applications/Windsurf.app"
       "/Applications/1Password.app"
+      "/Applications/Google Chrome.app"
+      "/Applications/Sublime Text.app"
       "/System/Applications/System\ Settings.app"
     ];
     dock = {
