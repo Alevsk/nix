@@ -17,8 +17,10 @@
         bindings = [];
       };
       
-      # Disable live config reload to prevent input issues
-      live_config_reload = false;
+      # General settings
+      general = {
+        live_config_reload = false;
+      };
       
       # Terminal settings to prevent input issues
       env = {
