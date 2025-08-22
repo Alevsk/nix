@@ -5,7 +5,6 @@
     enable = true;
     settings = {
       window = {
-        opacity = 0.95;
         padding = {
           x = 10;
           y = 10;
@@ -68,10 +67,15 @@
         size = 14.0;
       };
       
+      # Catppuccin Mocha color scheme
       colors = {
         primary = {
           background = "#1e1e2e";
           foreground = "#cdd6f4";
+        };
+        cursor = {
+          text = "#1e1e2e";
+          cursor = "#f5e0dc";
         };
         normal = {
           black = "#45475a";

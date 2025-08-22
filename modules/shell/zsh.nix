@@ -58,8 +58,28 @@
       # Source powerlevel10k theme
       source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
       
-      # Source p10k configuration
-      [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+      # Basic p10k configuration - you can customize this
+      typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon dir vcs)
+      typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status command_execution_time background_jobs time)
+      
+      # Prompt settings
+      typeset -g POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+      typeset -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=
+      typeset -g POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX=
+      typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
+      
+      # Segment separators
+      typeset -g POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR=""
+      typeset -g POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR=""
+      
+      # Directory colors
+      typeset -g POWERLEVEL9K_DIR_FOREGROUND=31
+      typeset -g POWERLEVEL9K_DIR_BACKGROUND=237
+      
+      # VCS colors
+      typeset -g POWERLEVEL9K_VCS_CLEAN_FOREGROUND=76
+      typeset -g POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND=178
+      typeset -g POWERLEVEL9K_VCS_MODIFIED_FOREGROUND=178
     '';
   };
   

@@ -4,10 +4,10 @@
   imports = [
     ./modules/shell/zsh.nix
     ./modules/terminal/alacritty.nix
-    ./modules/editor/neovim.nix
     ./modules/multiplexer/tmux.nix
-    ./modules/git/git.nix
+    ./modules/editor/neovim.nix
     ./modules/desktop/wallpaper.nix
+    ./modules/git/git.nix
   ];
 
   # Home Manager needs a bit of information about you and the paths it should manage.
@@ -43,6 +43,9 @@
     # Fonts
     nerd-fonts.fira-code
     nerd-fonts.droid-sans-mono
+
+    # AI
+    ollama
   ];
 
   # Let Home Manager install and manage itself.
