@@ -71,7 +71,7 @@
       "${pkgs.windsurf}/Applications/Windsurf.app"
       "/Applications/Sublime Text.app"
       "${pkgs.telegram-desktop}/Applications/Telegram.app"
-      "/Applications/1Password 7 - Password Manager.app"
+      "/Applications/1Password.app"
       "/System/Applications/System Preferences.app"
     ];
     dock = {

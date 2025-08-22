@@ -33,14 +33,6 @@
       inherit system;
       modules = [
         ./darwin-configuration.nix
-        
-        # Home Manager integration
-        home-manager.darwinModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.users.${username} = import ./home.nix;
-        }
 
         # Homebrew integration
         nix-homebrew.darwinModules.nix-homebrew
@@ -63,6 +55,12 @@
           homebrew.taps = builtins.attrNames config.nix-homebrew.taps;
         })
       ];
+    };
+    
+    # Separate Home Manager configuration
+    homeConfigurations.${username} = home-manager.lib.homeManagerConfiguration {
+      pkgs = nixpkgs.legacyPackages.${system};
+      modules = [ ./home.nix ];
     };
     
     darwinPackages = self.darwinConfigurations."cloud".pkgs;
