@@ -15,6 +15,7 @@
     windsurf
     telegram-desktop
     git
+    home-manager
   ];
 
   environment.extraOutputsToInstall = [ "terminfo" ];
@@ -72,7 +73,7 @@
       "/Applications/Sublime Text.app"
       "${pkgs.telegram-desktop}/Applications/Telegram.app"
       "/Applications/1Password.app"
-      "/System/Applications/System Preferences.app"
+      "/System/Applications/System\ Settings.app"
     ];
     dock = {
       show-process-indicators = true;
