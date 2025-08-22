@@ -1,6 +1,12 @@
 { config, pkgs, ... }:
 
-{
+let
+  # CHANGE THIS LINE TO SWITCH THEMES
+  currentThemeName = "ocean"; # Options: default, dracula, cyberpunk, ocean, tokyonight, nord
+  
+  # Import the selected theme
+  currentTheme = import (./modules/terminal/themes + "/${currentThemeName}.nix");
+in {
   imports = [
     ./modules/shell/zsh.nix
     ./modules/terminal/alacritty.nix
@@ -9,6 +15,9 @@
     ./modules/desktop/wallpaper.nix
     ./modules/git/git.nix
   ];
+
+  # Make theme available to modules
+  _module.args.terminalTheme = currentTheme;
 
   # Home Manager needs a bit of information about you and the paths it should manage.
   home.username = "alevsk";

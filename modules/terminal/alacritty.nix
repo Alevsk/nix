@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, terminalTheme, ... }:
 
 {
   programs.alacritty = {
@@ -67,37 +67,8 @@
         size = 14.0;
       };
       
-      # Catppuccin Mocha color scheme
-      colors = {
-        primary = {
-          background = "#0f1419";
-          foreground = "#cdd6f4";
-        };
-        cursor = {
-          text = "#1e1e2e";
-          cursor = "#f5e0dc";
-        };
-        normal = {
-          black = "#45475a";
-          red = "#f38ba8";
-          green = "#a6e3a1";
-          yellow = "#f9e2af";
-          blue = "#89b4fa";
-          magenta = "#f5c2e7";
-          cyan = "#94e2d5";
-          white = "#bac2de";
-        };
-        bright = {
-          black = "#585b70";
-          red = "#f38ba8";
-          green = "#a6e3a1";
-          yellow = "#f9e2af";
-          blue = "#89b4fa";
-          magenta = "#f5c2e7";
-          cyan = "#94e2d5";
-          white = "#a6adc8";
-        };
-      };
+      # Dynamic theme colors from themes/ folder
+      colors = terminalTheme.alacritty_colors;
     };
   };
 }

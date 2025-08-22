@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, terminalTheme, ... }:
 
 {
   programs.zsh = {
@@ -76,9 +76,9 @@
       typeset -g POWERLEVEL9K_PROMPT_CHAR_OK_VIINS_FOREGROUND=76
       typeset -g POWERLEVEL9K_PROMPT_CHAR_ERROR_VIINS_FOREGROUND=196
       
-      # Directory colors
-      typeset -g POWERLEVEL9K_DIR_FOREGROUND=0
-      typeset -g POWERLEVEL9K_DIR_BACKGROUND=13
+      # Dynamic theme colors from themes/ folder
+      typeset -g POWERLEVEL9K_DIR_FOREGROUND=${terminalTheme.p10k.colors.dir_foreground}
+      typeset -g POWERLEVEL9K_DIR_BACKGROUND=${terminalTheme.p10k.colors.dir_background}
       
       # VCS colors
       typeset -g POWERLEVEL9K_VCS_CLEAN_FOREGROUND=76
