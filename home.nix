@@ -41,7 +41,8 @@
     go
     
     # Fonts
-    (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
+    nerd-fonts.fira-code
+    nerd-fonts.droid-sans-mono
   ];
 
   # Let Home Manager install and manage itself.
