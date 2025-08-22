@@ -12,6 +12,42 @@
         };
       };
       
+      # Fix input lag and character duplication
+      keyboard = {
+        bindings = [];
+      };
+      
+      # Terminal settings to prevent input issues
+      env = {
+        TERM = "alacritty";
+        # Disable key repeat to prevent duplication
+        TERM_PROGRAM = "Alacritty";
+      };
+      
+      # Debug settings to help with input issues
+      debug = {
+        render_timer = false;
+        persistent_logging = false;
+        log_level = "Warn";
+        print_events = false;
+      };
+      
+      # Scrolling and input settings
+      scrolling = {
+        history = 10000;
+        multiplier = 3;
+      };
+      
+      # Mouse settings
+      mouse = {
+        hide_when_typing = true;
+      };
+      
+      # Selection settings
+      selection = {
+        save_to_clipboard = true;
+      };
+      
       font = {
         normal = {
           family = "JetBrainsMono Nerd Font";
