@@ -9,10 +9,10 @@
     keyMode = "vi";
     
     extraConfig = ''
-      # Better prefix key
-      unbind C-b
-      set -g prefix C-a
-      bind C-a send-prefix
+      # Prefix key
+      unbind C-a
+      set -g prefix C-b
+      bind C-b send-prefix
       
       # Better splitting
       bind | split-window -h
