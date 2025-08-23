@@ -28,6 +28,7 @@
     enable = true;
     brews = [
       "mas"
+      "fastfetch"
     ];
     casks = [
       "1password"

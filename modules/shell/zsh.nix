@@ -39,34 +39,38 @@
       # Define prompt style configurations
       promptStyles = {
         lean = ''
-          # Lean style - minimal single line
+          # Lean style - minimal single line with rounded separators
           typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir vcs)
           typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status)
           typeset -g POWERLEVEL9K_PROMPT_ON_NEWLINE=false
-          typeset -g POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR=""
-          typeset -g POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR=""
-          typeset -g POWERLEVEL9K_LEFT_SUBSEGMENT_SEPARATOR=" "
-          typeset -g POWERLEVEL9K_RIGHT_SUBSEGMENT_SEPARATOR=" "
+          typeset -g POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR=""
+          typeset -g POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR=""
+          typeset -g POWERLEVEL9K_LEFT_SUBSEGMENT_SEPARATOR=""
+          typeset -g POWERLEVEL9K_RIGHT_SUBSEGMENT_SEPARATOR=""
         '';
         
         classic = ''
-          # Classic style - multiline with decorations
+          # Classic style - multiline with decorations and rounded separators
           typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir vcs newline prompt_char)
           typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status command_execution_time background_jobs time)
           typeset -g POWERLEVEL9K_PROMPT_ON_NEWLINE=true
           typeset -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX='╭─'
           typeset -g POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX='╰─ '
-          typeset -g POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR=""
-          typeset -g POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR=""
+          typeset -g POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR=""
+          typeset -g POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR=""
+          typeset -g POWERLEVEL9K_LEFT_SUBSEGMENT_SEPARATOR=""
+          typeset -g POWERLEVEL9K_RIGHT_SUBSEGMENT_SEPARATOR=""
         '';
         
         rainbow = ''
-          # Rainbow style - colorful with many elements
+          # Rainbow style - colorful with many elements and rounded separators
           typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon context dir vcs)
           typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status command_execution_time background_jobs load ram time)
           typeset -g POWERLEVEL9K_PROMPT_ON_NEWLINE=false
-          typeset -g POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR=""
-          typeset -g POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR=""
+          typeset -g POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR=""
+          typeset -g POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR=""
+          typeset -g POWERLEVEL9K_LEFT_SUBSEGMENT_SEPARATOR=""
+          typeset -g POWERLEVEL9K_RIGHT_SUBSEGMENT_SEPARATOR=""
           # Rainbow colors for different segments
           typeset -g POWERLEVEL9K_OS_ICON_FOREGROUND='#${config.lib.stylix.colors.base07}'
           typeset -g POWERLEVEL9K_OS_ICON_BACKGROUND='#${config.lib.stylix.colors.base08}'
