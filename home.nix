@@ -44,8 +44,8 @@ in {
     # Configure fonts
     fonts = {
       monospace = {
-        package = pkgs.nerd-fonts.fira-code;
-        name = "FiraCode Nerd Font Mono";
+        package = pkgs.nerd-fonts.meslo-lg;
+        name = "MesloLGS Nerd Font";
       };
       sansSerif = {
         package = pkgs.dejavu_fonts;
@@ -98,6 +98,7 @@ in {
     # Fonts
     nerd-fonts.fira-code
     nerd-fonts.droid-sans-mono
+    nerd-fonts.meslo-lg
 
     # AI
     ollama
