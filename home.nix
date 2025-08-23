@@ -6,6 +6,9 @@ let
   
   # CHANGE THIS LINE TO SWITCH PROMPT STYLE
   promptStyle = "lean"; # Available: lean, classic, rainbow
+
+  # CHANGE THIS LINE TO AUTO START TMUX WHEN OPENING A NEW TERMINAL
+  autoStartTmux = false;
   
   # Theme mapping for nix-colors schemes
   themeMap = {
@@ -36,6 +39,7 @@ in {
     tmuxTintScheme = tmuxTintScheme;
     # Expose theme name so modules can map to plugins
     currentThemeName = currentThemeName;
+    autoStartTmux = autoStartTmux;
   };
   imports = [
     ./modules/shell/zsh.nix

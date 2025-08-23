@@ -7,15 +7,16 @@
 
   environment.systemPackages = with pkgs; [
     alacritty
-    mkalias
-    tmux
-    neovim
-    ncurses
-    vscode
-    windsurf
-    telegram-desktop
     git
     home-manager
+    macpm
+    mkalias
+    neovim
+    ncurses
+    telegram-desktop
+    tmux
+    vscode
+    windsurf
   ];
 
   environment.extraOutputsToInstall = [ "terminfo" ];
@@ -65,7 +66,13 @@
       echo "copying $src" >&2
       ${pkgs.mkalias}/bin/mkalias "$src" "/Applications/Nix Apps/$app_name"
     done
-        '';
+
+    # Ensure Spotlight indexes the Nix Apps directory
+    if command -v mdutil >/dev/null 2>&1; then
+      mdutil -i on "/Applications/Nix Apps" >/dev/null 2>&1 || true
+      mdutil -E "/Applications/Nix Apps" >/dev/null 2>&1 || true
+    fi
+  '';
 
   system.defaults = {
     dock.autohide = false;

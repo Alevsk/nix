@@ -1,4 +1,4 @@
-{ config, pkgs, promptStyle, ... }:
+{ config, pkgs, promptStyle, autoStartTmux, ... }:
 
 {
   programs.zsh = {
@@ -145,12 +145,14 @@
       # Load user Powerlevel10k overrides if present
       [[ -r ~/.p10k.zsh ]] && source ~/.p10k.zsh
 
-      # Auto-start tmux on interactive local shells
-      if [[ -o interactive ]] && command -v tmux >/dev/null; then
-        if [[ -z "$TMUX" && -z "$SSH_TTY" ]]; then
-          exec tmux
+      # Auto-start tmux on interactive local shells (if enabled)
+      ${if autoStartTmux then ''
+        if [[ -o interactive ]] && command -v tmux >/dev/null; then
+          if [[ -z "$TMUX" && -z "$SSH_TTY" ]]; then
+            exec tmux
+          fi
         fi
-      fi
+      '' else ""}
     '';
   };
   
