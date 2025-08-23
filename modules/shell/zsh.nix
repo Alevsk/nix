@@ -35,6 +35,7 @@
       rebuild-home = "home-manager switch --flake ~/nix#alevsk";
       rebuild-all = "sudo darwin-rebuild switch --flake ~/nix#cloud && home-manager switch --flake ~/nix#alevsk";
       nix-gc = "nix-collect-garbage -d";
+      switch-theme = "~/nix/switch-theme.sh";
     };
     
     initContent = let
