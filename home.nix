@@ -18,17 +18,31 @@ let
   
   # Get the selected theme
   selectedTheme = themeMap.${currentThemeName};
+
+  # Map current theme to tinted-tmux base16 scheme
+  tintedTmuxSchemeMap = {
+    "nord" = "base16-nord";
+    "dracula" = "base16-dracula";
+    "tokyonight" = "base16-tokyo-night-dark";
+    "ocean" = "base16-ocean";
+    "default" = "base16-catppuccin-mocha";
+  };
+  tmuxTintScheme = tintedTmuxSchemeMap.${currentThemeName};
 in {
   # Make theme and prompt style available to modules
   _module.args = {
     terminalTheme = selectedTheme;
     promptStyle = promptStyle;
+    tmuxTintScheme = tmuxTintScheme;
+    # Expose theme name so modules can map to plugins
+    currentThemeName = currentThemeName;
   };
   imports = [
     ./modules/shell/zsh.nix
     ./modules/terminal/alacritty.nix
     ./modules/multiplexer/tmux.nix
     ./modules/editor/neovim.nix
+    ./modules/cli/fzf.nix
     ./modules/desktop/wallpaper.nix
     ./modules/git/git.nix
   ];

@@ -10,6 +10,8 @@
     # Oh My Zsh configuration
     oh-my-zsh = {
       enable = true;
+      # Disable built-in theme loading; we'll source Powerlevel10k explicitly
+      theme = "";
       plugins = [
         "git"
         "docker"
@@ -139,6 +141,16 @@
       typeset -g POWERLEVEL9K_STATUS_ERROR_FOREGROUND='#${config.lib.stylix.colors.base08}'
       typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND='#${config.lib.stylix.colors.base0A}'
       typeset -g POWERLEVEL9K_BACKGROUND_JOBS_FOREGROUND='#${config.lib.stylix.colors.base0C}'
+      
+      # Load user Powerlevel10k overrides if present
+      [[ -r ~/.p10k.zsh ]] && source ~/.p10k.zsh
+
+      # Auto-start tmux on interactive local shells
+      if [[ -o interactive ]] && command -v tmux >/dev/null; then
+        if [[ -z "$TMUX" && -z "$SSH_TTY" ]]; then
+          exec tmux
+        fi
+      fi
     '';
   };
   

@@ -14,6 +14,8 @@
       # Fix input lag and character duplication
       keyboard = {
         bindings = [];
+        # Send ESC prefix for Alt/Meta so tmux/apps receive M- keys
+        alt_send_esc = true;
       };
       
       # General settings
