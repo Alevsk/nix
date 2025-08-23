@@ -4,6 +4,9 @@ let
   # CHANGE THIS LINE TO SWITCH THEMES
   currentThemeName = "nord"; # Available: dracula, nord, tokyonight, ocean, default
   
+  # CHANGE THIS LINE TO SWITCH PROMPT STYLE
+  promptStyle = "lean"; # Available: lean, classic, rainbow
+  
   # Theme mapping for nix-colors schemes
   themeMap = {
     "nord" = nix-colors.colorSchemes.nord;
@@ -16,6 +19,11 @@ let
   # Get the selected theme
   selectedTheme = themeMap.${currentThemeName};
 in {
+  # Make theme and prompt style available to modules
+  _module.args = {
+    terminalTheme = selectedTheme;
+    promptStyle = promptStyle;
+  };
   imports = [
     ./modules/shell/zsh.nix
     ./modules/terminal/alacritty.nix

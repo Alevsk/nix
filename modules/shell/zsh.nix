@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, promptStyle, ... }:
 
 {
   programs.zsh = {
@@ -35,16 +35,66 @@
       nix-gc = "nix-collect-garbage -d";
     };
     
-    initContent = ''
-      # Disable key repeat and input duplication fixes
-      unset zle_bracketed_paste
+    initContent = let
+      # Define prompt style configurations
+      promptStyles = {
+        lean = ''
+          # Lean style - minimal single line
+          typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir vcs)
+          typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status)
+          typeset -g POWERLEVEL9K_PROMPT_ON_NEWLINE=false
+          typeset -g POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR=""
+          typeset -g POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR=""
+          typeset -g POWERLEVEL9K_LEFT_SUBSEGMENT_SEPARATOR=" "
+          typeset -g POWERLEVEL9K_RIGHT_SUBSEGMENT_SEPARATOR=" "
+        '';
+        
+        classic = ''
+          # Classic style - multiline with decorations
+          typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir vcs newline prompt_char)
+          typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status command_execution_time background_jobs time)
+          typeset -g POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+          typeset -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX='╭─'
+          typeset -g POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX='╰─ '
+          typeset -g POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR=""
+          typeset -g POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR=""
+        '';
+        
+        rainbow = ''
+          # Rainbow style - colorful with many elements
+          typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon context dir vcs)
+          typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status command_execution_time background_jobs load ram time)
+          typeset -g POWERLEVEL9K_PROMPT_ON_NEWLINE=false
+          typeset -g POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR=""
+          typeset -g POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR=""
+          # Rainbow colors for different segments
+          typeset -g POWERLEVEL9K_OS_ICON_FOREGROUND='#${config.lib.stylix.colors.base07}'
+          typeset -g POWERLEVEL9K_OS_ICON_BACKGROUND='#${config.lib.stylix.colors.base08}'
+          typeset -g POWERLEVEL9K_CONTEXT_FOREGROUND='#${config.lib.stylix.colors.base00}'
+          typeset -g POWERLEVEL9K_CONTEXT_BACKGROUND='#${config.lib.stylix.colors.base0A}'
+          typeset -g POWERLEVEL9K_LOAD_FOREGROUND='#${config.lib.stylix.colors.base00}'
+          typeset -g POWERLEVEL9K_LOAD_BACKGROUND='#${config.lib.stylix.colors.base0C}'
+          typeset -g POWERLEVEL9K_RAM_FOREGROUND='#${config.lib.stylix.colors.base00}'
+          typeset -g POWERLEVEL9K_RAM_BACKGROUND='#${config.lib.stylix.colors.base0D}'
+        '';
+      };
       
-      # History configuration
+      selectedPromptStyle = promptStyles.${promptStyle};
+    in ''
+      # History settings
       export HISTSIZE=10000
       export SAVEHIST=10000
-      setopt HIST_IGNORE_DUPS
-      setopt HIST_IGNORE_SPACE
+      export HISTFILE=~/.zsh_history
+      setopt HIST_VERIFY
       setopt SHARE_HISTORY
+      setopt APPEND_HISTORY
+      setopt INC_APPEND_HISTORY
+      setopt HIST_IGNORE_DUPS
+      setopt HIST_IGNORE_ALL_DUPS
+      setopt HIST_REDUCE_BLANKS
+      setopt HIST_IGNORE_SPACE
+      setopt HIST_NO_STORE
+      setopt HIST_EXPAND
       
       # Better cd behavior
       setopt AUTO_CD
@@ -55,28 +105,23 @@
       unsetopt BEEP
       unsetopt AUTO_MENU
       
+      # Fix key repeat and input duplication issues
+      unset zle_bracketed_paste
+      
       # Source powerlevel10k theme
       source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
       
-      # Restore original p10k configuration with multiline prompt
-      typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir vcs newline prompt_char)
-      typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status command_execution_time background_jobs time)
+      # Apply selected prompt style
+      ${selectedPromptStyle}
       
-      # Prompt settings - restore multiline format
-      typeset -g POWERLEVEL9K_PROMPT_ON_NEWLINE=true
-      typeset -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX='╭─'
-      typeset -g POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX='╰─ '
+      # Disable instant prompt for now
       typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
       
-      # Segment separators - use powerline style
-      typeset -g POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR=""
-      typeset -g POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR=""
+      # Prompt character colors
+      typeset -g POWERLEVEL9K_PROMPT_CHAR_OK_VIINS_FOREGROUND='#${config.lib.stylix.colors.base0B}'
+      typeset -g POWERLEVEL9K_PROMPT_CHAR_ERROR_VIINS_FOREGROUND='#${config.lib.stylix.colors.base08}'
       
-      # Prompt character
-      typeset -g POWERLEVEL9K_PROMPT_CHAR_OK_VIINS_FOREGROUND=76
-      typeset -g POWERLEVEL9K_PROMPT_CHAR_ERROR_VIINS_FOREGROUND=196
-      
-      # Dynamic theme colors from Stylix/nix-colors
+      # Dynamic theme colors from Stylix/nix-colors (common to all styles)
       typeset -g POWERLEVEL9K_DIR_FOREGROUND='#${config.lib.stylix.colors.base05}'
       typeset -g POWERLEVEL9K_DIR_BACKGROUND='#${config.lib.stylix.colors.base01}'
       typeset -g POWERLEVEL9K_VCS_CLEAN_FOREGROUND='#${config.lib.stylix.colors.base00}'
@@ -86,6 +131,10 @@
       typeset -g POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='#${config.lib.stylix.colors.base00}'
       typeset -g POWERLEVEL9K_VCS_MODIFIED_BACKGROUND='#${config.lib.stylix.colors.base09}'
       typeset -g POWERLEVEL9K_TIME_FOREGROUND='#${config.lib.stylix.colors.base04}'
+      typeset -g POWERLEVEL9K_STATUS_OK_FOREGROUND='#${config.lib.stylix.colors.base0B}'
+      typeset -g POWERLEVEL9K_STATUS_ERROR_FOREGROUND='#${config.lib.stylix.colors.base08}'
+      typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND='#${config.lib.stylix.colors.base0A}'
+      typeset -g POWERLEVEL9K_BACKGROUND_JOBS_FOREGROUND='#${config.lib.stylix.colors.base0C}'
     '';
   };
   

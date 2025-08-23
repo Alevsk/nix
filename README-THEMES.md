@@ -1,105 +1,68 @@
-# 🎨 Terminal Theme System
+# 🎨 Dynamic Theme and Prompt System
 
-Your Nix configuration now includes a modular theme system with multiple beautiful themes for both Alacritty and Powerlevel10k.
+Your Nix configuration includes an integrated theme system with **Stylix** and **nix-colors** that automatically applies consistent colors across all applications.
 
-## 📁 Theme Structure
+## 🔄 Theme System
 
+### Quick Theme Switching
+
+Edit `home.nix` and change these two lines:
+
+```nix
+# Available: dracula, nord, tokyonight, ocean, default
+currentThemeName = "nord";
+
+# Available: lean, classic, rainbow  
+promptStyle = "lean";
 ```
-modules/terminal/themes/
-├── default.nix      # Clean minimal theme
-├── cyberpunk.nix    # Neon cyberpunk colors
-├── ocean.nix        # Blue/teal ocean theme
-├── dracula.nix      # Popular purple theme
-└── theme-switcher.nix # Theme management system
-```
 
-## 🔄 How to Switch Themes
-
-### Method 1: Direct File Editing (Recommended)
-
-1. **Edit Alacritty colors** in `modules/terminal/alacritty.nix`:
-   ```nix
-   colors = {
-     primary = { background = "#282a36"; foreground = "#f8f8f2"; };
-     # ... copy colors from any theme file
-   };
-   ```
-
-2. **Edit p10k colors** in `modules/shell/zsh.nix`:
-   ```bash
-   typeset -g POWERLEVEL9K_DIR_FOREGROUND=15
-   typeset -g POWERLEVEL9K_DIR_BACKGROUND=61
-   # ... customize colors
-   ```
-
-3. **Rebuild**: `home-manager switch --flake ~/nix#alevsk`
-
-### Method 2: Theme Files Reference
-
-Copy color schemes from the theme files:
-
-**Dracula Theme:**
-- Background: `#282a36`
-- Foreground: `#f8f8f2`
-- Accent: Purple/Pink
-
-**Cyberpunk Theme:**
-- Background: `#0a0e27`
-- Foreground: `#00ff41`
-- Accent: Neon colors
-
-**Ocean Theme:**
-- Background: `#0f1419`
-- Foreground: `#b3b1ad`
-- Accent: Blues/Teals
-
-## 🎯 Customization Tips
-
-### Powerlevel10k Elements
+Then apply:
 ```bash
-# Left prompt
-typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon dir vcs)
-
-# Right prompt  
-typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status time)
-
-# Add more elements: background_jobs, ram, load, battery
+home-manager switch --flake ~/nix#alevsk
 ```
 
-### Color Codes
-- Use 0-255 for terminal colors
-- Use hex codes for Alacritty
-- Test colors: `for i in {0..255}; do echo -e "\e[38;5;${i}mColor $i\e[0m"; done`
+### Available Themes
+- **`nord`** - Cool blue/gray Nordic theme (default)
+- **`dracula`** - Popular purple/pink theme
+- **`tokyonight`** - Dark blue Tokyo Night theme
+- **`ocean`** - Blue/teal ocean theme
+- **`default`** - Catppuccin Mocha theme
 
-### Separators
-```bash
-# Powerline style
-typeset -g POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR=""
-typeset -g POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR=""
-
-# Sharp style
-typeset -g POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR=""
-typeset -g POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR=""
-
-# Minimal
-typeset -g POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR=""
-typeset -g POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR=""
-```
-
-## 🚀 Quick Theme Switch Commands
-
-Add these aliases to your zsh config for quick switching:
-
-```bash
-alias theme-dracula="sed -i 's/background = \"#[^\"]*\"/background = \"#282a36\"/' ~/nix/modules/terminal/alacritty.nix && home-manager switch --flake ~/nix#alevsk"
-alias theme-cyber="sed -i 's/background = \"#[^\"]*\"/background = \"#0a0e27\"/' ~/nix/modules/terminal/alacritty.nix && home-manager switch --flake ~/nix#alevsk"
-```
+### Available Prompt Styles
+- **`lean`** - Minimal single-line prompt
+- **`classic`** - Multi-line with decorative borders  
+- **`rainbow`** - Colorful with system information
 
 ## 🎨 Creating Custom Themes
 
-1. Copy an existing theme file
-2. Modify colors to your preference
-3. Test with `home-manager switch --flake ~/nix#alevsk`
-4. Restart terminal to see changes
+To add a new theme:
+
+1. **Check nix-colors**: See if your theme exists at [nix-colors schemes](https://github.com/Misterio77/nix-colors)
+2. **Add to themeMap**: Edit `home.nix` and add your theme:
+   ```nix
+   themeMap = {
+     # existing themes...
+     "mytheme" = nix-colors.colorSchemes.my-theme-name;
+   };
+   ```
+3. **Apply**: `home-manager switch --flake ~/nix#alevsk`
+
+## 🎯 Creating Custom Prompt Styles
+
+To add a new Powerlevel10k style:
+
+1. **Edit zsh.nix**: Add your style to the `promptStyles` attribute set
+2. **Use Stylix colors**: Reference colors with `config.lib.stylix.colors.base0X`
+3. **Test**: Change `promptStyle` in `home.nix` and rebuild
+
+Example custom style:
+```nix
+mystyle = ''
+  typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir vcs)
+  typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status time)
+  typeset -g POWERLEVEL9K_DIR_FOREGROUND='#${config.lib.stylix.colors.base05}'
+  # ... more customization
+'';
+```
 
 Happy theming! 🌈

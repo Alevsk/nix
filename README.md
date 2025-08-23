@@ -71,11 +71,12 @@ Manages system-level settings:
 ### User Configuration (`home.nix`)
 
 Manages user-level dotfiles and programs:
-- **Shell configuration**: Zsh with aliases and custom prompt
-- **Terminal**: Alacritty with custom theme
+- **Shell configuration**: Zsh with aliases and dynamic Powerlevel10k prompt styles
+- **Terminal**: Alacritty with Stylix theme integration
 - **Editor**: Neovim with basic configuration
 - **Git**: User settings and aliases
 - **CLI tools**: Modern replacements (bat, eza, ripgrep, etc.)
+- **Theming**: Integrated nix-colors + Stylix for consistent theming
 
 ## 📦 Installed Software
 
@@ -91,6 +92,52 @@ Manages user-level dotfiles and programs:
 - **Media**: IINA
 - **Development**: Hammerspoon
 - **Utilities**: The Unarchiver, Sublime Text
+
+## 🎨 Themes and Styling
+
+### Available Themes
+
+Change themes by editing `currentThemeName` in `home.nix`:
+
+```nix
+# Available: dracula, nord, tokyonight, ocean, default
+currentThemeName = "nord";
+```
+
+**Available themes:**
+- **`nord`** - Cool blue/gray Nordic theme
+- **`dracula`** - Popular purple/pink theme
+- **`tokyonight`** - Dark blue Tokyo Night theme
+- **`ocean`** - Blue/teal ocean theme
+- **`default`** - Catppuccin Mocha theme
+
+### Powerlevel10k Prompt Styles
+
+Change prompt styles by editing `promptStyle` in `home.nix`:
+
+```nix
+# Available: lean, classic, rainbow
+promptStyle = "classic";
+```
+
+**Available styles:**
+- **`lean`** - Minimal single-line prompt with essential info
+- **`classic`** - Multi-line prompt with decorative borders
+- **`rainbow`** - Colorful prompt with system information
+
+### Theme Integration
+
+- **Stylix**: Provides consistent theming across applications
+- **nix-colors**: Base16 color schemes for terminal applications
+- **Dynamic colors**: All prompt styles automatically adapt to selected theme
+- **Consistent fonts**: FiraCode Nerd Font across all applications
+
+### Applying Changes
+
+After modifying themes or prompt styles:
+```bash
+home-manager switch --flake ~/nix#alevsk
+```
 
 ## 🔧 Customization
 
@@ -126,11 +173,27 @@ homebrew.casks = [
 ### Modifying Dotfiles
 
 Edit the relevant module file:
-- **Zsh**: `modules/shell/zsh.nix`
-- **Alacritty**: `modules/terminal/alacritty.nix`
+- **Zsh**: `modules/shell/zsh.nix` (includes Powerlevel10k prompt styles)
+- **Alacritty**: `modules/terminal/alacritty.nix` (Stylix-themed)
 - **Neovim**: `modules/editor/neovim.nix`
 - **Git**: `modules/git/git.nix`
 - **Tmux**: `modules/multiplexer/tmux.nix`
+
+### Creating Custom Prompt Styles
+
+To add a new Powerlevel10k style, edit `modules/shell/zsh.nix`:
+
+1. Add your style to the `promptStyles` attribute set
+2. Define prompt elements and colors using Stylix variables
+3. Update the `promptStyle` options in `home.nix`
+
+### Creating Custom Themes
+
+To add a new theme:
+
+1. Add the theme to nix-colors (if not available)
+2. Update the `themeMap` in `home.nix`
+3. Add the theme name to available options
 
 ### Adding New Program Modules
 
@@ -236,6 +299,9 @@ nix search nixpkgs package-name
 - ✅ **Modern tools**: Includes modern CLI replacements
 - ✅ **Custom dotfiles**: Managed through Home Manager
 - ✅ **Standalone Home Manager**: User configs independent from system
+- ✅ **Dynamic theming**: Integrated Stylix + nix-colors theming system
+- ✅ **Multiple prompt styles**: Switchable Powerlevel10k configurations
+- ✅ **Consistent styling**: Colors and fonts unified across applications
 
 ## 📋 Architecture
 
