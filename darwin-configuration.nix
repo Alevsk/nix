@@ -29,6 +29,8 @@
     brews = [
       "mas"
       "fastfetch"
+      "gemini-cli"
+      "codex"
     ];
     casks = [
       "1password"
