@@ -36,6 +36,7 @@
       rebuild-all = "sudo darwin-rebuild switch --flake ~/nix#cloud && home-manager switch --flake ~/nix#alevsk";
       nix-gc = "nix-collect-garbage -d";
       switch-theme = "~/nix/switch-theme.sh";
+      tmux-stats = "~/nix/tmux-stats.sh";
     };
     
     initContent = let

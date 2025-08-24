@@ -107,6 +107,7 @@ in {
     wget
     jq
     ncurses
+    tmux-mem-cpu-load
     
     # Development tools
     nodejs

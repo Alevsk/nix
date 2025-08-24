@@ -38,6 +38,7 @@
     ];
     casks = [
       "1password"
+      "claude-code"
       "firefox"
       "google-chrome"
       "hammerspoon"
