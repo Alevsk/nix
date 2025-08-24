@@ -43,22 +43,6 @@
       
       # Font configuration for Powerlevel10k
       font = {
-        normal = {
-          family = "MesloLGS Nerd Font";
-          style = "Regular";
-        };
-        bold = {
-          family = "MesloLGS Nerd Font";
-          style = "Bold";
-        };
-        italic = {
-          family = "MesloLGS Nerd Font";
-          style = "Italic";
-        };
-        bold_italic = {
-          family = "MesloLGS Nerd Font";
-          style = "Bold Italic";
-        };
         size = lib.mkForce 14;
       };
       

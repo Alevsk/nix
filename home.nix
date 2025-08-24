@@ -113,11 +113,6 @@ in {
     python3
     go
     
-    # Fonts
-    nerd-fonts.fira-code
-    nerd-fonts.droid-sans-mono
-    nerd-fonts.meslo-lg
-
     # AI
     ollama
   ];
