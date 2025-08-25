@@ -30,12 +30,16 @@
 
   homebrew = {
     enable = true;
+    # keep sorted alphabetically
     brews = [
-      "mas"
+      "codex"
       "fastfetch"
       "gemini-cli"
-      "codex"
+      "iproute2mac"
+      "mas"
+      "watch"
     ];
+    # keep sorted alphabetically
     casks = [
       "1password"
       "claude-code"
