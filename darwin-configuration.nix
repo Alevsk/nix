@@ -35,6 +35,7 @@
       "codex"
       "fastfetch"
       "gemini-cli"
+      "golangci-lint"
       "iproute2mac"
       "mas"
       "watch"
@@ -85,6 +86,7 @@
   system.defaults = {
     dock.autohide = false;
     dock.persistent-apps = [
+      "/System/Applications/Launchpad.app"
       "${pkgs.alacritty}/Applications/Alacritty.app"
       "${pkgs.telegram-desktop}/Applications/Telegram.app"
       "${pkgs.windsurf}/Applications/Windsurf.app"
