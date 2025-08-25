@@ -2,6 +2,8 @@
 
 Declarative macOS setup using Nix Darwin + Home Manager with integrated theming.
 
+![screenshot](docs/terminal.png)
+
 ## 📁 Project Structure
 
 ```
