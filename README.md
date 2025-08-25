@@ -1,178 +1,100 @@
 # Alevsk's Nix Darwin Configuration
 
-A declarative macOS system configuration using Nix Darwin and Home Manager with integrated theming.
+Declarative macOS setup using Nix Darwin + Home Manager with integrated theming.
 
 ## 📁 Project Structure
 
 ```
 ~/nix/
-├── flake.nix                 # Main flake configuration
-├── darwin-configuration.nix  # System-level configuration
-├── home.nix                 # User-level configuration
-├── modules/                 # Modular configurations
-│   ├── cli/fzf.nix          # FZF fuzzy finder
-│   ├── desktop/wallpaper.nix # Desktop wallpaper
-│   ├── editor/neovim.nix    # Neovim configuration
-│   ├── git/git.nix          # Git configuration
-│   ├── multiplexer/tmux.nix # Tmux configuration
-│   ├── shell/zsh.nix        # Zsh with Powerlevel10k
-│   └── terminal/alacritty.nix # Alacritty terminal
-└── switch-theme.sh          # Theme switching script
+├── flake.nix                  # Flake with nix-darwin, home-manager, stylix, nix-homebrew
+├── darwin-configuration.nix   # System-level config (Nix + Homebrew)
+├── home.nix                   # User-level config (Home Manager)
+├── modules/                   # Modular configs
+│   ├── cli/fzf.nix            # FZF
+│   ├── desktop/wallpaper.nix  # Wallpaper setup
+│   ├── editor/neovim.nix      # Neovim + theme
+│   ├── git/git.nix            # Git
+│   ├── multiplexer/tmux.nix   # Tmux + statusline
+│   ├── shell/zsh.nix          # Zsh + Powerlevel10k
+│   └── terminal/alacritty.nix # Alacritty
+└── scripts/
+    ├── switch-theme.sh        # Interactive theme/prompt switcher
+    └── tmux-stats.sh          # Tmux helper
 ```
 
 ## 🚀 Quick Start
 
-1. **Install Nix**:
-   ```bash
-   curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
-   ```
+- Install Nix:
+  - `curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install`
+- Bootstrap nix-darwin (first time only):
+  - `sh -c "$(curl -L https://github.com/LnL7/nix-darwin/releases/latest/download/install)"`
+- Apply configuration:
+  - `cd ~/nix && sudo darwin-rebuild switch --flake .#cloud`
+  - `home-manager switch --flake .#alevsk`
 
-2. **Apply configuration**:
-   ```bash
-   cd ~/nix
-   sudo darwin-rebuild switch --flake .#cloud
-   home-manager switch --flake .#alevsk
-   ```
+## 🔁 Daily Usage
 
-3. **Daily usage**:
-   ```bash
-   # System changes
-   sudo darwin-rebuild switch --flake ~/nix#cloud
-   
-   # User dotfiles changes  
-   home-manager switch --flake ~/nix#alevsk
-   ```
+- System changes: `sudo darwin-rebuild switch --flake ~/nix#cloud`
+- User changes: `home-manager switch --flake ~/nix#alevsk`
+- Helpful aliases (available in the shell):
+  - `rebuild-system`, `rebuild-home`, `rebuild-all`, `switch-theme`, `nix-gc`
 
-## 📦 Installed Software
+## ➕ Add Packages
 
-### System Packages (Nix)
-- **Development**: Git, Neovim, VSCode, Windsurf
-- **Terminal**: Alacritty, Tmux
-- **Communication**: Telegram Desktop
-- **Fonts**: JetBrains Mono Nerd Font
+- Nix (system): edit `darwin-configuration.nix`
+  - `environment.systemPackages = with pkgs; [ my-package ];`
+- Nix (user): edit `home.nix`
+  - `home.packages = with pkgs; [ my-package ];`
+- Homebrew (CLI): edit `darwin-configuration.nix`
+  - `homebrew.brews = [ "my-brew" ];` (keep list alphabetized)
+- Homebrew (Apps): edit `darwin-configuration.nix`
+  - `homebrew.casks = [ "MyApp" ];` (keep list alphabetized)
 
-### User Packages
-- **CLI Tools**: bat, eza, fzf, ripgrep, fd, tree, htop
-- **Development**: Node.js, Python3, Go
-- **AI**: Ollama
-- **Fonts**: FiraCode, DroidSansMono, MesloLGS Nerd Fonts
+## 🧰 Apply/Bootstrap Notes
 
-### GUI Applications (Homebrew)
-- **Browsers**: Google Chrome, Firefox
-- **Productivity**: 1Password, Rectangle
-- **Media**: IINA
-- **Development**: Hammerspoon, Sublime Text
-- **Utilities**: The Unarchiver
-- **CLI Tools**: mas, fastfetch, gemini-cli, codex
-
-## 🎨 Theming System
-
-### Quick Theme Change
-
-Edit `home.nix` and modify:
-
-```nix
-currentThemeName = "nord";    # Available: nord, dracula, tokyonight, ocean, default
-promptStyle = "lean";         # Available: lean, classic, rainbow
-autoStartTmux = false;        # Auto-start tmux in new terminals
-```
-
-Then apply: `home-manager switch --flake ~/nix#alevsk`
-
-### Available Themes
-- **`nord`** - Cool blue/gray Nordic theme (default)
-- **`dracula`** - Purple/pink theme
-- **`tokyonight`** - Dark blue Tokyo Night theme
-- **`ocean`** - Blue/teal ocean theme
-- **`default`** - Catppuccin Mocha theme
-
-### Prompt Styles
-- **`lean`** - Minimal single-line prompt
-- **`classic`** - Multi-line with decorative borders
-- **`rainbow`** - Colorful with system information
-
-### Theme Integration
-- **Stylix**: Consistent theming across applications
-- **nix-colors**: Base16 color schemes
-- **Dynamic colors**: Prompt styles adapt to selected theme
-- **Unified fonts**: MesloLGS Nerd Font across applications
-
-## 🔧 Customization
-
-### Adding Packages
-
-**System packages**:
-```nix
-# darwin-configuration.nix
-environment.systemPackages = with pkgs; [ new-package ];
-```
-
-**User packages**:
-```nix
-# home.nix
-home.packages = with pkgs; [ new-package ];
-```
-
-**GUI applications**:
-```nix
-# darwin-configuration.nix
-homebrew.casks = [ "new-app" ];
-```
-
-### Module Configuration
-
-- **Zsh**: `modules/shell/zsh.nix`
-- **Alacritty**: `modules/terminal/alacritty.nix`
-- **Neovim**: `modules/editor/neovim.nix`
-- **Git**: `modules/git/git.nix`
-- **Tmux**: `modules/multiplexer/tmux.nix`
-- **FZF**: `modules/cli/fzf.nix`
-- **Wallpaper**: `modules/desktop/wallpaper.nix`
-
-### Adding Custom Themes
-
-1. Check [nix-colors schemes](https://github.com/Misterio77/nix-colors)
-2. Add to `themeMap` in `home.nix`:
-   ```nix
-   themeMap = {
-     "mytheme" = nix-colors.colorSchemes.my-theme-name;
-   };
-   ```
+- Flake attributes: system `.#cloud`, user `.#alevsk`.
+- Homebrew is managed via `nix-homebrew` and `homebrew.*` in `darwin-configuration.nix`.
+- Dock items and “Nix Apps” symlinks are set automatically during activation.
 
 ## 🔄 Maintenance
 
-```bash
-# Update flake inputs
-nix flake update
+- Update inputs: `nix flake update`
+- Garbage collect: `nix-collect-garbage -d`
+- Validate flake: `nix flake check`
+- Inspect flake: `nix flake show`
+- Search packages: `nix search nixpkgs <name>`
+- Rollback: `sudo darwin-rebuild rollback` (system), `home-manager rollback` (user)
 
-# Garbage collection
-nix-collect-garbage -d
+## 🎨 Theming
 
-# Check syntax
-nix flake check
+- Fast switch (interactive): run `switch-theme` or `~/nix/scripts/switch-theme.sh`
+- Manual edit: update in `home.nix`
+  - `currentThemeName = "nord";`    # nord, dracula, tokyonight, ocean, default
+  - `promptStyle = "lean";`         # lean, classic, rainbow
+  - `autoStartTmux = false;`         # auto-start tmux on new terminals
+- Apply theme changes: `home-manager switch --flake ~/nix#alevsk`
+- Integration: Stylix + nix-colors propagate colors to Zsh, tmux, fzf, Neovim, Alacritty.
 
-# Show flake info
-nix flake show
+## 🔧 Module Locations
 
-# Search packages
-nix search nixpkgs package-name
-
-# Rollback changes
-sudo darwin-rebuild rollback        # System
-home-manager rollback              # User
-```
+- Zsh: `modules/shell/zsh.nix`
+- Alacritty: `modules/terminal/alacritty.nix`
+- Neovim: `modules/editor/neovim.nix`
+- Git: `modules/git/git.nix`
+- Tmux: `modules/multiplexer/tmux.nix`
+- FZF: `modules/cli/fzf.nix`
+- Wallpaper: `modules/desktop/wallpaper.nix`
 
 ## 🐛 Troubleshooting
 
-- **Permission errors**: Use `sudo` with `darwin-rebuild`
-- **Flake not found**: Ensure you're in `~/nix` directory
-- **Build failures**: Check `.nix` file syntax
-- **Conflicts**: Remove existing dotfiles that conflict
+- Use `sudo` with `darwin-rebuild` for system changes.
+- Ensure you run from `~/nix` or point `--flake` at the repo.
+- If builds fail, check `.nix` syntax and attribute names (`cloud`, `alevsk`).
 
 ## 📚 Resources
 
-- [Package Search](https://search.nixos.org/)
-- [Nix Darwin](https://github.com/LnL7/nix-darwin)
-- [Home Manager](https://github.com/nix-community/home-manager)
-- [Stylix](https://github.com/nix-community/stylix)
-- [nix-colors](https://github.com/Misterio77/nix-colors)
+- Nix packages: https://search.nixos.org/
+- nix-darwin: https://github.com/LnL7/nix-darwin
+- Home Manager: https://github.com/nix-community/home-manager
+- Stylix: https://github.com/nix-community/stylix
+- nix-colors: https://github.com/Misterio77/nix-colors
