@@ -97,7 +97,6 @@ in {
     # Terminal and shell utilities
     bat
     eza
-    fzf
     ripgrep
     fd
     tree

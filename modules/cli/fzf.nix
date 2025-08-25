@@ -14,6 +14,18 @@
         "pointer:#${config.lib.stylix.colors.base08},marker:#${config.lib.stylix.colors.base0B}," +
         "spinner:#${config.lib.stylix.colors.base0C},info:#${config.lib.stylix.colors.base0A}"
       ))
+      "--height=60%"
+      "--layout=reverse"
+      "--border=rounded"
+      "--margin=1,2"
+      "--padding=1"
+      "--preview-window=right:50%:wrap"
+      "--bind=ctrl-u:preview-page-up,ctrl-d:preview-page-down"
+      "--bind=ctrl-f:page-down,ctrl-b:page-up"
+      "--prompt='❯ '"
+      "--pointer='▶'"
+      "--marker='✓'"
+      "--header='Press CTRL-F/B for page navigation, CTRL-U/D for preview scroll'"
     ];
   };
 }
