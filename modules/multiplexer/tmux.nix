@@ -52,6 +52,30 @@ let
     ip addr show en0 | grep 'inet ' | awk '{print $2}' | cut -d '/' -f 1
   '';
 
+  # Define the left status bar as a Nix variable for readability.
+  statusLeftString = pkgs.lib.strings.concatStrings [
+    # --- Apple Logo and Hostname ---
+    # We use #h for the short hostname. Use #H for the full one.
+    # The icon  is the Apple logo in most Nerd Fonts.
+    "#[fg=#${config.lib.stylix.colors.base0E},bold] " # Apple Logo
+    "#[fg=#${config.lib.stylix.colors.base06}]#h "       # Hostname
+    "#[fg=#${config.lib.stylix.colors.base03}]│ "         # Separator
+
+    # --- Session Name ---
+    # The 󰣇 icon is a nice symbol for tmux itself.
+    "#[fg=#${config.lib.stylix.colors.base0D},bold]󰣇 " # Session Icon
+    "#[fg=#${config.lib.stylix.colors.base06}]#S "       # Session Name
+    "#[fg=#${config.lib.stylix.colors.base03}]│ "         # Separator
+
+    # --- Window and Pane Counts ---
+    "#[fg=#${config.lib.stylix.colors.base0A}] "       # Window Icon
+    "#[fg=#${config.lib.stylix.colors.base06}]#{session_windows} " # Window count
+    "#[fg=#${config.lib.stylix.colors.base03}]• "         # Dot Separator
+    "#[fg=#${config.lib.stylix.colors.base0C}] "       # Pane Icon
+    "#[fg=#${config.lib.stylix.colors.base06}]#{window_panes} "    # Pane count
+    "#[fg=#${config.lib.stylix.colors.base03}]│ "         # Separator
+  ];
+
   # Combine all parts of the status-right string
   statusRightString = pkgs.lib.strings.concatStrings [
     "#{?client_prefix,#[fg=#${config.lib.stylix.colors.base0E}]⌨ #[fg=#${config.lib.stylix.colors.base03}]│ ,}"
@@ -70,15 +94,19 @@ let
     "#{?#{==:#{pane_current_command},ssh}, #[fg=#${config.lib.stylix.colors.base0D}]󰣀 SSH,}  "
   ];
 
+  # Format for the currently active window.
+  # Underlines the index for a clean, integrated look.
+  windowCurrentFormat = pkgs.lib.strings.concatStrings [
+    "#[fg=#${config.lib.stylix.colors.base0D},bold,underline] #I "
+  ];
+
+  # Format for inactive windows (no change needed).
+  windowFormat = pkgs.lib.strings.concatStrings [
+    "#[fg=#${config.lib.stylix.colors.base04}] #I "
+  ];
+
 in
 {
-  # home.packages = [
-  #   tmux-cpu-script
-  #   tmux-mem-script
-  #   tmux-batt-script
-  #   tmux-ip-script
-  # ];
-
   programs.tmux = {
     enable = true;
     terminal = "tmux-256color";
@@ -139,20 +167,33 @@ in
       set -g pane-active-border-style "fg=#${config.lib.stylix.colors.base02}"
 
       # Window list styling and formats
-      set -g window-status-separator "  "
-      set -g window-status-style "bg=default,fg=#${config.lib.stylix.colors.base05}"
-      set -g window-status-activity-style "bg=default,fg=#${config.lib.stylix.colors.base07}"
-      set -g window-status-format " #[fg=#${config.lib.stylix.colors.base04}]#I #[fg=#${config.lib.stylix.colors.base06}]#W "
-      set -g window-status-current-style "bg=default,fg=#${config.lib.stylix.colors.base0D},bold"
-      set -g window-status-current-format " #[fg=#${config.lib.stylix.colors.base0D}] #[fg=#${config.lib.stylix.colors.base07},bold]#I #[fg=#${config.lib.stylix.colors.base07},bold]#W #[nobold]"
+      # set -g window-status-separator "  "
+      # set -g window-status-style "bg=default,fg=#${config.lib.stylix.colors.base05}"
+      # set -g window-status-activity-style "bg=default,fg=#${config.lib.stylix.colors.base07}"
+      # set -g window-status-format " #[fg=#${config.lib.stylix.colors.base04}]#I #[fg=#${config.lib.stylix.colors.base06}]#W "
+      # set -g window-status-current-style "bg=default,fg=#${config.lib.stylix.colors.base0D},bold"
+      # set -g window-status-current-format " #[fg=#${config.lib.stylix.colors.base0D}] #[fg=#${config.lib.stylix.colors.base07},bold]#I #[fg=#${config.lib.stylix.colors.base07},bold]#W #[nobold]"
+
+      # --- Window List Styling ---
+
+      # A modest separator to space out the numbers.
+      set -g window-status-separator " "
+
+      # Style for windows with activity.
+      # Makes the number bold and gives it a notification color.
+      set -g window-status-activity-style "fg=#${config.lib.stylix.colors.base0A},bold"
+
+      # Base style for all windows (inactive).
+      set -g window-status-style "fg=#${config.lib.stylix.colors.base05},bg=default"
+      
+      # Apply our ultra-minimalist formats.
+      set -g window-status-format "${windowFormat}"
+      set -g window-status-current-format "${windowCurrentFormat}"
 
       # Left: session + counts
-      set -g status-left "#[fg=#${config.lib.stylix.colors.base0D},bold]󰣇 #[fg=#${config.lib.stylix.colors.base06}]#S #[fg=#${config.lib.stylix.colors.base03}]│ #[fg=#${config.lib.stylix.colors.base0A}] #[fg=#${config.lib.stylix.colors.base06}]#{session_windows} #[fg=#${config.lib.stylix.colors.base03}]• #[fg=#${config.lib.stylix.colors.base0C}] #[fg=#${config.lib.stylix.colors.base06}]#{window_panes} "
+      set -g status-left "${statusLeftString}"
 
       # Right: indicators + CPU + MEM + BAT + cmd (+SSH)
-      # set -g status-right "#{?client_prefix,#[fg=#${config.lib.stylix.colors.base0E}]⌨ #[fg=#${config.lib.stylix.colors.base03}]│ ,}#{?window_zoomed_flag,#[fg=#${config.lib.stylix.colors.base0E}] Z #[fg=#${config.lib.stylix.colors.base03}]│ ,}#{?pane_in_mode,#[fg=#${config.lib.stylix.colors.base0E}]󰆐 COPY #[fg=#${config.lib.stylix.colors.base03}]│ ,}#{?pane_synchronized,#[fg=#${config.lib.stylix.colors.base0E}]󰒡 SYNC #[fg=#${config.lib.stylix.colors.base03}]│ ,}#[fg=#${config.lib.stylix.colors.base06}]#(tmux-mem-cpu-load --colors --interval 2 -q -m 2 -t 0 -a 0 -g 0) #[fg=#${config.lib.stylix.colors.base03}]│ #[fg=#${config.lib.stylix.colors.base0B}]#(pmset -g batt | awk 'BEGIN{FS=\"[; \t]+\"} /InternalBattery/ {pct=$3; state=$4; bolt=(state==\"charging\"?\" \":\"\"); if (pct>=80) printf \"\"; else if (pct>=60) printf \"\"; else if (pct>=40) printf \"\"; else if (pct>=20) printf \"\"; else printf \"\"; printf \"%s%d%%%%\", bolt, pct; exit}') #[fg=#${config.lib.stylix.colors.base03}]│ #[fg=#${config.lib.stylix.colors.base0B}]󰓢 #[fg=#${config.lib.stylix.colors.base06}]#{pane_current_command}#{?#{==:#{pane_current_command},ssh}, #[fg=#${config.lib.stylix.colors.base0D}]󰣀 SSH,}  "
-      # set -g status-right "#{?client_prefix,#[fg=#${config.lib.stylix.colors.base0E}]⌨ #[fg=#${config.lib.stylix.colors.base03}]│ ,}#{?window_zoomed_flag,#[fg=#${config.lib.stylix.colors.base0E}] Z #[fg=#${config.lib.stylix.colors.base03}]│ ,}#{?pane_in_mode,#[fg=#${config.lib.stylix.colors.base0E}]󰆐 COPY #[fg=#${config.lib.stylix.colors.base03}]│ ,}#{?pane_synchronized,#[fg=#${config.lib.stylix.colors.base0E}]󰒡 SYNC #[fg=#${config.lib.stylix.colors.base03}]│ ,}#[fg=#${config.lib.stylix.colors.base0A}] #[fg=#${config.lib.stylix.colors.base06}]#(top -l 1 | grep 'CPU usage' | awk '{sub(/%/, \"\", $7); printf \"%.0f%%%%\", 100 - $7}') #[fg=#${config.lib.stylix.colors.base03}]│ #[fg=#${config.lib.stylix.colors.base0D}]󰍛 #[fg=#${config.lib.stylix.colors.base06}]#(memory_pressure -Q 2>/dev/null | awk '/System-wide memory free percentage/ {sub(/%/, \"\", $5); printf \"%d%%%%\", 100 - $5}') #[fg=#${config.lib.stylix.colors.base03}]│ #[fg=#${config.lib.stylix.colors.base0B}]#(pmset -g batt | awk 'BEGIN{FS=\"[; \t]+\"} /InternalBattery/ {pct=$3; state=$4; bolt=(state==\"charging\"?\" \":\"\"); if (pct>=80) printf \"\"; else if (pct>=60) printf \"\"; else if (pct>=40) printf \"\"; else if (pct>=20) printf \"\"; else printf \"\"; printf \"%s%d%%%%\", bolt, pct; exit}') #[fg=#${config.lib.stylix.colors.base03}]│ #[fg=#${config.lib.stylix.colors.base0B}]󰓢 #[fg=#${config.lib.stylix.colors.base06}]#{pane_current_command}#{?#{==:#{pane_current_command},ssh}, #[fg=#${config.lib.stylix.colors.base0D}]󰣀 SSH,}  "
-      # set -g status-right "#{?client_prefix,#[fg=#${config.lib.stylix.colors.base0E}]⌨ #[fg=#${config.lib.stylix.colors.base03}]│ ,}#{?window_zoomed_flag,#[fg=#${config.lib.stylix.colors.base0E}] Z #[fg=#${config.lib.stylix.colors.base03}]│ ,}#{?pane_in_mode,#[fg=#${config.lib.stylix.colors.base0E}]󰆐 COPY #[fg=#${config.lib.stylix.colors.base03}]│ ,}#{?pane_synchronized,#[fg=#${config.lib.stylix.colors.base0E}]󰒡 SYNC #[fg=#${config.lib.stylix.colors.base03}]│ ,}#[fg=#${config.lib.stylix.colors.base0A}] #[fg=#${config.lib.stylix.colors.base06}]#(top -l 1 | grep 'CPU usage' | awk '{sub(/%/, \"\", $7); printf \"%.0f%%%%\", 100 - $7}') #[fg=#${config.lib.stylix.colors.base03}]│ #[fg=#${config.lib.stylix.colors.base0D}]󰍛 #[fg=#${config.lib.stylix.colors.base06}]#(memory_pressure -Q 2>/dev/null | awk '/System-wide memory free percentage/ {sub(/%/, \"\", $5); printf \"%d%%%%\", 100 - $5}') #[fg=#${config.lib.stylix.colors.base03}]│ #[fg=#${config.lib.stylix.colors.base0B}]#(pmset -g batt | awk 'BEGIN{FS=\"[; \t]+\"} /InternalBattery/ {pct=$3; state=$4; bolt=(state==\"charging\"?\" \":\"\"); if (pct>=80) printf \"\"; else if (pct>=60) printf \"\"; else if (pct>=40) printf \"\"; else if (pct>=20) printf \"\"; else printf \"\"; printf \"%s%d%%%%\", bolt, pct; exit}') #[fg=#${config.lib.stylix.colors.base03}]│ #[fg=#${config.lib.stylix.colors.base0B}]󰓢 #[fg=#${config.lib.stylix.colors.base06}]#{pane_current_command}#{?#{==:#{pane_current_command},ssh}, #[fg=#${config.lib.stylix.colors.base0D}]󰣀 SSH,}  "
       set -g status-right "${statusRightString}"
 
       # Window notifications
