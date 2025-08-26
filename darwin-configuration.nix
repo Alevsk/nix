@@ -73,20 +73,18 @@
     pkgs.lib.mkForce ''
     # Set up applications.
     echo "setting up /Applications..." >&2
-    rm -rf /Applications/Nix\ Apps
-    mkdir -p /Applications/Nix\ Apps
     
-    # Set proper permissions for the directory
-    chown ${config.system.primaryUser}:staff /Applications/Nix\ Apps
-    chmod 755 /Applications/Nix\ Apps
+    # Clean up old Nix aliases in /Applications
+    find /Applications -name "Nix-*" -type f -delete 2>/dev/null || true
+    rm -rf /Applications/Nix\ Apps
     
     # Find system applications from environment.systemPackages
     if [ -d "${env}/Applications" ]; then
       find "${env}/Applications" -maxdepth 1 -name "*.app" -type l | while read -r app_path; do
         app_name=$(basename "$app_path")
         src=$(readlink "$app_path")
-        echo "linking system app: $src" >&2
-        ln -sf "$src" "/Applications/Nix Apps/$app_name"
+        echo "creating alias for system app: $src" >&2
+        ${pkgs.mkalias}/bin/mkalias "$src" "/Applications/$app_name" || echo "Failed to create alias for $app_name" >&2
       done
     fi
     
@@ -96,18 +94,12 @@
         find "$hm_apps_dir/Applications" -maxdepth 1 -name "*.app" -type l | while read -r app_path; do
           app_name=$(basename "$app_path")
           src=$(readlink "$app_path")
-          echo "linking home app: $src" >&2
-          ln -sf "$src" "/Applications/Nix Apps/$app_name"
+          echo "creating alias for home app: $src" >&2
+          ${pkgs.mkalias}/bin/mkalias "$src" "/Applications/$app_name" || echo "Failed to create alias for $app_name" >&2
         done
         break
       fi
     done
-
-    # Ensure Spotlight indexes the Nix Apps directory
-    if command -v mdutil >/dev/null 2>&1; then
-      mdutil -i on "/Applications/Nix Apps" >/dev/null 2>&1 || true
-      mdutil -E "/Applications/Nix Apps" >/dev/null 2>&1 || true
-    fi
   '';
 
   system.defaults = {
