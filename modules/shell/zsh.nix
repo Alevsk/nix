@@ -34,6 +34,8 @@
       rebuild-system = "sudo darwin-rebuild switch --flake ~/nix#cloud";
       rebuild-home = "home-manager switch --flake ~/nix#alevsk";
       rebuild-all = "sudo darwin-rebuild switch --flake ~/nix#cloud && home-manager switch --flake ~/nix#alevsk";
+      nix-update = "nix flake update --flake ~/nix";
+      nix-upgrade = "nix flake update --flake ~/nix && sudo darwin-rebuild switch --flake ~/nix#cloud && home-manager switch --flake ~/nix#alevsk";
       nix-gc = "nix-collect-garbage -d";
       switch-theme = "~/nix/scripts/switch-theme.sh";
       tmux-stats = "~/nix/scripts/tmux-stats.sh";
