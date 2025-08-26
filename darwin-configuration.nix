@@ -75,11 +75,32 @@
     echo "setting up /Applications..." >&2
     rm -rf /Applications/Nix\ Apps
     mkdir -p /Applications/Nix\ Apps
-    find ${env}/Applications -maxdepth 1 -type l -exec readlink '{}' + |
-    while read -r src; do
-      app_name=$(basename "$src")
-      echo "copying $src" >&2
-      ${pkgs.mkalias}/bin/mkalias "$src" "/Applications/Nix Apps/$app_name"
+    
+    # Set proper permissions for the directory
+    chown ${config.system.primaryUser}:staff /Applications/Nix\ Apps
+    chmod 755 /Applications/Nix\ Apps
+    
+    # Find system applications from environment.systemPackages
+    if [ -d "${env}/Applications" ]; then
+      find "${env}/Applications" -maxdepth 1 -name "*.app" -type l | while read -r app_path; do
+        app_name=$(basename "$app_path")
+        src=$(readlink "$app_path")
+        echo "linking system app: $src" >&2
+        ln -sf "$src" "/Applications/Nix Apps/$app_name"
+      done
+    fi
+    
+    # Find Home Manager applications by looking for home-manager-applications in nix store
+    for hm_apps_dir in $(find /nix/store -name "*home-manager-applications*" -type d 2>/dev/null | head -1); do
+      if [ -d "$hm_apps_dir/Applications" ]; then
+        find "$hm_apps_dir/Applications" -maxdepth 1 -name "*.app" -type l | while read -r app_path; do
+          app_name=$(basename "$app_path")
+          src=$(readlink "$app_path")
+          echo "linking home app: $src" >&2
+          ln -sf "$src" "/Applications/Nix Apps/$app_name"
+        done
+        break
+      fi
     done
 
     # Ensure Spotlight indexes the Nix Apps directory
