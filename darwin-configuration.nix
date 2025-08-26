@@ -5,18 +5,30 @@
 
   nixpkgs.config.allowUnfree = true;
 
+  # These packages are installed system-wide, similar to how you’d configure packages on NixOS.
   environment.systemPackages = with pkgs; [
-    alacritty
+    docker
+    fastfetch
     git
+    go
+    golangci-lint
     home-manager
     macpm
     mkalias
     neovim
     ncurses
-    telegram-desktop
     tmux
-    vscode
-    windsurf
+    curl
+    wget
+    jq
+    fd
+    tree
+    htop
+    eza
+    ripgrep
+    python3
+    nodejs
+    yarn
   ];
 
   environment.extraOutputsToInstall = [ "terminfo" ];
@@ -28,24 +40,18 @@
     nerd-fonts.droid-sans-mono
   ];
 
+  # Useful when something is not well-maintained or not available in Nixpkgs (e.g., some proprietary macOS apps).
+  # keep sorted alphabetically
   homebrew = {
     enable = true;
-    # keep sorted alphabetically
     brews = [
-      "codex"
-      "fastfetch"
-      "gemini-cli"
-      "golangci-lint"
       "iproute2mac"
       "mas"
+      "nvm"
       "watch"
     ];
-    # keep sorted alphabetically
     casks = [
       "1password"
-      "claude-code"
-      "firefox"
-      "google-chrome"
       "hammerspoon"
       "iina"
       "rectangle"
@@ -91,8 +97,8 @@
       "${pkgs.telegram-desktop}/Applications/Telegram.app"
       "${pkgs.windsurf}/Applications/Windsurf.app"
       "/Applications/1Password.app"
-      "/Applications/Google Chrome.app"
-      "/Applications/Sublime Text.app"
+      "${pkgs.google-chrome}/Applications/Google Chrome.app"
+      "/Applications/Sublime\ Text.app"
       "/System/Applications/System\ Settings.app"
     ];
     dock = {

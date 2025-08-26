@@ -92,29 +92,28 @@ in {
   # introduces backwards incompatible changes.
   home.stateVersion = "24.05";
 
+  # Allow unfree packages in Home Manager
+  nixpkgs.config.allowUnfree = true;
+
   # Packages that should be installed to the user profile.
+  # This is the recommended place for user-facing software
+  # e.g. CLI tools, developer utilities, GUI apps (if packaged in Nix), etc.
   home.packages = with pkgs; [
-    # Terminal and shell utilities
+    alacritty
     bat
-    eza
-    ripgrep
-    fd
-    tree
-    htop
-    git
-    curl
-    wget
-    jq
+    claude-code
+    codex
+    gemini-cli
     ncurses
+    telegram-desktop
     tmux-mem-cpu-load
-    
-    # Development tools
-    nodejs
-    python3
-    go
-    
-    # AI
+    podman
     ollama
+    vscode
+    windsurf
+    zoom-us
+    google-chrome
+    firefox
   ];
 
   # Let Home Manager install and manage itself.
