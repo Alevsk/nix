@@ -150,6 +150,11 @@
       # Load user Powerlevel10k overrides if present
       [[ -r ~/.p10k.zsh ]] && source ~/.p10k.zsh
 
+      # Use Colima's Docker socket if available
+      if [ -S "$HOME/.colima/default/docker.sock" ]; then
+        export DOCKER_HOST=unix://$HOME/.colima/default/docker.sock
+      fi
+
       # Auto-start tmux on interactive local shells (if enabled)
       ${if autoStartTmux then ''
         if [[ -o interactive ]] && command -v tmux >/dev/null; then

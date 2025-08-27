@@ -103,17 +103,17 @@ in {
     bat
     claude-code
     codex
+    firefox
     gemini-cli
+    google-chrome
     ncurses
+    ollama
+    podman
     telegram-desktop
     tmux-mem-cpu-load
-    podman
-    ollama
     vscode
     windsurf
     zoom-us
-    google-chrome
-    firefox
   ];
 
   # Let Home Manager install and manage itself.

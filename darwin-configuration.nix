@@ -7,29 +7,34 @@
 
   # These packages are installed system-wide, similar to how you’d configure packages on NixOS.
   environment.systemPackages = with pkgs; [
+    bun
+    colima
+    curl
     docker
+    docker-buildx
+    docker-compose
+    eza
     fastfetch
+    fd
     git
     go
     golangci-lint
     home-manager
+    htop
+    jq
     macpm
     mkalias
-    neovim
     ncurses
-    tmux
-    curl
-    wget
-    jq
-    fd
-    tree
-    htop
-    eza
-    ripgrep
-    python3
+    neovim
     nodejs
+    python3
+    ripgrep
+    tmux
+    tree
+    wget
     yarn
   ];
+
 
   environment.extraOutputsToInstall = [ "terminfo" ];
 
