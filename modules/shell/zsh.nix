@@ -45,7 +45,7 @@
       # Define prompt style configurations
       promptStyles = {
         lean = ''
-          # Lean style - minimal single line with rounded separators
+          # Lean style - minimal single line with angled separators
           typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir vcs)
           typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status)
           typeset -g POWERLEVEL9K_PROMPT_ON_NEWLINE=false
@@ -53,39 +53,93 @@
           typeset -g POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR=""
           typeset -g POWERLEVEL9K_LEFT_SUBSEGMENT_SEPARATOR=""
           typeset -g POWERLEVEL9K_RIGHT_SUBSEGMENT_SEPARATOR=""
+          # Lean-specific colors
+          typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_BACKGROUND='#${config.lib.stylix.colors.base0A}'
+          typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND='#${config.lib.stylix.colors.base00}'
+          typeset -g POWERLEVEL9K_CONTEXT_BACKGROUND='#${config.lib.stylix.colors.base0A}'
+          typeset -g POWERLEVEL9K_CONTEXT_FOREGROUND='#${config.lib.stylix.colors.base00}'
+          typeset -g POWERLEVEL9K_DIR_BACKGROUND='#${config.lib.stylix.colors.base0D}'
+          typeset -g POWERLEVEL9K_DIR_FOREGROUND='#${config.lib.stylix.colors.base00}'
+          typeset -g POWERLEVEL9K_LOAD_BACKGROUND='#${config.lib.stylix.colors.base0C}'
+          typeset -g POWERLEVEL9K_LOAD_FOREGROUND='#${config.lib.stylix.colors.base00}'
+          typeset -g POWERLEVEL9K_OS_ICON_BACKGROUND='#${config.lib.stylix.colors.base08}'
+          typeset -g POWERLEVEL9K_OS_ICON_FOREGROUND='#${config.lib.stylix.colors.base07}'
+          typeset -g POWERLEVEL9K_RAM_BACKGROUND='#${config.lib.stylix.colors.base0D}'
+          typeset -g POWERLEVEL9K_RAM_FOREGROUND='#${config.lib.stylix.colors.base00}'
+          typeset -g POWERLEVEL9K_STATUS_ERROR_FOREGROUND='#${config.lib.stylix.colors.base00}'
+          typeset -g POWERLEVEL9K_STATUS_ERROR_BACKGROUND='#${config.lib.stylix.colors.base08}'
+          typeset -g POWERLEVEL9K_STATUS_OK_FOREGROUND='#${config.lib.stylix.colors.base00}'
+          typeset -g POWERLEVEL9K_STATUS_OK_BACKGROUND='#${config.lib.stylix.colors.base0B}'
+          typeset -g POWERLEVEL9K_TIME_BACKGROUND='#${config.lib.stylix.colors.base03}'
+          typeset -g POWERLEVEL9K_TIME_FOREGROUND='#${config.lib.stylix.colors.base07}'
+          typeset -g POWERLEVEL9K_VCS_CLEAN_BACKGROUND='#${config.lib.stylix.colors.base0B}'
+          typeset -g POWERLEVEL9K_VCS_CLEAN_FOREGROUND='#${config.lib.stylix.colors.base00}'
         '';
         
         classic = ''
-          # Classic style - multiline with decorations and rounded separators
+          # Classic style - multiline with decorations and powerline separators
           typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir vcs newline prompt_char)
           typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status command_execution_time background_jobs time)
-          typeset -g POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+          typeset -g POWERLEVEL9K_PROMPT_ON_NEWLINE=false
           typeset -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX='╭─'
           typeset -g POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX='╰─ '
           typeset -g POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR=""
           typeset -g POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR=""
           typeset -g POWERLEVEL9K_LEFT_SUBSEGMENT_SEPARATOR=""
           typeset -g POWERLEVEL9K_RIGHT_SUBSEGMENT_SEPARATOR=""
+          # Classic-specific colors with more contrast
+          typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_BACKGROUND='#${config.lib.stylix.colors.base0A}'
+          typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND='#${config.lib.stylix.colors.base00}'
+          typeset -g POWERLEVEL9K_CONTEXT_BACKGROUND='#${config.lib.stylix.colors.base0A}'
+          typeset -g POWERLEVEL9K_CONTEXT_FOREGROUND='#${config.lib.stylix.colors.base00}'
+          typeset -g POWERLEVEL9K_DIR_BACKGROUND='#${config.lib.stylix.colors.base0D}'
+          typeset -g POWERLEVEL9K_DIR_FOREGROUND='#${config.lib.stylix.colors.base00}'
+          typeset -g POWERLEVEL9K_LOAD_BACKGROUND='#${config.lib.stylix.colors.base0C}'
+          typeset -g POWERLEVEL9K_LOAD_FOREGROUND='#${config.lib.stylix.colors.base00}'
+          typeset -g POWERLEVEL9K_OS_ICON_BACKGROUND='#${config.lib.stylix.colors.base08}'
+          typeset -g POWERLEVEL9K_OS_ICON_FOREGROUND='#${config.lib.stylix.colors.base07}'
+          typeset -g POWERLEVEL9K_RAM_BACKGROUND='#${config.lib.stylix.colors.base0D}'
+          typeset -g POWERLEVEL9K_RAM_FOREGROUND='#${config.lib.stylix.colors.base00}'
+          typeset -g POWERLEVEL9K_STATUS_ERROR_FOREGROUND='#${config.lib.stylix.colors.base00}'
+          typeset -g POWERLEVEL9K_STATUS_ERROR_BACKGROUND='#${config.lib.stylix.colors.base08}'
+          typeset -g POWERLEVEL9K_STATUS_OK_FOREGROUND='#${config.lib.stylix.colors.base00}'
+          typeset -g POWERLEVEL9K_STATUS_OK_BACKGROUND='#${config.lib.stylix.colors.base0B}'
+          typeset -g POWERLEVEL9K_TIME_BACKGROUND='#${config.lib.stylix.colors.base03}'
+          typeset -g POWERLEVEL9K_TIME_FOREGROUND='#${config.lib.stylix.colors.base07}'
+          typeset -g POWERLEVEL9K_VCS_CLEAN_BACKGROUND='#${config.lib.stylix.colors.base0B}'
+          typeset -g POWERLEVEL9K_VCS_CLEAN_FOREGROUND='#${config.lib.stylix.colors.base00}'
         '';
         
         rainbow = ''
           # Rainbow style - colorful with many elements and rounded separators
-          typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon context dir vcs)
-          typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status command_execution_time background_jobs load ram time)
+          typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir vcs)
+          typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status command_execution_time background_jobs time)
           typeset -g POWERLEVEL9K_PROMPT_ON_NEWLINE=false
-          typeset -g POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR=""
-          typeset -g POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR=""
-          typeset -g POWERLEVEL9K_LEFT_SUBSEGMENT_SEPARATOR=""
-          typeset -g POWERLEVEL9K_RIGHT_SUBSEGMENT_SEPARATOR=""
+          typeset -g POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR=""
+          typeset -g POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR=""
+          typeset -g POWERLEVEL9K_LEFT_SUBSEGMENT_SEPARATOR=""
+          typeset -g POWERLEVEL9K_RIGHT_SUBSEGMENT_SEPARATOR=""
           # Rainbow colors for different segments
-          typeset -g POWERLEVEL9K_OS_ICON_FOREGROUND='#${config.lib.stylix.colors.base07}'
-          typeset -g POWERLEVEL9K_OS_ICON_BACKGROUND='#${config.lib.stylix.colors.base08}'
-          typeset -g POWERLEVEL9K_CONTEXT_FOREGROUND='#${config.lib.stylix.colors.base00}'
+          typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_BACKGROUND='#${config.lib.stylix.colors.base0A}'
+          typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND='#${config.lib.stylix.colors.base00}'
           typeset -g POWERLEVEL9K_CONTEXT_BACKGROUND='#${config.lib.stylix.colors.base0A}'
-          typeset -g POWERLEVEL9K_LOAD_FOREGROUND='#${config.lib.stylix.colors.base00}'
+          typeset -g POWERLEVEL9K_CONTEXT_FOREGROUND='#${config.lib.stylix.colors.base00}'
+          typeset -g POWERLEVEL9K_DIR_BACKGROUND='#${config.lib.stylix.colors.base0D}'
+          typeset -g POWERLEVEL9K_DIR_FOREGROUND='#${config.lib.stylix.colors.base00}'
           typeset -g POWERLEVEL9K_LOAD_BACKGROUND='#${config.lib.stylix.colors.base0C}'
-          typeset -g POWERLEVEL9K_RAM_FOREGROUND='#${config.lib.stylix.colors.base00}'
+          typeset -g POWERLEVEL9K_LOAD_FOREGROUND='#${config.lib.stylix.colors.base00}'
+          typeset -g POWERLEVEL9K_OS_ICON_BACKGROUND='#${config.lib.stylix.colors.base08}'
+          typeset -g POWERLEVEL9K_OS_ICON_FOREGROUND='#${config.lib.stylix.colors.base07}'
           typeset -g POWERLEVEL9K_RAM_BACKGROUND='#${config.lib.stylix.colors.base0D}'
+          typeset -g POWERLEVEL9K_RAM_FOREGROUND='#${config.lib.stylix.colors.base00}'
+          typeset -g POWERLEVEL9K_STATUS_ERROR_FOREGROUND='#${config.lib.stylix.colors.base00}'
+          typeset -g POWERLEVEL9K_STATUS_ERROR_BACKGROUND='#${config.lib.stylix.colors.base08}'
+          typeset -g POWERLEVEL9K_STATUS_OK_FOREGROUND='#${config.lib.stylix.colors.base00}'
+          typeset -g POWERLEVEL9K_STATUS_OK_BACKGROUND='#${config.lib.stylix.colors.base0B}'
+          typeset -g POWERLEVEL9K_TIME_BACKGROUND='#${config.lib.stylix.colors.base03}'
+          typeset -g POWERLEVEL9K_TIME_FOREGROUND='#${config.lib.stylix.colors.base07}'
+          typeset -g POWERLEVEL9K_VCS_CLEAN_BACKGROUND='#${config.lib.stylix.colors.base0B}'
+          typeset -g POWERLEVEL9K_VCS_CLEAN_FOREGROUND='#${config.lib.stylix.colors.base00}'
         '';
       };
       
@@ -130,26 +184,16 @@
       # Prompt character colors
       typeset -g POWERLEVEL9K_PROMPT_CHAR_OK_VIINS_FOREGROUND='#${config.lib.stylix.colors.base0B}'
       typeset -g POWERLEVEL9K_PROMPT_CHAR_ERROR_VIINS_FOREGROUND='#${config.lib.stylix.colors.base08}'
+      # typeset -g POWERLEVEL9K_PROMPT_CHAR_ERROR_VIINS_BACKGROUND='#${config.lib.stylix.colors.base01}'
       
-      # Dynamic theme colors from Stylix/nix-colors (common to all styles)
-      typeset -g POWERLEVEL9K_DIR_FOREGROUND='#${config.lib.stylix.colors.base05}'
-      typeset -g POWERLEVEL9K_DIR_BACKGROUND='#${config.lib.stylix.colors.base01}'
-      typeset -g POWERLEVEL9K_VCS_CLEAN_FOREGROUND='#${config.lib.stylix.colors.base00}'
-      typeset -g POWERLEVEL9K_VCS_CLEAN_BACKGROUND='#${config.lib.stylix.colors.base0B}'
+      # Common theme colors from Stylix/nix-colors (shared across all styles)
       typeset -g POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND='#${config.lib.stylix.colors.base00}'
       typeset -g POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND='#${config.lib.stylix.colors.base09}'
       typeset -g POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='#${config.lib.stylix.colors.base00}'
       typeset -g POWERLEVEL9K_VCS_MODIFIED_BACKGROUND='#${config.lib.stylix.colors.base09}'
-      typeset -g POWERLEVEL9K_TIME_FOREGROUND='#${config.lib.stylix.colors.base07}'
-      typeset -g POWERLEVEL9K_TIME_BACKGROUND='#${config.lib.stylix.colors.base02}'
-      typeset -g POWERLEVEL9K_STATUS_OK_FOREGROUND='#${config.lib.stylix.colors.base0B}'
-      typeset -g POWERLEVEL9K_STATUS_ERROR_FOREGROUND='#${config.lib.stylix.colors.base08}'
-      typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND='#${config.lib.stylix.colors.base0A}'
       typeset -g POWERLEVEL9K_BACKGROUND_JOBS_FOREGROUND='#${config.lib.stylix.colors.base0C}'
+      typeset -g POWERLEVEL9K_BACKGROUND_JOBS_BACKGROUND='#${config.lib.stylix.colors.base01}'
       
-      # Load user Powerlevel10k overrides if present
-      [[ -r ~/.p10k.zsh ]] && source ~/.p10k.zsh
-
       # Use Colima's Docker socket if available
       if [ -S "$HOME/.colima/default/docker.sock" ]; then
         export DOCKER_HOST=unix://$HOME/.colima/default/docker.sock
@@ -170,17 +214,4 @@
   home.packages = with pkgs; [
     zsh-powerlevel10k
   ];
-  
-  # Powerlevel10k configuration
-  home.file.".p10k.zsh".text = ''
-    # Basic p10k configuration
-    typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
-      dir vcs
-    )
-    typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
-      status command_execution_time background_jobs time
-    )
-    typeset -g POWERLEVEL9K_MODE=nerdfont-complete
-    typeset -g POWERLEVEL9K_PROMPT_ON_NEWLINE=true
-  '';
 }

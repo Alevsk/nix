@@ -5,7 +5,7 @@ let
   currentThemeName = "nord"; # Available: dracula, nord, tokyonight, ocean, default
   
   # CHANGE THIS LINE TO SWITCH PROMPT STYLE
-  promptStyle = "lean"; # Available: lean, classic, rainbow
+  promptStyle = "classic"; # Available: lean, classic, rainbow
 
   # CHANGE THIS LINE TO AUTO START TMUX WHEN OPENING A NEW TERMINAL
   autoStartTmux = false;
