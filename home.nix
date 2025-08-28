@@ -49,6 +49,7 @@ in {
     ./modules/cli/fzf.nix
     ./modules/desktop/wallpaper.nix
     ./modules/git/git.nix
+    ./modules/development/protobuf.nix
   ];
 
   # Set nix-colors colorScheme (used by nix-colors modules)

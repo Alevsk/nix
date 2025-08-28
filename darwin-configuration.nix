@@ -7,6 +7,7 @@
 
   # These packages are installed system-wide, similar to how you’d configure packages on NixOS.
   environment.systemPackages = with pkgs; [
+    buf
     bun
     colima
     curl
@@ -57,6 +58,7 @@
     ];
     casks = [
       "1password"
+      "google-drive"
       "hammerspoon"
       "iina"
       "rectangle"
