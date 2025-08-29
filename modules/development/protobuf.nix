@@ -1,54 +1,5 @@
 { pkgs, lib, ... }:
 
-let
-  # Custom package for protoc-gen-grpc-gateway
-  protoc-gen-grpc-gateway = pkgs.buildGoModule rec {
-    pname = "protoc-gen-grpc-gateway";
-    version = "2.19.1";
-
-    src = pkgs.fetchFromGitHub {
-      owner = "grpc-ecosystem";
-      repo = "grpc-gateway";
-      rev = "v${version}";
-      sha256 = "sha256-4bXHImUWdPCxgNwkxqD2aPuEZhPYl9mBsZU7F8rw6Qs=";
-    };
-
-    vendorHash = "sha256-R8b+CmYNRqDOTLr3oBaTWVlzK5sOCGYlZDg8eTjWZf4=";
-
-    subPackages = [ "protoc-gen-grpc-gateway" ];
-
-    meta = with lib; {
-      description = "gRPC to JSON proxy generator";
-      homepage = "https://github.com/grpc-ecosystem/grpc-gateway";
-      license = licenses.bsd3;
-      maintainers = with maintainers; [ ];
-    };
-  };
-
-  # Custom package for protoc-gen-openapiv2
-  protoc-gen-openapiv2 = pkgs.buildGoModule rec {
-    pname = "protoc-gen-openapiv2";
-    version = "2.19.1";
-
-    src = pkgs.fetchFromGitHub {
-      owner = "grpc-ecosystem";
-      repo = "grpc-gateway";
-      rev = "v${version}";
-      sha256 = lib.fakeSha256;
-    };
-
-    vendorHash = lib.fakeSha256;
-
-    subPackages = [ "protoc-gen-openapiv2" ];
-
-    meta = with lib; {
-      description = "OpenAPI v2 generator for gRPC";
-      homepage = "https://github.com/grpc-ecosystem/grpc-gateway";
-      license = licenses.bsd3;
-      maintainers = with maintainers; [ ];
-    };
-  };
-in
 {
   home.packages = with pkgs; [
     # Core protobuf tools
@@ -57,9 +8,30 @@ in
     protoc-gen-go
     protoc-gen-go-grpc
     go
-    
-    # Custom Go protoc plugins
-    protoc-gen-grpc-gateway
-    protoc-gen-openapiv2
   ];
+
+  # Use home.activation to install Go tools declaratively
+  home.activation.installGoProtocTools = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    export PATH="${pkgs.go}/bin:$PATH"
+    export GOPATH="$HOME/go"
+    export GOBIN="$HOME/go/bin"
+    
+    # Create GOPATH directories if they don't exist
+    mkdir -p "$GOPATH/bin"
+    
+    # Install protoc-gen-grpc-gateway if not present
+    if [ ! -f "$GOBIN/protoc-gen-grpc-gateway" ]; then
+      echo "Installing protoc-gen-grpc-gateway..."
+      ${pkgs.go}/bin/go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway@v2.19.1
+    fi
+    
+    # Install protoc-gen-openapiv2 if not present
+    if [ ! -f "$GOBIN/protoc-gen-openapiv2" ]; then
+      echo "Installing protoc-gen-openapiv2..."
+      ${pkgs.go}/bin/go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@v2.19.1
+    fi
+  '';
+
+  # Ensure GOPATH/bin is in PATH
+  home.sessionPath = [ "$HOME/go/bin" ];
 }
