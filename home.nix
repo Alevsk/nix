@@ -50,6 +50,7 @@ in {
     ./modules/desktop/wallpaper.nix
     ./modules/git/git.nix
     ./modules/development/protobuf.nix
+    ./modules/ai/gemini.nix
   ];
 
   # Set nix-colors colorScheme (used by nix-colors modules)
@@ -105,7 +106,6 @@ in {
     claude-code
     codex
     firefox
-    gemini-cli
     google-chrome
     ncurses
     ollama
