@@ -62,6 +62,7 @@
       "google-drive"
       "hammerspoon"
       "iina"
+      "neo4j-desktop" # not available on nixpkgs
       "rectangle"
       "sublime-text"
       "the-unarchiver"
@@ -120,6 +121,7 @@
       "/Applications/1Password.app"
       "${pkgs.google-chrome}/Applications/Google Chrome.app"
       "/Applications/Sublime\ Text.app"
+      "/Applications/Neo4j\ Desktop\ 2.app"
       "/System/Applications/System\ Settings.app"
     ];
     dock = {
