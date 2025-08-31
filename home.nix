@@ -105,6 +105,7 @@ in {
     claude-code
     codex
     firefox
+    grpcurl
     google-chrome
     ncurses
     ollama
