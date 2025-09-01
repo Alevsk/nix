@@ -54,11 +54,13 @@
       "gemini-cli"  # better support and maintenance in brew than nix store
       "iproute2mac"
       "mas"
+      "minio-mc"
       "nvm"
       "watch"
     ];
     casks = [
       "1password"
+      "burp-suite"
       "google-drive"
       "hammerspoon"
       "iina"
