@@ -23,6 +23,7 @@
     home-manager
     htop
     jq
+    lf
     macpm
     mkalias
     ncurses
