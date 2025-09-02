@@ -167,10 +167,25 @@
       
       # Disable problematic zsh features that might cause duplication
       unsetopt BEEP
-      unsetopt AUTO_MENU
       
       # Fix key repeat and input duplication issues
       unset zle_bracketed_paste
+      
+      # Enable tab completion with menu selection
+      autoload -Uz compinit && compinit
+      zmodload -i zsh/complist
+      
+      # Enable menu selection and cycling
+      zstyle ':completion:*' menu select
+      setopt AUTO_LIST AUTO_MENU
+      
+      # Configure tab behavior for completion
+      bindkey '^I' complete-word
+      bindkey -M menuselect '^I' menu-complete
+      bindkey -M menuselect '^[[Z' reverse-menu-complete  # Shift-Tab
+      
+      # Add colors to completion menu
+      zstyle ':completion:*' list-colors ''${(s.:.)LS_COLORS}
       
       # Source powerlevel10k theme
       source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
