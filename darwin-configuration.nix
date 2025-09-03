@@ -66,6 +66,7 @@
       "hammerspoon"
       "iina"
       "neo4j-desktop" # not available on nixpkgs
+      "qflipper"
       "rectangle"
       "sublime-text"
       "the-unarchiver"
