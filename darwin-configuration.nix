@@ -68,6 +68,7 @@
       "neo4j-desktop" # not available on nixpkgs
       "qflipper"
       "rectangle"
+      "slack"
       "sublime-text"
       "the-unarchiver"
     ];
