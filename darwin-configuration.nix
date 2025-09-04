@@ -33,6 +33,7 @@
     ripgrep
     tmux
     tree
+    uutils-coreutils-noprefix
     wget
     yarn
   ];
