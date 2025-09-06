@@ -109,7 +109,6 @@ in {
     google-chrome
     ncurses
     ollama
-    podman
     telegram-desktop
     tmux-mem-cpu-load
     vscode
