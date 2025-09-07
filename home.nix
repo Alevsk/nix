@@ -105,6 +105,7 @@ in {
     claude-code
     codex
     firefox
+    ffuf
     grpcurl
     google-chrome
     ncurses
