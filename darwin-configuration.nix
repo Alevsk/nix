@@ -54,6 +54,7 @@
     enable = true;
     brews = [
       "gemini-cli"  # better support and maintenance in brew than nix store
+      "golang-migrate"
       "iproute2mac"
       "mas"
       "minio-mc"
