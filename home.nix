@@ -42,14 +42,17 @@ in {
     autoStartTmux = autoStartTmux;
   };
   imports = [
-    ./modules/shell/zsh.nix
-    ./modules/terminal/alacritty.nix
-    ./modules/multiplexer/tmux.nix
-    ./modules/editor/neovim.nix
+    ./modules/ai/claude
+    ./modules/ai/codex
+    ./modules/ai/gemini
     ./modules/cli/fzf.nix
     ./modules/desktop/wallpaper.nix
-    ./modules/git/git.nix
     ./modules/development/protobuf.nix
+    ./modules/editor/neovim.nix
+    ./modules/git/git.nix
+    ./modules/multiplexer/tmux.nix
+    ./modules/shell/zsh.nix
+    ./modules/terminal/alacritty.nix
   ];
 
   # Set nix-colors colorScheme (used by nix-colors modules)
@@ -104,10 +107,10 @@ in {
     bat
     claude-code
     codex
-    firefox
     ffuf
-    grpcurl
+    firefox
     google-chrome
+    grpcurl
     ncurses
     ollama
     telegram-desktop
