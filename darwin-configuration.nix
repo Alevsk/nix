@@ -1,6 +1,10 @@
 { pkgs, config, ... }:
 
 {
+  imports = [
+    ./modules/system/proxychains.nix
+  ];
+
   system.primaryUser = "alevsk";
 
   nixpkgs.config.allowUnfree = true;
@@ -31,7 +35,6 @@
     neo-cowsay
     neovim
     nodejs
-    proxychains-ng
     python3
     ripgrep
     tmux
@@ -41,14 +44,7 @@
     yarn
   ];
 
-  environment.etc."proxychains.conf".text = ''
-      dynamic_chain
-      proxy_dns
-      tcp_read_time_out 15000
-      tcp_connect_time_out 8000
-      [ProxyList]
-      socks5 127.0.0.1 1080
-  '';
+  programs.proxychains.enable = true;
 
   environment.extraOutputsToInstall = [ "terminfo" ];
 
