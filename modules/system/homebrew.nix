@@ -1,5 +1,7 @@
 {config, ...}: {
-  # Homebrew configuration (kept alphabetically sorted as noted)
+  # nix-darwin Homebrew configuration
+  # Policy: Use Homebrew for GUI apps/macOS bundles and select CLI tooling
+  # that is better supported via brew; keep lists alphabetized to ease review.
   homebrew = {
     enable = true;
 

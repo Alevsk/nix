@@ -1,5 +1,6 @@
 {pkgs, ...}: {
   # System-wide packages (nix-darwin level)
+  # Policy: Prefer Nix for CLI/dev tools; keep list alphabetized.
   environment.systemPackages = with pkgs; [
     alejandra
     buf

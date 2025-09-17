@@ -9,16 +9,25 @@ Declarative macOS setup using Nix Darwin + Home Manager with integrated theming.
 ```
 ~/nix/
 ├── flake.nix                  # Flake with nix-darwin, home-manager, stylix, nix-homebrew
-├── darwin-configuration.nix   # System-level config (Nix + Homebrew)
+├── darwin-configuration.nix   # Host-level config (imports modules/system/default.nix)
 ├── home.nix                   # User-level config (Home Manager)
 ├── modules/                   # Modular configs
-│   ├── cli/fzf.nix            # FZF
-│   ├── desktop/wallpaper.nix  # Wallpaper setup
-│   ├── editor/neovim.nix      # Neovim + theme
-│   ├── git/git.nix            # Git
-│   ├── multiplexer/tmux.nix   # Tmux + statusline
-│   ├── shell/zsh.nix          # Zsh + Powerlevel10k
-│   └── terminal/alacritty.nix # Alacritty
+│   ├── system/                # nix-darwin (system) modules
+│   │   ├── default.nix        # Aggregator: imports sibling system modules
+│   │   ├── core.nix           # Core: nix/nixpkgs/programs/terminfo
+│   │   ├── defaults.nix       # macOS defaults (Dock + UI)
+│   │   ├── packages.nix       # environment.systemPackages (CLI/dev tools)
+│   │   ├── homebrew.nix       # Homebrew brews/casks (+ activation prefs)
+│   │   ├── fonts.nix          # System fonts
+│   │   ├── applications.nix   # Alias Nix + HM apps into /Applications
+│   │   └── proxychains.nix    # Proxychains (optionized)
+│   ├── cli/fzf.nix            # FZF (Home Manager)
+│   ├── desktop/wallpaper.nix  # Wallpaper setup (Home Manager)
+│   ├── editor/neovim.nix      # Neovim + theme (Home Manager)
+│   ├── git/git.nix            # Git (Home Manager)
+│   ├── multiplexer/tmux.nix   # Tmux + statusline (Home Manager)
+│   ├── shell/zsh.nix          # Zsh + Powerlevel10k (Home Manager)
+│   └── terminal/alacritty.nix # Alacritty (Home Manager)
 └── scripts/
     ├── switch-theme.sh        # Interactive theme/prompt switcher
     └── tmux-stats.sh          # Tmux helper
@@ -55,14 +64,22 @@ Declarative macOS setup using Nix Darwin + Home Manager with integrated theming.
 ## 🧰 Apply/Bootstrap Notes
 
 - Flake attributes: system `.#cloud`, user `.#alevsk`.
-- Homebrew is managed via `nix-homebrew` and `homebrew.*` in `darwin-configuration.nix`.
-- Dock items and “Nix Apps” symlinks are set automatically during activation.
+- Homebrew is integrated via `nix-homebrew` in flake.nix and configured in `modules/system/homebrew.nix`.
+- Dock items and application aliases are created during system activation (see `modules/system/applications.nix`).
+- Both system (nix-darwin) and user (Home Manager) apps are aliased into `/Applications` so Spotlight/Launchpad can find them easily.
 
 ## 📦 Package Policy
 
 - Use Nix for CLI/dev tools and libraries (reproducible, easy pinning via flakes).
 - Use Homebrew for GUI apps/macOS bundles (better support and updates for many apps).
-- Dock apps should point to Homebrew-managed apps under `/Applications` where possible.
+- Dock apps should point to Homebrew-managed apps under `/Applications` where possible (exceptions allowed by choice).
+
+## 🧿 App Aliasing Behavior
+
+- The activation script aliases:
+  - System apps from `environment.systemPackages`’ `*/Applications/*.app` into `/Applications`.
+  - Home Manager apps from all `*home-manager-applications*/Applications/*.app` into `/Applications`.
+- This provides a single UX surface in `/Applications`; HM’s default `~/Applications/Home Manager Apps` may also exist but `/Applications` is considered primary in this setup.
 
 ## 🔄 Maintenance
 

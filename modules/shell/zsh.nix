@@ -17,15 +17,15 @@
       # Disable built-in theme loading; we'll source Powerlevel10k explicitly
       theme = "";
       plugins = [
-        "git"
-        "docker"
-        "kubectl"
         "brew"
-        "macos"
-        "z"
-        "fzf"
         "colored-man-pages"
         "command-not-found"
+        "docker"
+        "fzf"
+        "git"
+        "kubectl"
+        "macos"
+        "z"
       ];
     };
 
