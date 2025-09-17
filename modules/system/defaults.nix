@@ -1,7 +1,9 @@
 { pkgs, ... }:
 
 {
-  # Dock layout and behavior
+  # macOS defaults consolidated (Dock + general UI)
+
+  # Dock
   system.defaults.dock.autohide = false;
   system.defaults.dock.persistent-apps = [
     "/System/Applications/Launchpad.app"
@@ -19,5 +21,11 @@
     show-recents = false;
     static-only = false;
   };
+
+  # UI
+  system.defaults.finder.FXPreferredViewStyle = "clmv";
+  system.defaults.loginwindow.GuestEnabled = false;
+  system.defaults.NSGlobalDomain.AppleInterfaceStyle = "Dark";
+  system.defaults.NSGlobalDomain.KeyRepeat = 2;
 }
 

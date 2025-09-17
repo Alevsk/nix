@@ -2,26 +2,14 @@
 
 {
   imports = [
-    ./modules/system/proxychains.nix
-    ./modules/system/homebrew.nix
-    ./modules/system/packages.nix
-    ./modules/system/fonts.nix
-    ./modules/system/terminal.nix
-    ./modules/system/applications.nix
-    ./modules/system/dock.nix
-    ./modules/system/ui.nix
-    ./modules/system/programs.nix
+    ./modules/system/default.nix
   ];
 
   system.primaryUser = "alevsk";
 
   programs.proxychains.enable = true;
 
-  # Allow unfree packages (e.g., 1Password)
-  nixpkgs.config.allowUnfree = true;
-
-  # Necessary for using flakes on this system.
-  nix.settings.experimental-features = "nix-command flakes";
+  # System-wide defaults and base programs are imported from modules/system/default.nix
 
   # Set Git commit hash for darwin-version.
   system.configurationRevision = null;
