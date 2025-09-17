@@ -74,5 +74,15 @@
     };
     
     darwinPackages = self.darwinConfigurations."cloud".pkgs;
+
+    # Developer shell with formatting tools
+    devShells.${system}.default = nixpkgs.legacyPackages.${system}.mkShell {
+      packages = with nixpkgs.legacyPackages.${system}; [
+        alejandra
+      ];
+      shellHook = ''
+        echo "Dev shell: alejandra available (fmt, fmt-check targets in Makefile)."
+      '';
+    };
   };
 }

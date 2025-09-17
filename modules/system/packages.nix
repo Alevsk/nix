@@ -3,6 +3,7 @@
 {
   # System-wide packages (nix-darwin level)
   environment.systemPackages = with pkgs; [
+    alejandra
     buf
     bun
     chisel
@@ -36,4 +37,3 @@
     yarn
   ];
 }
-
