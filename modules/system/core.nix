@@ -1,6 +1,4 @@
-{ ... }:
-
-{
+{...}: {
   # Core system settings consolidated for simplicity.
   # - nix: enable flakes & nix-command
   # - nixpkgs: allowUnfree
@@ -16,10 +14,9 @@
   # programs
   programs = {
     gnupg.agent.enable = true;
-    zsh.enable = true;  # default shell on macOS
+    zsh.enable = true; # default shell on macOS
   };
 
   # terminal
-  environment.extraOutputsToInstall = [ "terminfo" ];
+  environment.extraOutputsToInstall = ["terminfo"];
 }
-

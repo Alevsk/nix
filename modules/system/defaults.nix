@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   # macOS defaults consolidated (Dock + general UI)
 
   # Dock
@@ -28,4 +26,3 @@
   system.defaults.NSGlobalDomain.AppleInterfaceStyle = "Dark";
   system.defaults.NSGlobalDomain.KeyRepeat = 2;
 }
-

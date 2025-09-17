@@ -5,15 +5,15 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nix-darwin.url = "github:nix-darwin/nix-darwin/master";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
-    
+
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    
+
     stylix.url = "github:nix-community/stylix";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
-    
+
     nix-colors.url = "github:misterio77/nix-colors";
-    
+
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
     # Optional: Declarative tap management
     homebrew-core = {
@@ -26,12 +26,21 @@
     };
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs, home-manager, stylix, nix-colors, nix-homebrew, homebrew-core, homebrew-cask, ... }:
-  let
+  outputs = inputs @ {
+    self,
+    nix-darwin,
+    nixpkgs,
+    home-manager,
+    stylix,
+    nix-colors,
+    nix-homebrew,
+    homebrew-core,
+    homebrew-cask,
+    ...
+  }: let
     username = "alevsk";
     system = "aarch64-darwin";
-  in
-  {
+  in {
     # Build darwin flake using:
     # $ darwin-rebuild switch --flake .#cloud
     darwinConfigurations."cloud" = nix-darwin.lib.darwinSystem {
@@ -54,25 +63,25 @@
             autoMigrate = true;
           };
         }
-        
+
         # Align homebrew taps config with nix-homebrew
         ({config, ...}: {
           homebrew.taps = builtins.attrNames config.nix-homebrew.taps;
         })
       ];
     };
-    
+
     # Separate Home Manager configuration
     homeConfigurations.${username} = home-manager.lib.homeManagerConfiguration {
       pkgs = nixpkgs.legacyPackages.${system};
-      modules = [ 
+      modules = [
         stylix.homeModules.stylix
         nix-colors.homeManagerModules.default
-        ./home.nix 
+        ./home.nix
       ];
-      extraSpecialArgs = { inherit nix-colors; };
+      extraSpecialArgs = {inherit nix-colors;};
     };
-    
+
     darwinPackages = self.darwinConfigurations."cloud".pkgs;
 
     # Developer shell with formatting tools

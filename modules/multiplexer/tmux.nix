@@ -1,5 +1,9 @@
-{ config, pkgs, tmuxTintScheme ? "base16-nord", ... }:
-let
+{
+  config,
+  pkgs,
+  tmuxTintScheme ? "base16-nord",
+  ...
+}: let
   gawk = "${pkgs.gawk}/bin/gawk";
 
   # Script to get CPU usage, now with absolute paths.
@@ -25,21 +29,21 @@ let
         } else {
           pct = 0
         }
-        
+
         # Determine charging state
         if (index($0, "charging") > 0) {
           bolt = " "
         } else {
           bolt = ""
         }
-        
+
         # Select battery icon based on percentage
         if      (pct >= 80) { icon = "" }
         else if (pct >= 60) { icon = "" }
         else if (pct >= 40) { icon = "" }
         else if (pct >= 20) { icon = "" }
         else                { icon = "" }
-        
+
         printf "%s%s%d%%", icon, bolt, pct
         exit
       }
@@ -58,22 +62,22 @@ let
     # We use #h for the short hostname. Use #H for the full one.
     # The icon  is the Apple logo in most Nerd Fonts.
     "#[fg=#${config.lib.stylix.colors.base0E},bold] " # Apple Logo
-    "#[fg=#${config.lib.stylix.colors.base06}]#h "       # Hostname
-    "#[fg=#${config.lib.stylix.colors.base03}]│ "         # Separator
+    "#[fg=#${config.lib.stylix.colors.base06}]#h " # Hostname
+    "#[fg=#${config.lib.stylix.colors.base03}]│ " # Separator
 
     # --- Session Name ---
     # The 󰣇 icon is a nice symbol for tmux itself.
     "#[fg=#${config.lib.stylix.colors.base0D},bold]󰣇 " # Session Icon
-    "#[fg=#${config.lib.stylix.colors.base06}]#S "       # Session Name
-    "#[fg=#${config.lib.stylix.colors.base03}]│ "         # Separator
+    "#[fg=#${config.lib.stylix.colors.base06}]#S " # Session Name
+    "#[fg=#${config.lib.stylix.colors.base03}]│ " # Separator
 
     # --- Window and Pane Counts ---
-    "#[fg=#${config.lib.stylix.colors.base0A}] "       # Window Icon
+    "#[fg=#${config.lib.stylix.colors.base0A}] " # Window Icon
     "#[fg=#${config.lib.stylix.colors.base06}]#{session_windows} " # Window count
-    "#[fg=#${config.lib.stylix.colors.base03}]• "         # Dot Separator
-    "#[fg=#${config.lib.stylix.colors.base0C}] "       # Pane Icon
-    "#[fg=#${config.lib.stylix.colors.base06}]#{window_panes} "    # Pane count
-    "#[fg=#${config.lib.stylix.colors.base03}]│ "         # Separator
+    "#[fg=#${config.lib.stylix.colors.base03}]• " # Dot Separator
+    "#[fg=#${config.lib.stylix.colors.base0C}] " # Pane Icon
+    "#[fg=#${config.lib.stylix.colors.base06}]#{window_panes} " # Pane count
+    "#[fg=#${config.lib.stylix.colors.base03}]│ " # Separator
   ];
 
   # Combine all parts of the status-right string
@@ -104,9 +108,7 @@ let
   windowFormat = pkgs.lib.strings.concatStrings [
     "#[fg=#${config.lib.stylix.colors.base04}] #I "
   ];
-
-in
-{
+in {
   programs.tmux = {
     enable = true;
     terminal = "tmux-256color";
@@ -185,7 +187,7 @@ in
 
       # Base style for all windows (inactive).
       set -g window-status-style "fg=#${config.lib.stylix.colors.base05},bg=default"
-      
+
       # Apply our ultra-minimalist formats.
       set -g window-status-format "${windowFormat}"
       set -g window-status-current-format "${windowCurrentFormat}"

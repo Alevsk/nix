@@ -1,10 +1,11 @@
-{ config, pkgs, ... }:
-
-let
+{
+  config,
+  pkgs,
+  ...
+}: let
   wallpaperUrl = "https://images.pexels.com/photos/1668246/pexels-photo-1668246.jpeg";
   wallpaperPath = "${config.home.homeDirectory}/.config/wallpaper/current-wallpaper.jpg";
-in
-{
+in {
   # Create wallpaper directory and download wallpaper
   home.file.".config/wallpaper/current-wallpaper.jpg" = {
     source = pkgs.fetchurl {

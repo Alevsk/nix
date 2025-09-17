@@ -1,12 +1,10 @@
-{ config, ... }:
-
-{
+{config, ...}: {
   # Homebrew configuration (kept alphabetically sorted as noted)
   homebrew = {
     enable = true;
 
     brews = [
-      "gemini-cli"  # better support and maintenance in brew than nix store
+      "gemini-cli" # better support and maintenance in brew than nix store
       "golang-migrate"
       "iproute2mac"
       "mas"
@@ -35,4 +33,3 @@
     onActivation.upgrade = true;
   };
 }
-

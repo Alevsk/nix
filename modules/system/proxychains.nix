@@ -1,9 +1,11 @@
-{ lib, pkgs, config, ... }:
-
-let
-  cfg = config.programs.proxychains;
-in
 {
+  lib,
+  pkgs,
+  config,
+  ...
+}: let
+  cfg = config.programs.proxychains;
+in {
   options.programs.proxychains = {
     enable = lib.mkEnableOption "proxychains system configuration";
 
@@ -35,8 +37,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = [ cfg.package ];
+    environment.systemPackages = [cfg.package];
     environment.etc."${cfg.etcPath}".text = cfg.config;
   };
 }
-

@@ -1,6 +1,9 @@
-{ lib, pkgs, config, ... }:
-
 {
+  lib,
+  pkgs,
+  config,
+  ...
+}: {
   # Create macOS application aliases for Nix and Home Manager apps
   #
   # Rationale:
@@ -12,14 +15,14 @@
   #   activation. Tradeoff: imperative-ish script, but practical for macOS.
   # - The Home Manager search iterates all matching outputs (no head -1) to avoid
   #   missing apps when multiple profiles/derivations exist.
-  system.activationScripts.applications.text =
-    let
-      env = pkgs.buildEnv {
-        name = "system-applications";
-        paths = config.environment.systemPackages;
-        pathsToLink = "/Applications";
-      };
-    in lib.mkForce ''
+  system.activationScripts.applications.text = let
+    env = pkgs.buildEnv {
+      name = "system-applications";
+      paths = config.environment.systemPackages;
+      pathsToLink = "/Applications";
+    };
+  in
+    lib.mkForce ''
       # Set up applications.
       echo "setting up /Applications..." >&2
 

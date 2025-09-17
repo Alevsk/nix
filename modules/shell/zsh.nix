@@ -1,12 +1,16 @@
-{ config, pkgs, promptStyle, autoStartTmux, ... }:
-
 {
+  config,
+  pkgs,
+  promptStyle,
+  autoStartTmux,
+  ...
+}: {
   programs.zsh = {
     enable = true;
     enableCompletion = true;
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
-    
+
     # Oh My Zsh configuration
     oh-my-zsh = {
       enable = true;
@@ -24,7 +28,7 @@
         "command-not-found"
       ];
     };
-    
+
     shellAliases = {
       ll = "eza -la";
       ls = "eza";
@@ -40,7 +44,7 @@
       switch-theme = "~/nix/scripts/switch-theme.sh";
       tmux-stats = "~/nix/scripts/tmux-stats.sh";
     };
-    
+
     initContent = let
       # Define prompt style configurations
       promptStyles = {
@@ -75,7 +79,7 @@
           typeset -g POWERLEVEL9K_VCS_CLEAN_BACKGROUND='#${config.lib.stylix.colors.base0B}'
           typeset -g POWERLEVEL9K_VCS_CLEAN_FOREGROUND='#${config.lib.stylix.colors.base00}'
         '';
-        
+
         classic = ''
           # Classic style - multiline with decorations and powerline separators
           typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir vcs newline prompt_char)
@@ -109,7 +113,7 @@
           typeset -g POWERLEVEL9K_VCS_CLEAN_BACKGROUND='#${config.lib.stylix.colors.base0B}'
           typeset -g POWERLEVEL9K_VCS_CLEAN_FOREGROUND='#${config.lib.stylix.colors.base00}'
         '';
-        
+
         rainbow = ''
           # Rainbow style - colorful with many elements and rounded separators
           typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir vcs)
@@ -142,7 +146,7 @@
           typeset -g POWERLEVEL9K_VCS_CLEAN_FOREGROUND='#${config.lib.stylix.colors.base00}'
         '';
       };
-      
+
       selectedPromptStyle = promptStyles.${promptStyle};
     in ''
       # History settings
@@ -159,48 +163,48 @@
       setopt HIST_IGNORE_SPACE
       setopt HIST_NO_STORE
       setopt HIST_EXPAND
-      
+
       # Better cd behavior
       setopt AUTO_CD
       setopt AUTO_PUSHD
       setopt PUSHD_IGNORE_DUPS
-      
+
       # Disable problematic zsh features that might cause duplication
       unsetopt BEEP
-      
+
       # Fix key repeat and input duplication issues
       unset zle_bracketed_paste
-      
+
       # Enable tab completion with menu selection
       autoload -Uz compinit && compinit
       zmodload -i zsh/complist
-      
+
       # Enable menu selection and cycling
       zstyle ':completion:*' menu select
       setopt AUTO_LIST AUTO_MENU
-      
+
       # Configure tab behavior for completion
       bindkey '^I' complete-word
       bindkey -M menuselect '^I' menu-complete
       bindkey -M menuselect '^[[Z' reverse-menu-complete  # Shift-Tab
-      
+
       # Add colors to completion menu
       zstyle ':completion:*' list-colors ''${(s.:.)LS_COLORS}
-      
+
       # Source powerlevel10k theme
       source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
-      
+
       # Apply selected prompt style
       ${selectedPromptStyle}
-      
+
       # Disable instant prompt for now
       typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
-      
+
       # Prompt character colors
       typeset -g POWERLEVEL9K_PROMPT_CHAR_OK_VIINS_FOREGROUND='#${config.lib.stylix.colors.base0B}'
       typeset -g POWERLEVEL9K_PROMPT_CHAR_ERROR_VIINS_FOREGROUND='#${config.lib.stylix.colors.base08}'
       # typeset -g POWERLEVEL9K_PROMPT_CHAR_ERROR_VIINS_BACKGROUND='#${config.lib.stylix.colors.base01}'
-      
+
       # Common theme colors from Stylix/nix-colors (shared across all styles)
       typeset -g POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND='#${config.lib.stylix.colors.base00}'
       typeset -g POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND='#${config.lib.stylix.colors.base09}'
@@ -208,23 +212,27 @@
       typeset -g POWERLEVEL9K_VCS_MODIFIED_BACKGROUND='#${config.lib.stylix.colors.base09}'
       typeset -g POWERLEVEL9K_BACKGROUND_JOBS_FOREGROUND='#${config.lib.stylix.colors.base0C}'
       typeset -g POWERLEVEL9K_BACKGROUND_JOBS_BACKGROUND='#${config.lib.stylix.colors.base01}'
-      
+
       # Use Colima's Docker socket if available
       if [ -S "$HOME/.colima/default/docker.sock" ]; then
         export DOCKER_HOST=unix://$HOME/.colima/default/docker.sock
       fi
 
       # Auto-start tmux on interactive local shells (if enabled)
-      ${if autoStartTmux then ''
-        if [[ -o interactive ]] && command -v tmux >/dev/null; then
-          if [[ -z "$TMUX" && -z "$SSH_TTY" ]]; then
-            exec tmux
+      ${
+        if autoStartTmux
+        then ''
+          if [[ -o interactive ]] && command -v tmux >/dev/null; then
+            if [[ -z "$TMUX" && -z "$SSH_TTY" ]]; then
+              exec tmux
+            fi
           fi
-        fi
-      '' else ""}
+        ''
+        else ""
+      }
     '';
   };
-  
+
   # Install powerlevel10k theme
   home.packages = with pkgs; [
     zsh-powerlevel10k

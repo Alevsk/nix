@@ -1,15 +1,19 @@
-{ config, pkgs, lib, nix-colors, ... }:
-
-let
+{
+  config,
+  pkgs,
+  lib,
+  nix-colors,
+  ...
+}: let
   # CHANGE THIS LINE TO SWITCH THEMES
   currentThemeName = "nord"; # Available: dracula, nord, tokyonight, ocean, default
-  
+
   # CHANGE THIS LINE TO SWITCH PROMPT STYLE
   promptStyle = "classic"; # Available: lean, classic, rainbow
 
   # CHANGE THIS LINE TO AUTO START TMUX WHEN OPENING A NEW TERMINAL
   autoStartTmux = false;
-  
+
   # Theme mapping for nix-colors schemes
   themeMap = {
     "nord" = nix-colors.colorSchemes.nord;
@@ -18,7 +22,7 @@ let
     "ocean" = nix-colors.colorSchemes.ocean;
     "default" = nix-colors.colorSchemes.catppuccin-mocha;
   };
-  
+
   # Get the selected theme
   selectedTheme = themeMap.${currentThemeName};
 
@@ -62,7 +66,7 @@ in {
   stylix = {
     enable = true;
     base16Scheme = selectedTheme;
-    
+
     # Configure fonts
     fonts = {
       monospace = {
@@ -78,7 +82,7 @@ in {
         name = "DejaVu Serif";
       };
     };
-    
+
     # Set cursor theme
     cursor = {
       package = pkgs.bibata-cursors;
