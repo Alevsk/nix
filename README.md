@@ -43,20 +43,26 @@ Declarative macOS setup using Nix Darwin + Home Manager with integrated theming.
 
 ## ➕ Add Packages
 
-- Nix (system): edit `darwin-configuration.nix`
-  - `environment.systemPackages = with pkgs; [ my-package ];`
+- Nix (system): edit `modules/system/packages.nix`
+  - `environment.systemPackages = with pkgs; [ my-package ];` (keep list alphabetized)
 - Nix (user): edit `home.nix`
   - `home.packages = with pkgs; [ my-package ];`
-- Homebrew (CLI): edit `darwin-configuration.nix`
+- Homebrew (CLI): edit `modules/system/homebrew.nix`
   - `homebrew.brews = [ "my-brew" ];` (keep list alphabetized)
-- Homebrew (Apps): edit `darwin-configuration.nix`
-  - `homebrew.casks = [ "MyApp" ];` (keep list alphabetized)
+- Homebrew (Apps): edit `modules/system/homebrew.nix`
+  - `homebrew.casks = [ "my-app" ];` (keep list alphabetized)
 
 ## 🧰 Apply/Bootstrap Notes
 
 - Flake attributes: system `.#cloud`, user `.#alevsk`.
 - Homebrew is managed via `nix-homebrew` and `homebrew.*` in `darwin-configuration.nix`.
 - Dock items and “Nix Apps” symlinks are set automatically during activation.
+
+## 📦 Package Policy
+
+- Use Nix for CLI/dev tools and libraries (reproducible, easy pinning via flakes).
+- Use Homebrew for GUI apps/macOS bundles (better support and updates for many apps).
+- Dock apps should point to Homebrew-managed apps under `/Applications` where possible.
 
 ## 🔄 Maintenance
 
