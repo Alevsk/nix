@@ -19,13 +19,17 @@
       "1password"
       "beekeeper-studio"
       "burp-suite"
+      "discord"
       "google-drive"
       "hammerspoon"
       "iina"
       "neo4j-desktop" # not available on nixpkgs
+      "ngrok"
       "qflipper"
       "rectangle"
       "slack"
+      "spotify"
+      "steam"
       "sublime-text"
       "the-unarchiver"
     ];
