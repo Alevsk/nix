@@ -51,6 +51,7 @@ in {
     ./modules/ai/gemini
     ./modules/cli/fzf.nix
     ./modules/desktop/wallpaper.nix
+    ./modules/development/nodejs.nix
     ./modules/development/protobuf.nix
     ./modules/editor/neovim.nix
     ./modules/git/git.nix

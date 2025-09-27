@@ -8,6 +8,12 @@
     source = ./CLAUDE.md;
   };
 
+  # Copy agents folder to ~/.claude/agents
+  home.file.".claude/agents" = {
+    source = ./agents;
+    recursive = true;
+  };
+
   # Merge MCP servers into existing ~/.claude.json
   home.activation.setupClaudeMCP = lib.hm.dag.entryAfter ["writeBoundary"] ''
     CLAUDE_CONFIG="$HOME/.claude.json"

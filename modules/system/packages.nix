@@ -26,13 +26,11 @@
     ncurses
     neo-cowsay
     neovim
-    nodejs
     python3
     ripgrep
     tmux
     tree
     uutils-coreutils-noprefix
     wget
-    yarn
   ];
 }

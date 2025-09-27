@@ -11,8 +11,10 @@
       "iproute2mac"
       "mas"
       "minio-mc"
+      "node"
       "nvm"
       "watch"
+      "yarn"
     ];
 
     casks = [
