@@ -22,6 +22,7 @@
       "beekeeper-studio"
       "burp-suite"
       "discord"
+      "dropbox"
       "google-drive"
       "hammerspoon"
       "iina"
