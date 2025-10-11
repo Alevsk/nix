@@ -6,6 +6,7 @@
     enable = true;
 
     brews = [
+      "duckdb"
       "gemini-cli" # better support and maintenance in brew than nix store
       "golang-migrate"
       "iproute2mac"

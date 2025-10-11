@@ -3,6 +3,7 @@
   # Policy: Prefer Nix for CLI/dev tools; keep list alphabetized.
   environment.systemPackages = with pkgs; [
     alejandra
+    ast-grep
     buf
     bun
     chisel
@@ -22,6 +23,7 @@
     jq
     lf
     macpm
+    mdcat
     mkalias
     ncurses
     neo-cowsay
