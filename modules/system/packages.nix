@@ -19,8 +19,8 @@
     go
     golangci-lint
     home-manager
-    htop
     hostctl
+    htop
     jq
     lf
     macpm
