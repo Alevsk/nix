@@ -29,7 +29,9 @@
       "iina"
       "neo4j-desktop" # not available on nixpkgs
       "ngrok"
+      "lm-studio"
       "qflipper"
+      "raspberry-pi-imager"
       "rectangle"
       "slack"
       "spotify"

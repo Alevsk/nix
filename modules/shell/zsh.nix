@@ -35,14 +35,14 @@
       cat = "bat";
       grep = "rg";
       find = "fd";
-      rebuild-system = "sudo darwin-rebuild switch --flake ~/nix#cloud";
-      rebuild-home = "home-manager switch --flake ~/nix#alevsk";
-      rebuild-all = "sudo darwin-rebuild switch --flake ~/nix#cloud && home-manager switch --flake ~/nix#alevsk";
-      nix-update = "nix flake update --flake ~/nix";
-      nix-upgrade = "nix flake update --flake ~/nix && sudo darwin-rebuild switch --flake ~/nix#cloud && home-manager switch --flake ~/nix#alevsk";
-      nix-gc = "nix-collect-garbage -d";
-      switch-theme = "~/nix/scripts/switch-theme.sh";
-      tmux-stats = "~/nix/scripts/tmux-stats.sh";
+      rebuild-system = "make -C ${config.home.homeDirectory}/nix rebuild-system";
+      rebuild-home = "make -C ${config.home.homeDirectory}/nix rebuild-home";
+      rebuild-all = "make -C ${config.home.homeDirectory}/nix rebuild-all";
+      nix-update = "make -C ${config.home.homeDirectory}/nix nix-update";
+      nix-upgrade = "make -C ${config.home.homeDirectory}/nix nix-upgrade";
+      nix-gc = "make -C ${config.home.homeDirectory}/nix nix-gc";
+      switch-theme = "${config.home.homeDirectory}/nix/scripts/switch-theme.sh";
+      tmux-stats = "${config.home.homeDirectory}/nix/scripts/tmux-stats.sh";
     };
 
     initContent = let

@@ -20,19 +20,25 @@
     golangci-lint
     home-manager
     htop
+    hostctl
     jq
     lf
     macpm
     mdcat
+    miller
     mkalias
+    mosh
     ncurses
     neo-cowsay
     neovim
     python3
     ripgrep
+    rustscan
     tmux
+    tomlq
     tree
     uutils-coreutils-noprefix
     wget
+    yq
   ];
 }

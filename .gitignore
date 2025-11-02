@@ -1,0 +1,17 @@
+# Nix
+result
+result-*
+
+# Environment and secrets
+.env
+.envrc
+secrets/
+*.secret
+*-secrets.yaml
+*-secrets.json
+
+# direnv
+.direnv/
+
+# macOS
+.DS_Store
