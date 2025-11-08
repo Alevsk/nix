@@ -22,6 +22,8 @@
       "1password"
       "beekeeper-studio"
       "burp-suite"
+      "claude-code"
+      "codex"
       "discord"
       "dropbox"
       "google-drive"

@@ -111,8 +111,6 @@ in {
   home.packages = with pkgs; [
     alacritty
     bat
-    claude-code
-    codex
     ffuf
     firefox
     google-chrome
