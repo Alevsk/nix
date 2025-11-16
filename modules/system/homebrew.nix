@@ -14,6 +14,7 @@
       "minio-mc"
       "node"
       "nvm"
+      "opencode"
       "watch"
       "yarn"
     ];

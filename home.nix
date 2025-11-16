@@ -49,6 +49,7 @@ in {
     ./modules/ai/claude
     ./modules/ai/codex
     ./modules/ai/gemini
+    ./modules/ai/opencode
     ./modules/cli/fzf.nix
     ./modules/desktop/wallpaper.nix
     ./modules/development/colima.nix
