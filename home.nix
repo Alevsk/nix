@@ -117,7 +117,6 @@ in {
     google-chrome
     grpcurl
     ncurses
-    ollama
     telegram-desktop
     tmux-mem-cpu-load
     vscode

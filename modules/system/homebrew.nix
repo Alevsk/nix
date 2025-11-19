@@ -14,6 +14,7 @@
       "minio-mc"
       "node"
       "nvm"
+      "ollama" # better support via brew on macOS
       "opencode"
       "watch"
       "yarn"

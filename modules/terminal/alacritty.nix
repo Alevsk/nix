@@ -50,9 +50,7 @@
       };
 
       # Mouse settings
-      mouse = {
-        hide_when_typing = true;
-      };
+      mouse = {};
 
       # Selection settings
       selection = {
