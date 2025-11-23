@@ -22,6 +22,7 @@
 
     casks = [
       "1password"
+      "antigravity"
       "beekeeper-studio"
       "burp-suite"
       "claude-code"
