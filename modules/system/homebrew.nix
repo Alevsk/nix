@@ -9,6 +9,7 @@
       "duckdb"
       "gemini-cli" # better support and maintenance in brew than nix store
       "golang-migrate"
+      "imagemagick"
       "iproute2mac"
       "mas"
       "minio-mc"
@@ -32,6 +33,7 @@
       "google-drive"
       "hammerspoon"
       "iina"
+      "inkscape"
       "lm-studio"
       "neo4j-desktop" # not available on nixpkgs
       "ngrok"

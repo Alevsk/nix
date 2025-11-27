@@ -14,6 +14,12 @@
     recursive = true;
   };
 
+  # Copy skills folder to ~/.claude/skills
+  home.file.".claude/skills" = {
+    source = ./skills;
+    recursive = true;
+  };
+
   # Merge MCP servers into existing ~/.claude.json
   home.activation.setupClaudeMCP = lib.hm.dag.entryAfter ["writeBoundary"] ''
     CLAUDE_CONFIG="$HOME/.claude.json"
