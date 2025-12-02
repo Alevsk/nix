@@ -11,6 +11,7 @@
 
     stylix.url = "github:nix-community/stylix";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
+    stylix.inputs.home-manager.follows = "home-manager";
 
     nix-colors.url = "github:misterio77/nix-colors";
 
