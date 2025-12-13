@@ -50,14 +50,27 @@
 
       TEMP_OUTPUT=$(mktemp)
       TEMP_JSON=$(mktemp)
+      TEMP_BASE_JSON=$(mktemp)
+      TEMP_EXTRA_JSON=$(mktemp)
 
-      # Convert TOML to JSON, merge, then convert back to TOML
-      /run/current-system/sw/bin/tomlq -s '
+      # Convert each TOML file to JSON separately, handling parse errors
+      if ! /run/current-system/sw/bin/tomlq '.' "$CODEX_CONFIG" > "$TEMP_BASE_JSON" 2>/dev/null; then
+        echo '{"mcp_servers":{}}' > "$TEMP_BASE_JSON"
+      fi
+
+      if ! /run/current-system/sw/bin/tomlq '.' "$TEMP_MCP" > "$TEMP_EXTRA_JSON" 2>/dev/null; then
+        echo "Warning: Failed to parse MCP servers TOML file"
+        rm -f "$TEMP_OUTPUT" "$TEMP_JSON" "$TEMP_BASE_JSON" "$TEMP_EXTRA_JSON" "$TEMP_MCP"
+        exit 0
+      fi
+
+      # Merge the JSON files
+      ${pkgs.jq}/bin/jq -s '
         .[0] as $base |
         .[1] as $extra |
         $base |
         .mcp_servers = (($base.mcp_servers // {}) + ($extra.mcp_servers // {}))
-      ' "$CODEX_CONFIG" "$TEMP_MCP" > "$TEMP_JSON"
+      ' "$TEMP_BASE_JSON" "$TEMP_EXTRA_JSON" > "$TEMP_JSON"
 
       # Convert JSON to TOML format preserving all sections
       cat "$TEMP_JSON" | ${pkgs.jq}/bin/jq -r '
@@ -98,7 +111,7 @@
         echo "✗ Error: Failed to merge configuration, keeping original"
       fi
 
-      rm -f "$TEMP_OUTPUT" "$TEMP_JSON" "$TEMP_MCP"
+      rm -f "$TEMP_OUTPUT" "$TEMP_JSON" "$TEMP_BASE_JSON" "$TEMP_EXTRA_JSON" "$TEMP_MCP"
     else
       echo "Warning: MCP servers file not found"
     fi

@@ -17,6 +17,7 @@
       "nvm"
       "ollama" # better support via brew on macOS
       "opencode"
+      "scoutsuite"
       "watch"
       "yarn"
     ];
@@ -30,6 +31,8 @@
       "codex"
       "discord"
       "dropbox"
+      "gcloud-cli"
+      "google-cloud-sdk"
       "google-drive"
       "hammerspoon"
       "iina"
@@ -45,6 +48,7 @@
       "steam"
       "sublime-text"
       "the-unarchiver"
+      "utm"
     ];
 
     onActivation.cleanup = "zap";
