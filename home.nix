@@ -51,6 +51,7 @@ in {
     ./modules/ai/gemini
     ./modules/ai/opencode
     ./modules/cli/fzf.nix
+    ./modules/cli/gcloud.nix
     ./modules/desktop/wallpaper.nix
     ./modules/development/colima.nix
     ./modules/development/nodejs.nix

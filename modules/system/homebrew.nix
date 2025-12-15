@@ -11,12 +11,16 @@
       "golang-migrate"
       "imagemagick"
       "iproute2mac"
+      "kubectl"
+      "kubectx"
+      "kubeshark"
       "mas"
       "minio-mc"
       "node"
       "nvm"
       "ollama" # better support via brew on macOS
       "opencode"
+      "python@3.13"
       "scoutsuite"
       "watch"
       "yarn"
@@ -31,8 +35,6 @@
       "codex"
       "discord"
       "dropbox"
-      "gcloud-cli"
-      "google-cloud-sdk"
       "google-drive"
       "hammerspoon"
       "iina"
@@ -49,6 +51,7 @@
       "sublime-text"
       "the-unarchiver"
       "utm"
+      "wireshark"
     ];
 
     onActivation.cleanup = "zap";
