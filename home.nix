@@ -14,6 +14,9 @@
   # CHANGE THIS LINE TO AUTO START TMUX WHEN OPENING A NEW TERMINAL
   autoStartTmux = false;
 
+  # CHANGE THIS LINE TO SWITCH DOCKER RUNTIME
+  dockerRuntime = "colima"; # Available: "colima", "docker-desktop"
+
   # Theme mapping for nix-colors schemes
   themeMap = {
     "nord" = nix-colors.colorSchemes.nord;
@@ -44,6 +47,7 @@ in {
     # Expose theme name so modules can map to plugins
     currentThemeName = currentThemeName;
     autoStartTmux = autoStartTmux;
+    dockerRuntime = dockerRuntime;
   };
   imports = [
     ./modules/ai/claude
@@ -54,6 +58,7 @@ in {
     ./modules/cli/gcloud.nix
     ./modules/desktop/wallpaper.nix
     ./modules/development/colima.nix
+    ./modules/development/docker.nix
     ./modules/development/nodejs.nix
     ./modules/development/protobuf.nix
     ./modules/editor/neovim.nix

@@ -5,9 +5,9 @@
   ...
 }: {
   # Declarative Colima configuration
-  # Creates a template at ~/.colima/custom/colima.yaml.template
+  # Creates a template at ~/.colima/default/colima.yaml.template
   # and copies it to the actual config location if it doesn't exist
-  home.file.".colima/custom/colima.yaml.template" = {
+  home.file.".colima/default/colima.yaml.template" = {
     text = ''
       cpu: 8
       disk: 100
@@ -27,7 +27,7 @@
 
   # Initialize the actual config from template if it doesn't exist
   home.activation.colimaConfig = lib.hm.dag.entryAfter ["writeBoundary"] ''
-    COLIMA_DIR="$HOME/.colima/custom"
+    COLIMA_DIR="$HOME/.colima/default"
     TEMPLATE="$COLIMA_DIR/colima.yaml.template"
     CONFIG="$COLIMA_DIR/colima.yaml"
 

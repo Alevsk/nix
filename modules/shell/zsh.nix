@@ -213,11 +213,6 @@
       typeset -g POWERLEVEL9K_BACKGROUND_JOBS_FOREGROUND='#${config.lib.stylix.colors.base0C}'
       typeset -g POWERLEVEL9K_BACKGROUND_JOBS_BACKGROUND='#${config.lib.stylix.colors.base01}'
 
-      # Use Colima's Docker socket if available
-      if [ -S "$HOME/.colima/default/docker.sock" ]; then
-        export DOCKER_HOST=unix://$HOME/.colima/default/docker.sock
-      fi
-
       # Auto-start tmux on interactive local shells (if enabled)
       ${
         if autoStartTmux

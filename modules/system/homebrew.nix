@@ -38,6 +38,7 @@
       "claude-code"
       "codex"
       "discord"
+      "docker-desktop"
       "dropbox"
       "google-drive"
       "hammerspoon"
