@@ -6,6 +6,7 @@
     ast-grep
     buf
     bun
+    check-jsonschema
     chisel
     colima
     curl
@@ -31,6 +32,7 @@
     ncurses
     neo-cowsay
     neovim
+    poppler-utils
     python3
     ripgrep
     rustscan

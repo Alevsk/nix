@@ -10,6 +10,9 @@
       "models": {
         "qwen/qwen3-vl-30b": {
           "name": "qwen/qwen3-vl-30b"
+        },
+        "txgsync/gpt-oss-120b-Derestricted-mxfp4-mlx": {
+          "name": "txgsync/gpt-oss-120b-Derestricted-mxfp4-mlx"
         }
       }
     }

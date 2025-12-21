@@ -6,11 +6,14 @@
     enable = true;
 
     brews = [
+      "dive"
       "duckdb"
       "gemini-cli" # better support and maintenance in brew than nix store
+      "gitleaks"
       "golang-migrate"
       "imagemagick"
       "iproute2mac"
+      "k9s"
       "kubectl"
       "kubectx"
       "kubeshark"
@@ -22,6 +25,7 @@
       "opencode"
       "python@3.13"
       "scoutsuite"
+      "trufflehog"
       "watch"
       "yarn"
     ];
