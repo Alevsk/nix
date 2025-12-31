@@ -32,6 +32,7 @@
     ncurses
     neo-cowsay
     neovim
+    openjdk21
     poppler-utils
     python3
     ripgrep

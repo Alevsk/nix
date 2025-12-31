@@ -14,6 +14,15 @@
     "chrome-devtools": {
       "command": "npx",
       "args": ["-y", "chrome-devtools-mcp@latest"]
+    },
+    "burp": {
+      "command": "/run/current-system/sw/bin/java",
+      "args": [
+          "-jar",
+          "/Users/alevsk/Development/burp/mcp-proxy.jar",
+          "--sse-url",
+          "http://127.0.0.1:9876"
+      ]
     }
   }
 }

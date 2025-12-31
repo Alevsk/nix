@@ -35,6 +35,7 @@
       "antigravity"
       "beekeeper-studio"
       "burp-suite"
+      "caido"
       "claude-code"
       "codex"
       "discord"
