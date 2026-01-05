@@ -20,7 +20,8 @@
 in {
   # Set DOCKER_HOST declaratively
   home.sessionVariables = {
-    DOCKER_HOST = "unix://${selected.socketPath}";
+    # DOCKER_HOST = "unix://${selected.socketPath}";
+    DOCKER_HOST = "";
   };
 
   # Set docker context on activation

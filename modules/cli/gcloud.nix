@@ -22,7 +22,7 @@ in {
   };
 
   # Zsh completions for gcloud
-  programs.zsh.initExtra = ''
+  programs.zsh.initContent = ''
     # Google Cloud SDK completions
     if command -v gcloud &>/dev/null; then
       source "$(dirname $(dirname $(which gcloud)))/google-cloud-sdk/completion.zsh.inc" 2>/dev/null || true

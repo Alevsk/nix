@@ -4,6 +4,7 @@
   environment.systemPackages = with pkgs; [
     alejandra
     ast-grep
+    btop
     buf
     bun
     check-jsonschema
@@ -37,6 +38,7 @@
     python3
     ripgrep
     rustscan
+    taskwarrior3
     tmux
     tomlq
     tree

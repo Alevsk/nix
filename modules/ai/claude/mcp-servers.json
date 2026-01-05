@@ -23,6 +23,10 @@
           "--sse-url",
           "http://127.0.0.1:9876"
       ]
+    },
+    "kali": {
+      "command": "/Users/alevsk/Development/MCP-Kali-Server/.venv/bin/python",
+      "args": ["/Users/alevsk/Development/MCP-Kali-Server/mcp_server.py", "--server", "http://192.168.64.3:5000/"]
     }
   }
 }
