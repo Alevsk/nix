@@ -46,6 +46,7 @@
       "iina"
       "inkscape"
       "lm-studio"
+      "macdown"
       "neo4j-desktop" # not available on nixpkgs
       "ngrok"
       "qflipper"
