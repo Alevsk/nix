@@ -13,7 +13,7 @@
 
   # CHANGE THIS LINE TO SWITCH PROMPT STYLE
   # Available: lean, classic, rainbow, pure, powerline, developer
-  promptStyle = "developer";
+  promptStyle = "powerline";
 
   # CHANGE THIS LINE TO AUTO START TMUX WHEN OPENING A NEW TERMINAL
   autoStartTmux = false;

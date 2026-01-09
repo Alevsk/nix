@@ -10,17 +10,43 @@ CYAN='\033[0;36m'
 NC='\033[0m' # No Color
 
 # Available themes and prompt styles
-THEMES=("nord" "dracula" "tokyonight" "ocean" "default")
-PROMPT_STYLES=("lean" "classic" "rainbow")
+THEMES=(
+    "nord"
+    "dracula"
+    "tokyonight"
+    "ocean"
+    "catppuccin"
+    "gruvbox"
+    "gruvbox-light"
+    "solarized-dark"
+    "solarized-light"
+    "onedark"
+    "monokai"
+    "rose-pine"
+    "rose-pine-moon"
+    "everforest"
+    "kanagawa"
+)
+PROMPT_STYLES=("lean" "classic" "rainbow" "pure" "powerline" "developer")
 
 # Function to get theme description
 get_theme_desc() {
     case "$1" in
-        "nord") echo "Nord - Arctic, north-bluish color palette" ;;
-        "dracula") echo "Dracula - Dark theme with vibrant colors" ;;
-        "tokyonight") echo "Tokyo Night - Dark theme inspired by Tokyo's neon lights" ;;
-        "ocean") echo "Ocean - Deep blue oceanic color scheme" ;;
-        "default") echo "Catppuccin Mocha - Warm, cozy color palette" ;;
+        "nord") echo "Arctic, north-bluish color palette" ;;
+        "dracula") echo "Dark theme with vibrant colors" ;;
+        "tokyonight") echo "Dark theme inspired by Tokyo's neon lights" ;;
+        "ocean") echo "Deep blue oceanic color scheme" ;;
+        "catppuccin") echo "Warm, cozy pastel color palette" ;;
+        "gruvbox") echo "Retro groove, warm earthy colors" ;;
+        "gruvbox-light") echo "Gruvbox light variant" ;;
+        "solarized-dark") echo "Scientific precision, dark variant" ;;
+        "solarized-light") echo "Scientific precision, light variant" ;;
+        "onedark") echo "Atom's iconic dark theme" ;;
+        "monokai") echo "Sublime Text's classic theme" ;;
+        "rose-pine") echo "Modern aesthetic, all natural pine" ;;
+        "rose-pine-moon") echo "Rose Pine, darker moon variant" ;;
+        "everforest") echo "Soft green, comfortable forest theme" ;;
+        "kanagawa") echo "Japanese art inspired, wave theme" ;;
         *) echo "Unknown theme" ;;
     esac
 }
@@ -28,9 +54,12 @@ get_theme_desc() {
 # Function to get prompt description
 get_prompt_desc() {
     case "$1" in
-        "lean") echo "Lean - Minimal single line with essential info" ;;
-        "classic") echo "Classic - Multi-line with decorations and full info" ;;
-        "rainbow") echo "Rainbow - Colorful with many elements and system info" ;;
+        "lean") echo "Minimal single line with essential info" ;;
+        "classic") echo "Multi-line with decorations and full info" ;;
+        "rainbow") echo "Colorful with many elements and system info" ;;
+        "pure") echo "Ultra minimal, inspired by sindresorhus/pure" ;;
+        "powerline") echo "Classic powerline with arrow separators" ;;
+        "developer") echo "Shows programming language versions and dev tools" ;;
         *) echo "Unknown prompt style" ;;
     esac
 }
@@ -103,7 +132,9 @@ rebuild_home() {
     if home-manager switch --flake ~/nix#alevsk; then
         echo
         echo -e "${GREEN}✅ Theme switch completed successfully!${NC}"
-        echo -e "${YELLOW}Please restart your terminal or source your shell to see changes.${NC}"
+        echo
+        echo -e "${YELLOW}⚠️  IMPORTANT: Open a NEW terminal window to see the changes.${NC}"
+        echo -e "${YELLOW}   Existing shells will not reflect the new theme.${NC}"
     else
         echo
         echo -e "${RED}❌ Failed to rebuild configuration. Restoring backup...${NC}"
@@ -121,21 +152,21 @@ main() {
     show_theme_menu
     while true; do
         read -p "$(echo -e "${YELLOW}Select theme (1-${#THEMES[@]}): ${NC}")" theme_choice
-        if [[ "$theme_choice" =~ ^[1-${#THEMES[@]}]$ ]]; then
+        if [[ "$theme_choice" =~ ^[0-9]+$ ]] && (( theme_choice >= 1 && theme_choice <= ${#THEMES[@]} )); then
             selected_theme="${THEMES[$((theme_choice - 1))]}"
             break
         else
             echo -e "${RED}Invalid choice. Please select 1-${#THEMES[@]}.${NC}"
         fi
     done
-    
+
     echo
-    
+
     # Prompt style selection
     show_prompt_menu
     while true; do
         read -p "$(echo -e "${YELLOW}Select prompt style (1-${#PROMPT_STYLES[@]}): ${NC}")" prompt_choice
-        if [[ "$prompt_choice" =~ ^[1-${#PROMPT_STYLES[@]}]$ ]]; then
+        if [[ "$prompt_choice" =~ ^[0-9]+$ ]] && (( prompt_choice >= 1 && prompt_choice <= ${#PROMPT_STYLES[@]} )); then
             selected_prompt="${PROMPT_STYLES[$((prompt_choice - 1))]}"
             break
         else
