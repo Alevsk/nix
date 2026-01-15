@@ -9,7 +9,7 @@ PROMPT_STYLE="${2:-}"
 HOME_NIX_FILE="$HOME/nix/home.nix"
 
 VALID_THEMES=("nord" "dracula" "tokyonight" "ocean" "catppuccin" "gruvbox" "gruvbox-light" "solarized-dark" "solarized-light" "onedark" "monokai" "rose-pine" "rose-pine-moon" "everforest" "kanagawa")
-VALID_PROMPTS=("lean" "classic" "rainbow" "pure" "powerline" "developer")
+VALID_PROMPTS=("lean" "classic" "pure" "powerline" "developer" "unix" "minimal" "boxed" "capsule" "slanted" "starship" "hacker" "arrow" "soft" "rainbow")
 
 # Validation
 if [[ -z "$THEME" ]] || [[ -z "$PROMPT_STYLE" ]]; then

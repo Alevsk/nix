@@ -34,6 +34,7 @@
     neo-cowsay
     neovim
     openjdk21
+    pokemon-colorscripts
     poppler-utils
     python3
     ripgrep

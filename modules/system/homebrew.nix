@@ -8,9 +8,11 @@
     brews = [
       "dive"
       "duckdb"
+      "ffmpeg"
       "gemini-cli" # better support and maintenance in brew than nix store
       "gitleaks"
       "golang-migrate"
+      "gopeed"
       "imagemagick"
       "iproute2mac"
       "k9s"

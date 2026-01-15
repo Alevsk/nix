@@ -27,7 +27,24 @@ THEMES=(
     "everforest"
     "kanagawa"
 )
-PROMPT_STYLES=("lean" "classic" "rainbow" "pure" "powerline" "developer")
+
+PROMPT_STYLES=(
+    "lean"
+    "classic"
+    "pure"
+    "powerline"
+    "developer"
+    "unix"
+    "minimal"
+    "boxed"
+    "capsule"
+    "slanted"
+    "starship"
+    "hacker"
+    "arrow"
+    "soft"
+    "rainbow"
+)
 
 # Function to get theme description
 get_theme_desc() {
@@ -54,12 +71,21 @@ get_theme_desc() {
 # Function to get prompt description
 get_prompt_desc() {
     case "$1" in
-        "lean") echo "Minimal single line with essential info" ;;
-        "classic") echo "Multi-line with decorations and full info" ;;
-        "rainbow") echo "Colorful with many elements and system info" ;;
-        "pure") echo "Ultra minimal, inspired by sindresorhus/pure" ;;
-        "powerline") echo "Classic powerline with arrow separators" ;;
-        "developer") echo "Shows programming language versions and dev tools" ;;
+        "lean") echo "Zen minimal: ~/nix main λ" ;;
+        "classic") echo "Two-line: dir  git (venv) ⏎ λ" ;;
+        "pure") echo "Pure-style two-line: dir git ⏎ λ (magenta)" ;;
+        "powerline") echo "Filled segments:  dir  git  λ" ;;
+        "developer") echo "Dev two-line: dir  git (venv) ⏎ λ + lang versions" ;;
+        "unix") echo "Classic UNIX: [user@host dir git] λ" ;;
+        "minimal") echo "Ultra-minimal: ~ λ" ;;
+        "boxed") echo "ASCII box: ┌─ user in dir on  git ⏎ └─λ" ;;
+        "capsule") echo "Powerline capsules:  dir  git ⏎ λ" ;;
+        "slanted") echo "Slanted powerline: ◣ dir ◣ git ◣ ⏎ λ" ;;
+        "starship") echo "Info-rich: dir on  git via  node λ" ;;
+        "hacker") echo "Matrix cyber: ▶ dir :: git λ" ;;
+        "arrow") echo "Clean arrow: user@host:dir  git λ" ;;
+        "soft") echo "Catppuccin aesthetic: ◆ dir  git ⏎ λ" ;;
+        "rainbow") echo "Colorful powerline:  dir  git ⏎ λ" ;;
         *) echo "Unknown prompt style" ;;
     esac
 }
@@ -89,7 +115,7 @@ show_theme_menu() {
     echo -e "${BLUE}Available Themes:${NC}"
     for i in "${!THEMES[@]}"; do
         local num=$((i + 1))
-        echo -e "  ${PURPLE}$num)${NC} ${THEMES[$i]} - $(get_theme_desc "${THEMES[$i]}")"
+        printf "  ${PURPLE}%2d)${NC} %-18s %s\n" "$num" "${THEMES[$i]}" "$(get_theme_desc "${THEMES[$i]}")"
     done
     echo
 }
@@ -99,7 +125,7 @@ show_prompt_menu() {
     echo -e "${BLUE}Available Prompt Styles:${NC}"
     for i in "${!PROMPT_STYLES[@]}"; do
         local num=$((i + 1))
-        echo -e "  ${PURPLE}$num)${NC} ${PROMPT_STYLES[$i]} - $(get_prompt_desc "${PROMPT_STYLES[$i]}")"
+        printf "  ${PURPLE}%2d)${NC} %-12s %s\n" "$num" "${PROMPT_STYLES[$i]}" "$(get_prompt_desc "${PROMPT_STYLES[$i]}")"
     done
     echo
 }
@@ -108,16 +134,16 @@ show_prompt_menu() {
 update_home_nix() {
     local new_theme="$1"
     local new_prompt="$2"
-    
+
     # Create backup
     cp "$HOME_NIX_FILE" "$HOME_NIX_FILE.backup"
-    
+
     # Update theme
     sed -i '' "s/currentThemeName = \"[^\"]*\"/currentThemeName = \"$new_theme\"/" "$HOME_NIX_FILE"
-    
+
     # Update prompt style
     sed -i '' "s/promptStyle = \"[^\"]*\"/promptStyle = \"$new_prompt\"/" "$HOME_NIX_FILE"
-    
+
     echo -e "${GREEN}✓ Updated configuration:${NC}"
     echo -e "  Theme: ${CYAN}$new_theme${NC}"
     echo -e "  Prompt: ${CYAN}$new_prompt${NC}"
@@ -128,7 +154,7 @@ update_home_nix() {
 rebuild_home() {
     echo -e "${YELLOW}🔄 Rebuilding Home Manager configuration...${NC}"
     echo
-    
+
     if home-manager switch --flake ~/nix#alevsk; then
         echo
         echo -e "${GREEN}✅ Theme switch completed successfully!${NC}"
@@ -147,7 +173,7 @@ rebuild_home() {
 main() {
     show_header
     get_current_settings
-    
+
     # Theme selection
     show_theme_menu
     while true; do
@@ -173,15 +199,15 @@ main() {
             echo -e "${RED}Invalid choice. Please select 1-${#PROMPT_STYLES[@]}.${NC}"
         fi
     done
-    
+
     echo
-    
+
     # Confirmation
     echo -e "${YELLOW}You selected:${NC}"
     echo -e "  Theme: ${CYAN}$selected_theme${NC} - $(get_theme_desc "$selected_theme")"
     echo -e "  Prompt: ${CYAN}$selected_prompt${NC} - $(get_prompt_desc "$selected_prompt")"
     echo
-    
+
     read -p "$(echo -e "${YELLOW}Apply these changes? (y/N): ${NC}")" confirm
     if [[ "$confirm" =~ ^[Yy]$ ]]; then
         update_home_nix "$selected_theme" "$selected_prompt"

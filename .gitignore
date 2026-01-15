@@ -15,3 +15,5 @@ secrets/
 
 # macOS
 .DS_Store
+
+scripts/tests
