@@ -46,6 +46,11 @@ PROMPT_STYLES=(
     "rainbow"
 )
 
+PROMPT_ENGINES=(
+    "powerlevel10k"
+    "starship"
+)
+
 # Function to get theme description
 get_theme_desc() {
     case "$1" in
@@ -90,6 +95,15 @@ get_prompt_desc() {
     esac
 }
 
+# Function to get engine description
+get_engine_desc() {
+    case "$1" in
+        "powerlevel10k") echo "Zsh theme, fast, highly configurable" ;;
+        "starship") echo "Cross-shell, Rust-based, minimal config" ;;
+        *) echo "Unknown engine" ;;
+    esac
+}
+
 # Git branch icon
 GIT_ICON=$'\uF126'
 
@@ -125,7 +139,7 @@ get_prompt_example() {
             ;;
         "powerline")
             # Powerline with filled segments
-            echo -e "${P_BLUE}  ~/nix ${P_NC}${P_GREEN}  ${GIT_ICON} main ! ${P_NC}"
+            echo -e "${P_BLUE}~/nix ${P_NC}${P_GREEN} ${GIT_ICON} main ! ${P_NC}"
             echo -e "${P_MAGENTA}λ${P_NC}"
             ;;
         "developer")
@@ -148,7 +162,7 @@ get_prompt_example() {
             ;;
         "capsule")
             # Rounded capsule segments
-            echo -e "${P_BLUE}  ~/nix ${P_NC} ${P_GREEN}  ${GIT_ICON} main ! ${P_NC}"
+            echo -e "${P_BLUE}~/nix ${P_NC}${P_GREEN} ${GIT_ICON} main ! ${P_NC}"
             echo -e "${P_MAGENTA}λ${P_NC}"
             ;;
         "slanted")
@@ -176,7 +190,7 @@ get_prompt_example() {
             ;;
         "rainbow")
             # Rainbow colored segments
-            echo -e "${P_RED} ~ ${P_NC}${P_YELLOW} nix ${P_NC}${P_GREEN} ${GIT_ICON} main ! ${P_NC}"
+            echo -e "${P_BLUE}~/nix ${P_NC}${P_GREEN} ${GIT_ICON} main ! ${P_NC}"
             echo -e "${P_MAGENTA}λ${P_NC}"
             ;;
         *)
@@ -197,11 +211,14 @@ show_header() {
 
 # Function to get current settings
 get_current_settings() {
-    local current_theme=$(grep 'currentThemeName = ' "$HOME_NIX_FILE" | sed 's/.*= "\([^"]*\)".*/\1/')
-    local current_prompt=$(grep 'promptStyle = ' "$HOME_NIX_FILE" | sed 's/.*= "\([^"]*\)".*/\1/')
+    # Match only lines with quoted values (= "value") to avoid _module.args lines
+    local current_theme=$(grep 'currentThemeName = "' "$HOME_NIX_FILE" | sed 's/.*= "\([^"]*\)".*/\1/')
+    local current_prompt=$(grep 'promptStyle = "' "$HOME_NIX_FILE" | sed 's/.*= "\([^"]*\)".*/\1/')
+    local current_engine=$(grep 'promptEngine = "' "$HOME_NIX_FILE" | sed 's/.*= "\([^"]*\)".*/\1/')
     echo -e "${YELLOW}Current Settings:${NC}"
-    echo -e "  Theme: ${GREEN}$current_theme${NC}"
+    echo -e "  Theme:  ${GREEN}$current_theme${NC}"
     echo -e "  Prompt: ${GREEN}$current_prompt${NC}"
+    echo -e "  Engine: ${GREEN}$current_engine${NC}"
     echo
 }
 
@@ -240,10 +257,21 @@ show_prompt_menu() {
     done
 }
 
+# Function to show engine menu
+show_engine_menu() {
+    echo -e "${BLUE}Available Prompt Engines:${NC}"
+    for i in "${!PROMPT_ENGINES[@]}"; do
+        local num=$((i + 1))
+        printf "  ${PURPLE}%2d)${NC} %-15s %s\n" "$num" "${PROMPT_ENGINES[$i]}" "$(get_engine_desc "${PROMPT_ENGINES[$i]}")"
+    done
+    echo
+}
+
 # Function to update home.nix
 update_home_nix() {
     local new_theme="$1"
     local new_prompt="$2"
+    local new_engine="$3"
 
     # Create backup
     cp "$HOME_NIX_FILE" "$HOME_NIX_FILE.backup"
@@ -254,9 +282,13 @@ update_home_nix() {
     # Update prompt style
     sed -i '' "s/promptStyle = \"[^\"]*\"/promptStyle = \"$new_prompt\"/" "$HOME_NIX_FILE"
 
+    # Update engine
+    sed -i '' "s/promptEngine = \"[^\"]*\"/promptEngine = \"$new_engine\"/" "$HOME_NIX_FILE"
+
     echo -e "${GREEN}✓ Updated configuration:${NC}"
-    echo -e "  Theme: ${CYAN}$new_theme${NC}"
+    echo -e "  Theme:  ${CYAN}$new_theme${NC}"
     echo -e "  Prompt: ${CYAN}$new_prompt${NC}"
+    echo -e "  Engine: ${CYAN}$new_engine${NC}"
     echo
 }
 
@@ -312,15 +344,30 @@ main() {
 
     echo
 
+    # Engine selection
+    show_engine_menu
+    while true; do
+        read -p "$(echo -e "${YELLOW}Select prompt engine (1-${#PROMPT_ENGINES[@]}): ${NC}")" engine_choice
+        if [[ "$engine_choice" =~ ^[0-9]+$ ]] && (( engine_choice >= 1 && engine_choice <= ${#PROMPT_ENGINES[@]} )); then
+            selected_engine="${PROMPT_ENGINES[$((engine_choice - 1))]}"
+            break
+        else
+            echo -e "${RED}Invalid choice. Please select 1-${#PROMPT_ENGINES[@]}.${NC}"
+        fi
+    done
+
+    echo
+
     # Confirmation
     echo -e "${YELLOW}You selected:${NC}"
-    echo -e "  Theme: ${CYAN}$selected_theme${NC} - $(get_theme_desc "$selected_theme")"
+    echo -e "  Theme:  ${CYAN}$selected_theme${NC} - $(get_theme_desc "$selected_theme")"
     echo -e "  Prompt: ${CYAN}$selected_prompt${NC} - $(get_prompt_desc "$selected_prompt")"
+    echo -e "  Engine: ${CYAN}$selected_engine${NC} - $(get_engine_desc "$selected_engine")"
     echo
 
     read -p "$(echo -e "${YELLOW}Apply these changes? (y/N): ${NC}")" confirm
     if [[ "$confirm" =~ ^[Yy]$ ]]; then
-        update_home_nix "$selected_theme" "$selected_prompt"
+        update_home_nix "$selected_theme" "$selected_prompt" "$selected_engine"
         rebuild_home
     else
         echo -e "${YELLOW}Theme switch cancelled.${NC}"

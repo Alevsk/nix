@@ -12,8 +12,13 @@
   currentThemeName = "nord";
 
   # CHANGE THIS LINE TO SWITCH PROMPT STYLE
-  # Available: lean, classic, rainbow, pure, powerline, developer
-  promptStyle = "arrow";
+  # Available: lean, classic, rainbow, pure, powerline, developer,
+  #            unix, minimal, boxed, capsule, slanted, starship, hacker, arrow, soft
+  promptStyle = "starship";
+
+  # CHANGE THIS LINE TO SWITCH PROMPT ENGINE
+  # Available: powerlevel10k, starship
+  promptEngine = "starship";
 
   # CHANGE THIS LINE TO AUTO START TMUX WHEN OPENING A NEW TERMINAL
   autoStartTmux = false;
@@ -75,6 +80,7 @@ in {
   _module.args = {
     terminalTheme = selectedTheme;
     promptStyle = promptStyle;
+    promptEngine = promptEngine;
     tmuxTintScheme = tmuxTintScheme;
     # Expose theme name so modules can map to plugins
     currentThemeName = currentThemeName;
@@ -97,6 +103,7 @@ in {
     ./modules/git/git.nix
     ./modules/multiplexer/tmux.nix
     ./modules/shell/zsh.nix
+    ./modules/shell/starship.nix
     ./modules/terminal/alacritty.nix
   ];
 

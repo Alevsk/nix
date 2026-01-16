@@ -1,7 +1,9 @@
 {
   config,
   pkgs,
+  lib,
   promptStyle,
+  promptEngine,
   autoStartTmux,
   ...
 }: {
@@ -1169,14 +1171,23 @@
       # Add colors to completion menu
       zstyle ':completion:*' list-colors ''${(s.:.)LS_COLORS}
 
-      # Source powerlevel10k theme
-      source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
+      # Prompt engine initialization (conditional based on promptEngine setting)
+      ${
+        if promptEngine == "powerlevel10k"
+        then ''
+          # Source powerlevel10k theme
+          source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
 
-      # Apply selected prompt style
-      ${selectedPromptStyle}
+          # Apply selected prompt style
+          ${selectedPromptStyle}
 
-      # Disable instant prompt
-      typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
+          # Disable instant prompt
+          typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
+        ''
+        else ''
+          # Starship prompt is initialized via programs.starship
+        ''
+      }
 
       # Auto-start tmux on interactive local shells (if enabled)
       ${
@@ -1193,7 +1204,8 @@
     '';
   };
 
-  home.packages = with pkgs; [
+  # Only include p10k package when using that engine
+  home.packages = lib.mkIf (promptEngine == "powerlevel10k") (with pkgs; [
     zsh-powerlevel10k
-  ];
+  ]);
 }
