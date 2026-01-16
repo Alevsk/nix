@@ -898,10 +898,13 @@
   selectedStyle = starshipStyles.${promptStyle};
 
 in {
-  # Only enable Starship when it's the selected engine
-  programs.starship = lib.mkIf (promptEngine == "starship") {
+  # Always have starship package available (prevents "no such file" errors)
+  # but only enable zsh integration when it's the selected engine
+  programs.starship = {
     enable = true;
-    enableZshIntegration = true;
-    settings = selectedStyle;
+    # Only integrate with zsh when starship is the selected engine
+    enableZshIntegration = (promptEngine == "starship");
+    # Only set custom settings when starship is the engine
+    settings = lib.mkIf (promptEngine == "starship") selectedStyle;
   };
 }
