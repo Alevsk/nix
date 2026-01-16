@@ -583,75 +583,68 @@
     };
 
     # ─────────────────────────────────────────────────────────────────────────
-    # STARSHIP - Use Starship's beautiful default with Base16 colors
-    # Uses $all format for full-featured prompt with all modules
+    # STARSHIP - Clean, informative prompt (like the beautiful default)
+    # Shows: dir, git, gcloud, cmd_duration - no clutter
     # ─────────────────────────────────────────────────────────────────────────
     starship = {
       add_newline = true;
-      # Use $all to get Starship's full default modules (gcloud, cmd_duration, etc.)
-      format = "$all";
+      # Clean format: just the essentials
+      format = lib.concatStrings [
+        "$directory"
+        "$git_branch"
+        "$git_status"
+        "$gcloud"
+        "$cmd_duration"
+        "$line_break"
+        "$character"
+      ];
 
-      # Directory styling
+      # Directory - just the folder name
       directory = {
-        style = "fg:${c "base0C"}";  # Cyan for directory
-        truncation_length = 3;
-        truncate_to_repo = true;
+        style = "bold fg:${c "base0C"}";
+        truncation_length = 1;
+        truncate_to_repo = false;
       };
 
       # Git branch
       git_branch = {
-        style = "fg:${c "base0E"}";  # Purple for branch
+        style = "bold fg:${c "base0E"}";
+        format = "on [$symbol$branch]($style) ";
       };
 
-      # Git status
+      # Git status in brackets
       git_status = {
-        style = "fg:${c "base0A"}";  # Yellow for status
+        style = "bold fg:${c "base08"}";
+        format = "([$all_status$ahead_behind]($style) )";
       };
 
-      # Character prompt (❯ instead of λ to match default)
-      character = {
-        success_symbol = "[❯](fg:${c "base0B"})";
-        error_symbol = "[❯](fg:${c "base08"})";
-      };
-
-      # Cloud providers
+      # Gcloud - just the account
       gcloud = {
-        style = "fg:${c "base0D"}";  # Blue for gcloud
-        format = "on [$symbol$account(@$domain)]($style) ";
+        style = "bold fg:${c "base0D"}";
+        format = "on [$symbol$account]($style) ";
+        symbol = "☁️  ";
       };
 
-      aws = {
-        style = "fg:${c "base09"}";  # Orange for AWS
-      };
-
-      # Command duration
+      # Command duration - only show if > 2s
       cmd_duration = {
         style = "fg:${c "base0A"}";
+        format = "took [$duration]($style) ";
         min_time = 2000;
       };
 
-      # Language versions - subtle styling
-      nodejs = {
-        style = "fg:${c "base0B"}";  # Green
+      # Character prompt
+      character = {
+        success_symbol = "[❯](bold fg:${c "base0B"})";
+        error_symbol = "[❯](bold fg:${c "base08"})";
       };
 
-      python = {
-        style = "fg:${c "base0A"}";  # Yellow
-      };
-
-      golang = {
-        style = "fg:${c "base0C"}";  # Cyan
-      };
-
-      rust = {
-        style = "fg:${c "base09"}";  # Orange
-      };
-
-      # Kubernetes
-      kubernetes = {
-        style = "fg:${c "base0D"}";
-        disabled = false;
-      };
+      # Disable noisy modules
+      kubernetes.disabled = true;
+      nodejs.disabled = true;
+      python.disabled = true;
+      golang.disabled = true;
+      rust.disabled = true;
+      package.disabled = true;
     };
 
     # ─────────────────────────────────────────────────────────────────────────
