@@ -175,18 +175,18 @@
       add_newline = true;
       format = lib.concatStrings [
         "$directory"
-        "[](fg:${c "base0D"} bg:${c "base0B"})"
+        "[](fg:${c "base0D"} bg:${c "base0B"})"
         "$git_branch"
         "$git_status"
-        "[](fg:${c "base0B"})"
+        "[](fg:${c "base0B"})"
         "$line_break"
         "$character"
       ];
 
       right_format = lib.concatStrings [
-        "[](fg:${c "base03"})"
+        "[](fg:${c "base03"})"
         "$cmd_duration"
-        "[](fg:${c "base03"})"
+        "[](fg:${c "base03"})"
       ];
 
       directory = {
@@ -464,19 +464,19 @@
       add_newline = true;
       format = lib.concatStrings [
         "$directory"
-        "[](fg:${c "base0C"} bg:${c "base0B"})"
+        "[](fg:${c "base0C"} bg:${c "base0B"})"
         "$git_branch"
         "$git_status"
-        "[](fg:${c "base0B"})"
+        "[](fg:${c "base0B"})"
         "$python"
         "$line_break"
         "$character"
       ];
 
       right_format = lib.concatStrings [
-        "[](fg:${c "base02"})"
+        "[](fg:${c "base02"})"
         "$cmd_duration"
-        "[](fg:${c "base02"})"
+        "[](fg:${c "base02"})"
       ];
 
       directory = {
@@ -502,7 +502,7 @@
 
       python = {
         style = "fg:${c "base0E"}";
-        format = " [](fg:${c "base0E"})[ $virtualenv ](fg:${c "base00"} bg:${c "base0E"})[](fg:${c "base0E"})";
+        format = " [](fg:${c "base0E"})[ $virtualenv ](fg:${c "base00"} bg:${c "base0E"})[](fg:${c "base0E"})";
         detect_extensions = [];
         detect_files = [];
       };
@@ -527,19 +527,19 @@
       add_newline = true;
       format = lib.concatStrings [
         "$directory"
-        "[](fg:${c "base0D"} bg:${c "base0B"})"
+        "[](fg:${c "base0D"} bg:${c "base0B"})"
         "$git_branch"
         "$git_status"
-        "[](fg:${c "base0B"})"
+        "[](fg:${c "base0B"})"
         "$python"
         "$line_break"
         "$character"
       ];
 
       right_format = lib.concatStrings [
-        "[](fg:${c "base03"})"
+        "[](fg:${c "base03"})"
         "$cmd_duration"
-        "[](fg:${c "base03"})"
+        "[](fg:${c "base03"})"
       ];
 
       directory = {
@@ -565,7 +565,7 @@
 
       python = {
         style = "fg:${c "base0E"}";
-        format = " [](fg:${c "base0E"})[ $virtualenv ](fg:${c "base00"} bg:${c "base0E"})[](fg:${c "base0E"})";
+        format = " [](fg:${c "base0E"})[ $virtualenv ](fg:${c "base00"} bg:${c "base0E"})[](fg:${c "base0E"})";
         detect_extensions = [];
         detect_files = [];
       };
@@ -838,19 +838,19 @@
       add_newline = true;
       format = lib.concatStrings [
         "$directory"
-        "[](fg:${c "base0C"} bg:${c "base0B"})"
+        "[](fg:${c "base0C"} bg:${c "base0B"})"
         "$git_branch"
         "$git_status"
-        "[](fg:${c "base0B"})"
+        "[](fg:${c "base0B"})"
         "$python"
         "$line_break"
         "$character"
       ];
 
       right_format = lib.concatStrings [
-        "[](fg:${c "base02"})"
+        "[](fg:${c "base02"})"
         "$cmd_duration"
-        "[](fg:${c "base02"})"
+        "[](fg:${c "base02"})"
       ];
 
       directory = {
@@ -876,7 +876,7 @@
 
       python = {
         style = "fg:${c "base0E"}";
-        format = " [](fg:${c "base0E"})[ $virtualenv ](fg:${c "base00"} bg:${c "base0E"})[](fg:${c "base0E"})";
+        format = " [](fg:${c "base0E"})[ $virtualenv ](fg:${c "base00"} bg:${c "base0E"})[](fg:${c "base0E"})";
         detect_extensions = [];
         detect_files = [];
       };
