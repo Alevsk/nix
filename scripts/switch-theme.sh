@@ -68,25 +68,120 @@ get_theme_desc() {
     esac
 }
 
-# Function to get prompt description
+# Function to get prompt description (short)
 get_prompt_desc() {
     case "$1" in
-        "lean") echo "Zen minimal: ~/nix main λ" ;;
-        "classic") echo "Two-line: dir  git (venv) ⏎ λ" ;;
-        "pure") echo "Pure-style two-line: dir git ⏎ λ (magenta)" ;;
-        "powerline") echo "Filled segments:  dir  git  λ" ;;
-        "developer") echo "Dev two-line: dir  git (venv) ⏎ λ + lang versions" ;;
-        "unix") echo "Classic UNIX: [user@host dir git] λ" ;;
-        "minimal") echo "Ultra-minimal: ~ λ" ;;
-        "boxed") echo "ASCII box: ┌─ user in dir on  git ⏎ └─λ" ;;
-        "capsule") echo "Powerline capsules:  dir  git ⏎ λ" ;;
-        "slanted") echo "Slanted powerline: ◣ dir ◣ git ◣ ⏎ λ" ;;
-        "starship") echo "Info-rich: dir on  git via  node λ" ;;
-        "hacker") echo "Matrix cyber: ▶ dir :: git λ" ;;
-        "arrow") echo "Clean arrow: user@host:dir  git λ" ;;
-        "soft") echo "Catppuccin aesthetic: ◆ dir  git ⏎ λ" ;;
-        "rainbow") echo "Colorful powerline:  dir  git ⏎ λ" ;;
-        *) echo "Unknown prompt style" ;;
+        "lean") echo "Minimal single-line" ;;
+        "classic") echo "Clean two-line" ;;
+        "pure") echo "Pure-style two-line" ;;
+        "powerline") echo "Filled segments" ;;
+        "developer") echo "Two-line with langs" ;;
+        "unix") echo "Classic UNIX style" ;;
+        "minimal") echo "Ultra-minimal" ;;
+        "boxed") echo "ASCII box frame" ;;
+        "capsule") echo "Rounded capsules" ;;
+        "slanted") echo "Slanted segments" ;;
+        "starship") echo "Info-rich Starship" ;;
+        "hacker") echo "Matrix cyber" ;;
+        "arrow") echo "Arrow separator" ;;
+        "soft") echo "Soft aesthetic" ;;
+        "rainbow") echo "Colorful segments" ;;
+        *) echo "Unknown" ;;
+    esac
+}
+
+# Git branch icon
+GIT_ICON=$'\uF126'
+
+# Function to get visual prompt example
+# Returns multi-line string for multi-line prompts
+get_prompt_example() {
+    local style="$1"
+    # Using cyan for path, green for git info, yellow for status
+    local P_CYAN='\033[0;36m'
+    local P_GREEN='\033[0;32m'
+    local P_YELLOW='\033[1;33m'
+    local P_BLUE='\033[0;34m'
+    local P_MAGENTA='\033[0;35m'
+    local P_RED='\033[0;31m'
+    local P_WHITE='\033[1;37m'
+    local P_GRAY='\033[0;90m'
+    local P_NC='\033[0m'
+
+    case "$style" in
+        "lean")
+            # Single line: ~/nix  main ! λ
+            echo -e "${P_BLUE}~/nix${P_NC}  ${P_GREEN}${GIT_ICON} main${P_NC} ${P_YELLOW}!${P_NC} ${P_MAGENTA}λ${P_NC}"
+            ;;
+        "classic")
+            # Two-line: ~/nix  main ! (newline) λ
+            echo -e "${P_BLUE}~/nix${P_NC}  ${P_GREEN}${GIT_ICON} main${P_NC} ${P_YELLOW}!${P_NC}"
+            echo -e "${P_MAGENTA}λ${P_NC}"
+            ;;
+        "pure")
+            # Two-line Pure style: ~/nix  main (newline) λ
+            echo -e "${P_BLUE}~/nix${P_NC}  ${P_CYAN}${GIT_ICON} main${P_NC} ${P_YELLOW}!${P_NC}"
+            echo -e "${P_MAGENTA}λ${P_NC}"
+            ;;
+        "powerline")
+            # Powerline with filled segments
+            echo -e "${P_BLUE}  ~/nix ${P_NC}${P_GREEN}  ${GIT_ICON} main ! ${P_NC}"
+            echo -e "${P_MAGENTA}λ${P_NC}"
+            ;;
+        "developer")
+            # Developer: dir, git, language versions
+            echo -e "${P_BLUE}~/nix${P_NC}  ${P_GREEN}${GIT_ICON} main${P_NC} ${P_YELLOW}!${P_NC}  ${P_CYAN} 3.11${P_NC}  ${P_GREEN} 20${P_NC}"
+            echo -e "${P_MAGENTA}λ${P_NC}"
+            ;;
+        "unix")
+            # Classic UNIX: user@host dir  branch ! λ
+            echo -e "${P_GREEN}alevsk${P_NC}@${P_CYAN}cloud${P_NC} ${P_BLUE}nix${P_NC}  ${P_GREEN}${GIT_ICON} main${P_NC} ${P_YELLOW}!${P_NC} ${P_MAGENTA}λ${P_NC}"
+            ;;
+        "minimal")
+            # Ultra-minimal: ~ λ
+            echo -e "${P_BLUE}~${P_NC} ${P_MAGENTA}λ${P_NC}"
+            ;;
+        "boxed")
+            # ASCII box frame
+            echo -e "${P_GRAY}┌─${P_NC} ${P_CYAN}alevsk${P_NC} ${P_GRAY}in${P_NC} ${P_BLUE}~/nix${P_NC} ${P_GRAY}on${P_NC} ${P_GREEN}${GIT_ICON} main${P_NC} ${P_YELLOW}!${P_NC}"
+            echo -e "${P_GRAY}└─${P_NC}${P_MAGENTA}λ${P_NC}"
+            ;;
+        "capsule")
+            # Rounded capsule segments
+            echo -e "${P_BLUE}  ~/nix ${P_NC} ${P_GREEN}  ${GIT_ICON} main ! ${P_NC}"
+            echo -e "${P_MAGENTA}λ${P_NC}"
+            ;;
+        "slanted")
+            # Slanted powerline separators
+            echo -e "${P_BLUE}◢ ~/nix ${P_NC}${P_GREEN}◢ ${GIT_ICON} main ! ${P_NC}"
+            echo -e "${P_MAGENTA}λ${P_NC}"
+            ;;
+        "starship")
+            # Starship-style info-rich
+            echo -e "${P_BLUE}~/nix${P_NC} ${P_GRAY}on${P_NC} ${P_GREEN}${GIT_ICON} main${P_NC} ${P_YELLOW}!${P_NC} ${P_GRAY}via${P_NC} ${P_CYAN} v3.11${P_NC}"
+            echo -e "${P_GREEN}❯${P_NC}"
+            ;;
+        "hacker")
+            # Matrix/cyber hacker style
+            echo -e "${P_GREEN}▶${P_NC} ${P_CYAN}nix${P_NC} ${P_GREEN}:: main${P_NC} ${P_YELLOW}!${P_NC} ${P_GREEN}λ${P_NC}"
+            ;;
+        "arrow")
+            # Arrow separators: user@host:dir →  branch ! λ
+            echo -e "${P_GREEN}alevsk${P_NC}@${P_CYAN}cloud${P_NC}:${P_BLUE}~/nix${P_NC} → ${P_GREEN}${GIT_ICON} main${P_NC} ${P_YELLOW}!${P_NC} ${P_MAGENTA}λ${P_NC}"
+            ;;
+        "soft")
+            # Soft aesthetic with diamond
+            echo -e "${P_MAGENTA}◆${P_NC} ${P_BLUE}~/nix${P_NC}  ${P_GREEN}${GIT_ICON} main${P_NC} ${P_YELLOW}!${P_NC}"
+            echo -e "${P_MAGENTA}λ${P_NC}"
+            ;;
+        "rainbow")
+            # Rainbow colored segments
+            echo -e "${P_RED} ~ ${P_NC}${P_YELLOW} nix ${P_NC}${P_GREEN} ${GIT_ICON} main ! ${P_NC}"
+            echo -e "${P_MAGENTA}λ${P_NC}"
+            ;;
+        *)
+            echo "Unknown prompt style"
+            ;;
     esac
 }
 
@@ -120,14 +215,29 @@ show_theme_menu() {
     echo
 }
 
-# Function to show prompt style menu
+# Function to show prompt style menu with visual examples
 show_prompt_menu() {
     echo -e "${BLUE}Available Prompt Styles:${NC}"
+    echo
     for i in "${!PROMPT_STYLES[@]}"; do
         local num=$((i + 1))
-        printf "  ${PURPLE}%2d)${NC} %-12s %s\n" "$num" "${PROMPT_STYLES[$i]}" "$(get_prompt_desc "${PROMPT_STYLES[$i]}")"
+        local style="${PROMPT_STYLES[$i]}"
+        local desc="$(get_prompt_desc "$style")"
+
+        # Print style header
+        printf "  ${PURPLE}%2d)${NC} ${CYAN}%-12s${NC} ${YELLOW}%s${NC}\n" "$num" "$style" "$desc"
+
+        # Print visual example in a box
+        echo -e "      ${PURPLE}┌──────────────────────────────────────────────────────${NC}"
+
+        # Get the example and indent each line
+        while IFS= read -r line; do
+            echo -e "      ${PURPLE}│${NC} $line"
+        done <<< "$(get_prompt_example "$style")"
+
+        echo -e "      ${PURPLE}└──────────────────────────────────────────────────────${NC}"
+        echo
     done
-    echo
 }
 
 # Function to update home.nix

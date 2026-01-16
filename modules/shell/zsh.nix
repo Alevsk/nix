@@ -56,12 +56,15 @@
           typeset -g POWERLEVEL9K_PROMPT_ADD_NEWLINE=false
           typeset -g POWERLEVEL9K_ICON_PADDING=none
 
-          # Single space separators
+          # No automatic separators - control spacing via SUFFIX
           typeset -g POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR=""
           typeset -g POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR=""
-          typeset -g POWERLEVEL9K_LEFT_SUBSEGMENT_SEPARATOR=" "
+          typeset -g POWERLEVEL9K_LEFT_SUBSEGMENT_SEPARATOR=""
           typeset -g POWERLEVEL9K_LEFT_PROMPT_LAST_SEGMENT_END_SYMBOL=""
           typeset -g POWERLEVEL9K_LEFT_PROMPT_FIRST_SEGMENT_START_SYMBOL=""
+          # Disable internal segment whitespace
+          typeset -g POWERLEVEL9K_LEFT_LEFT_WHITESPACE=""
+          typeset -g POWERLEVEL9K_LEFT_RIGHT_WHITESPACE=""
 
           # Directory - subtle, muted
           typeset -g POWERLEVEL9K_DIR_BACKGROUND='none'
@@ -70,7 +73,7 @@
           typeset -g POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
           typeset -g POWERLEVEL9K_DIR_SHOW_WRITABLE=false
           typeset -g POWERLEVEL9K_DIR_PREFIX=""
-          typeset -g POWERLEVEL9K_DIR_SUFFIX=""
+          typeset -g POWERLEVEL9K_DIR_SUFFIX=" "
           typeset -g POWERLEVEL9K_DIR_VISUAL_IDENTIFIER_EXPANSION=
 
           # Git - minimal, color = state
@@ -80,19 +83,22 @@
           typeset -g POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='#${config.lib.stylix.colors.base0A}'
           typeset -g POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND='none'
           typeset -g POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND='#${config.lib.stylix.colors.base09}'
-          typeset -g POWERLEVEL9K_VCS_BRANCH_ICON=""
+          typeset -g POWERLEVEL9K_VCS_BRANCH_ICON=$'\uF126 '
+          typeset -g POWERLEVEL9K_VCS_STAGED_ICON="+"
+          typeset -g POWERLEVEL9K_VCS_UNSTAGED_ICON="!"
+          typeset -g POWERLEVEL9K_VCS_UNTRACKED_ICON="?"
           typeset -g POWERLEVEL9K_VCS_PREFIX=""
           typeset -g POWERLEVEL9K_VCS_SUFFIX=""
           typeset -g POWERLEVEL9K_VCS_HIDE_TAGS=true
           typeset -g POWERLEVEL9K_VCS_GIT_HOOKS=()
           typeset -g POWERLEVEL9K_VCS_VISUAL_IDENTIFIER_EXPANSION=
 
-          # Lambda prompt
+          # Lambda prompt - leading space separates from VCS
           typeset -g POWERLEVEL9K_PROMPT_CHAR_BACKGROUND='none'
           typeset -g POWERLEVEL9K_PROMPT_CHAR_OK_VIINS_FOREGROUND='#${config.lib.stylix.colors.base0B}'
           typeset -g POWERLEVEL9K_PROMPT_CHAR_ERROR_VIINS_FOREGROUND='#${config.lib.stylix.colors.base08}'
-          typeset -g POWERLEVEL9K_PROMPT_CHAR_OK_VIINS_CONTENT_EXPANSION='λ '
-          typeset -g POWERLEVEL9K_PROMPT_CHAR_ERROR_VIINS_CONTENT_EXPANSION='λ '
+          typeset -g POWERLEVEL9K_PROMPT_CHAR_OK_VIINS_CONTENT_EXPANSION=' λ '
+          typeset -g POWERLEVEL9K_PROMPT_CHAR_ERROR_VIINS_CONTENT_EXPANSION=' λ '
 
           # Disable extras
           typeset -g POWERLEVEL9K_STATUS_OK=false
@@ -101,7 +107,7 @@
 
         # ═══════════════════════════════════════════════════════════════════════
         # CLASSIC - The refined two-line. Clean, balanced, informative.
-        # Style: ~/nix  main (venv)
+        # Style: ~/nix main (venv)
         #        λ
         # ═══════════════════════════════════════════════════════════════════════
         classic = ''
@@ -112,36 +118,44 @@
           typeset -g POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
           typeset -g POWERLEVEL9K_ICON_PADDING=none
 
-          # Single space separators
+          # No automatic separators - control spacing via SUFFIX
           typeset -g POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR=""
           typeset -g POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR=""
-          typeset -g POWERLEVEL9K_LEFT_SUBSEGMENT_SEPARATOR=" "
-          typeset -g POWERLEVEL9K_RIGHT_SUBSEGMENT_SEPARATOR=" "
+          typeset -g POWERLEVEL9K_LEFT_SUBSEGMENT_SEPARATOR=""
+          typeset -g POWERLEVEL9K_RIGHT_SUBSEGMENT_SEPARATOR=""
           typeset -g POWERLEVEL9K_LEFT_PROMPT_LAST_SEGMENT_END_SYMBOL=""
           typeset -g POWERLEVEL9K_LEFT_PROMPT_FIRST_SEGMENT_START_SYMBOL=""
           typeset -g POWERLEVEL9K_EMPTY_LINE_LEFT_PROMPT_LAST_SEGMENT_END_SYMBOL=""
+          # Disable internal segment whitespace
+          typeset -g POWERLEVEL9K_LEFT_LEFT_WHITESPACE=""
+          typeset -g POWERLEVEL9K_LEFT_RIGHT_WHITESPACE=""
+          typeset -g POWERLEVEL9K_RIGHT_LEFT_WHITESPACE=""
+          typeset -g POWERLEVEL9K_RIGHT_RIGHT_WHITESPACE=""
 
-          # Directory
+          # Directory - single space after
           typeset -g POWERLEVEL9K_DIR_BACKGROUND='none'
           typeset -g POWERLEVEL9K_DIR_FOREGROUND='#${config.lib.stylix.colors.base0D}'
           typeset -g POWERLEVEL9K_SHORTEN_STRATEGY=truncate_to_unique
           typeset -g POWERLEVEL9K_SHORTEN_DIR_LENGTH=3
           typeset -g POWERLEVEL9K_DIR_ANCHOR_BOLD=true
           typeset -g POWERLEVEL9K_DIR_PREFIX=""
-          typeset -g POWERLEVEL9K_DIR_SUFFIX=""
+          typeset -g POWERLEVEL9K_DIR_SUFFIX=" "
 
-          # Git/VCS
+          # Git/VCS - git branch icon, status indicators
           typeset -g POWERLEVEL9K_VCS_CLEAN_BACKGROUND='none'
           typeset -g POWERLEVEL9K_VCS_CLEAN_FOREGROUND='#${config.lib.stylix.colors.base0B}'
           typeset -g POWERLEVEL9K_VCS_MODIFIED_BACKGROUND='none'
           typeset -g POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='#${config.lib.stylix.colors.base0A}'
           typeset -g POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND='none'
           typeset -g POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND='#${config.lib.stylix.colors.base09}'
-          typeset -g POWERLEVEL9K_VCS_BRANCH_ICON=" "
+          typeset -g POWERLEVEL9K_VCS_BRANCH_ICON=$'\uF126 '
+          typeset -g POWERLEVEL9K_VCS_STAGED_ICON="+"
+          typeset -g POWERLEVEL9K_VCS_UNSTAGED_ICON="!"
+          typeset -g POWERLEVEL9K_VCS_UNTRACKED_ICON="?"
           typeset -g POWERLEVEL9K_VCS_PREFIX=""
-          typeset -g POWERLEVEL9K_VCS_SUFFIX=""
+          typeset -g POWERLEVEL9K_VCS_SUFFIX=" "
 
-          # Virtualenv
+          # Virtualenv - no suffix, last before newline
           typeset -g POWERLEVEL9K_VIRTUALENV_BACKGROUND='none'
           typeset -g POWERLEVEL9K_VIRTUALENV_FOREGROUND='#${config.lib.stylix.colors.base0E}'
           typeset -g POWERLEVEL9K_VIRTUALENV_SHOW_PYTHON_VERSION=false
@@ -150,7 +164,7 @@
           typeset -g POWERLEVEL9K_VIRTUALENV_PREFIX=""
           typeset -g POWERLEVEL9K_VIRTUALENV_SUFFIX=""
 
-          # Prompt character
+          # Prompt character - on its own line
           typeset -g POWERLEVEL9K_PROMPT_CHAR_BACKGROUND='none'
           typeset -g POWERLEVEL9K_PROMPT_CHAR_OK_VIINS_FOREGROUND='#${config.lib.stylix.colors.base0D}'
           typeset -g POWERLEVEL9K_PROMPT_CHAR_OK_VICMD_FOREGROUND='#${config.lib.stylix.colors.base0B}'
@@ -186,20 +200,25 @@
           typeset -g POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
           typeset -g POWERLEVEL9K_ICON_PADDING=none
 
-          # Single space separator
+          # No automatic separators - control spacing via SUFFIX
           typeset -g POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR=""
           typeset -g POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR=""
-          typeset -g POWERLEVEL9K_LEFT_SUBSEGMENT_SEPARATOR=" "
+          typeset -g POWERLEVEL9K_LEFT_SUBSEGMENT_SEPARATOR=""
           typeset -g POWERLEVEL9K_LEFT_PROMPT_LAST_SEGMENT_END_SYMBOL=""
           typeset -g POWERLEVEL9K_LEFT_PROMPT_FIRST_SEGMENT_START_SYMBOL=""
+          # Disable internal segment whitespace
+          typeset -g POWERLEVEL9K_LEFT_LEFT_WHITESPACE=""
+          typeset -g POWERLEVEL9K_LEFT_RIGHT_WHITESPACE=""
+          typeset -g POWERLEVEL9K_RIGHT_LEFT_WHITESPACE=""
+          typeset -g POWERLEVEL9K_RIGHT_RIGHT_WHITESPACE=""
 
-          # Directory - blue like Pure
+          # Directory - blue like Pure, single space after
           typeset -g POWERLEVEL9K_DIR_BACKGROUND='none'
           typeset -g POWERLEVEL9K_DIR_FOREGROUND='#${config.lib.stylix.colors.base0D}'
           typeset -g POWERLEVEL9K_SHORTEN_STRATEGY=none
           typeset -g POWERLEVEL9K_DIR_SHOW_WRITABLE=false
           typeset -g POWERLEVEL9K_DIR_PREFIX=""
-          typeset -g POWERLEVEL9K_DIR_SUFFIX=""
+          typeset -g POWERLEVEL9K_DIR_SUFFIX=" "
 
           # Git - gray (pure style), colored only on dirty
           typeset -g POWERLEVEL9K_VCS_CLEAN_BACKGROUND='none'
@@ -208,7 +227,10 @@
           typeset -g POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='#${config.lib.stylix.colors.base0A}'
           typeset -g POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND='none'
           typeset -g POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND='#${config.lib.stylix.colors.base08}'
-          typeset -g POWERLEVEL9K_VCS_BRANCH_ICON=""
+          typeset -g POWERLEVEL9K_VCS_BRANCH_ICON=$'\uF126 '
+          typeset -g POWERLEVEL9K_VCS_STAGED_ICON="+"
+          typeset -g POWERLEVEL9K_VCS_UNSTAGED_ICON="!"
+          typeset -g POWERLEVEL9K_VCS_UNTRACKED_ICON="?"
           typeset -g POWERLEVEL9K_VCS_PREFIX=""
           typeset -g POWERLEVEL9K_VCS_SUFFIX=""
 
@@ -220,7 +242,7 @@
           typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_PREFIX=""
           typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_SUFFIX=""
 
-          # Lambda prompt - magenta
+          # Lambda prompt - magenta, on its own line
           typeset -g POWERLEVEL9K_PROMPT_CHAR_BACKGROUND='none'
           typeset -g POWERLEVEL9K_PROMPT_CHAR_OK_VIINS_FOREGROUND='#${config.lib.stylix.colors.base0E}'
           typeset -g POWERLEVEL9K_PROMPT_CHAR_OK_VICMD_FOREGROUND='#${config.lib.stylix.colors.base0E}'
@@ -272,7 +294,10 @@
           typeset -g POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='#${config.lib.stylix.colors.base01}'
           typeset -g POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND='#${config.lib.stylix.colors.base09}'
           typeset -g POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND='#${config.lib.stylix.colors.base01}'
-          typeset -g POWERLEVEL9K_VCS_BRANCH_ICON=" "
+          typeset -g POWERLEVEL9K_VCS_BRANCH_ICON=$'\uF126 '
+          typeset -g POWERLEVEL9K_VCS_STAGED_ICON="+"
+          typeset -g POWERLEVEL9K_VCS_UNSTAGED_ICON="!"
+          typeset -g POWERLEVEL9K_VCS_UNTRACKED_ICON="?"
           typeset -g POWERLEVEL9K_VCS_PREFIX=""
           typeset -g POWERLEVEL9K_VCS_SUFFIX=""
 
@@ -339,7 +364,10 @@
           typeset -g POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='#${config.lib.stylix.colors.base0A}'
           typeset -g POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND='none'
           typeset -g POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND='#${config.lib.stylix.colors.base09}'
-          typeset -g POWERLEVEL9K_VCS_BRANCH_ICON=" "
+          typeset -g POWERLEVEL9K_VCS_BRANCH_ICON=$'\uF126 '
+          typeset -g POWERLEVEL9K_VCS_STAGED_ICON="+"
+          typeset -g POWERLEVEL9K_VCS_UNSTAGED_ICON="!"
+          typeset -g POWERLEVEL9K_VCS_UNTRACKED_ICON="?"
           typeset -g POWERLEVEL9K_VCS_PREFIX=""
           typeset -g POWERLEVEL9K_VCS_SUFFIX=""
 
@@ -400,61 +428,73 @@
         '';
 
         # ═══════════════════════════════════════════════════════════════════════
-        # UNIX - Classic UNIX style. Nostalgic, professional.
-        # Style: [user@host ~/nix branch] λ
+        # UNIX - Modern Unix style with classic colors. Clean, professional.
+        # Style: user@host ~/nix branch λ
         # ═══════════════════════════════════════════════════════════════════════
         unix = ''
-          # Classic UNIX style: [user@host dir branch] λ
+          # Modern Unix style - classic colors, p10k-native single-line layout
           typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir vcs prompt_char)
           typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=()
           typeset -g POWERLEVEL9K_PROMPT_ON_NEWLINE=false
           typeset -g POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
           typeset -g POWERLEVEL9K_ICON_PADDING=none
 
-          # Minimal separators
+          # Separators and padding control
           typeset -g POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR=""
-          typeset -g POWERLEVEL9K_LEFT_SUBSEGMENT_SEPARATOR=" "
-          typeset -g POWERLEVEL9K_LEFT_PROMPT_FIRST_SEGMENT_START_SYMBOL="%F{#${config.lib.stylix.colors.base04}}[%f"
-          typeset -g POWERLEVEL9K_LEFT_PROMPT_LAST_SEGMENT_END_SYMBOL="%F{#${config.lib.stylix.colors.base04}}]%f "
+          typeset -g POWERLEVEL9K_LEFT_SUBSEGMENT_SEPARATOR=""
+          typeset -g POWERLEVEL9K_LEFT_PROMPT_FIRST_SEGMENT_START_SYMBOL=""
+          typeset -g POWERLEVEL9K_LEFT_PROMPT_LAST_SEGMENT_END_SYMBOL=""
+          # Control internal segment whitespace
+          typeset -g POWERLEVEL9K_LEFT_LEFT_WHITESPACE=""
+          typeset -g POWERLEVEL9K_LEFT_RIGHT_WHITESPACE=""
+          typeset -g POWERLEVEL9K_RIGHT_LEFT_WHITESPACE=""
+          typeset -g POWERLEVEL9K_RIGHT_RIGHT_WHITESPACE=""
+          # Disable gap between segments
+          typeset -g POWERLEVEL9K_LEFT_SEGMENT_END_SEPARATOR=""
+          typeset -g POWERLEVEL9K_BACKGROUND_JOBS_JOINED=true
 
-          # Context (user@host)
-          typeset -g POWERLEVEL9K_CONTEXT_BACKGROUND='none'
+          # Context (user@host) - classic green, single space separator
+          typeset -g POWERLEVEL9K_CONTEXT_BACKGROUND='#${config.lib.stylix.colors.base01}'
           typeset -g POWERLEVEL9K_CONTEXT_FOREGROUND='#${config.lib.stylix.colors.base0B}'
           typeset -g POWERLEVEL9K_CONTEXT_TEMPLATE='%n@%m'
+          typeset -g POWERLEVEL9K_CONTEXT_ROOT_BACKGROUND='#${config.lib.stylix.colors.base01}'
           typeset -g POWERLEVEL9K_CONTEXT_ROOT_FOREGROUND='#${config.lib.stylix.colors.base08}'
           typeset -g POWERLEVEL9K_CONTEXT_ROOT_TEMPLATE='%n@%m'
           typeset -g POWERLEVEL9K_CONTEXT_PREFIX=""
-          typeset -g POWERLEVEL9K_CONTEXT_SUFFIX=""
+          typeset -g POWERLEVEL9K_CONTEXT_SUFFIX=" "
           typeset -g POWERLEVEL9K_CONTEXT_VISUAL_IDENTIFIER_EXPANSION=""
 
-          # Directory
-          typeset -g POWERLEVEL9K_DIR_BACKGROUND='none'
+          # Directory - classic blue, single space separator
+          typeset -g POWERLEVEL9K_DIR_BACKGROUND='#${config.lib.stylix.colors.base01}'
           typeset -g POWERLEVEL9K_DIR_FOREGROUND='#${config.lib.stylix.colors.base0D}'
           typeset -g POWERLEVEL9K_SHORTEN_STRATEGY=truncate_to_last
           typeset -g POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
           typeset -g POWERLEVEL9K_DIR_PREFIX=""
-          typeset -g POWERLEVEL9K_DIR_SUFFIX=""
+          typeset -g POWERLEVEL9K_DIR_SUFFIX=" "
           typeset -g POWERLEVEL9K_DIR_VISUAL_IDENTIFIER_EXPANSION=""
 
-          # Git
-          typeset -g POWERLEVEL9K_VCS_CLEAN_BACKGROUND='none'
+          # Git - state-based colors, single space before lambda
+          typeset -g POWERLEVEL9K_VCS_CLEAN_BACKGROUND='#${config.lib.stylix.colors.base01}'
           typeset -g POWERLEVEL9K_VCS_CLEAN_FOREGROUND='#${config.lib.stylix.colors.base0E}'
-          typeset -g POWERLEVEL9K_VCS_MODIFIED_BACKGROUND='none'
+          typeset -g POWERLEVEL9K_VCS_MODIFIED_BACKGROUND='#${config.lib.stylix.colors.base01}'
           typeset -g POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='#${config.lib.stylix.colors.base0A}'
-          typeset -g POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND='none'
+          typeset -g POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND='#${config.lib.stylix.colors.base01}'
           typeset -g POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND='#${config.lib.stylix.colors.base09}'
-          typeset -g POWERLEVEL9K_VCS_BRANCH_ICON=""
+          typeset -g POWERLEVEL9K_VCS_BRANCH_ICON=$'\uF126 '
+          typeset -g POWERLEVEL9K_VCS_STAGED_ICON="+"
+          typeset -g POWERLEVEL9K_VCS_UNSTAGED_ICON="!"
+          typeset -g POWERLEVEL9K_VCS_UNTRACKED_ICON="?"
           typeset -g POWERLEVEL9K_VCS_PREFIX=""
           typeset -g POWERLEVEL9K_VCS_SUFFIX=""
           typeset -g POWERLEVEL9K_VCS_GIT_HOOKS=()
           typeset -g POWERLEVEL9K_VCS_VISUAL_IDENTIFIER_EXPANSION=""
 
-          # Lambda prompt
+          # Lambda prompt - leading space acts as separator from VCS
           typeset -g POWERLEVEL9K_PROMPT_CHAR_BACKGROUND='none'
           typeset -g POWERLEVEL9K_PROMPT_CHAR_OK_VIINS_FOREGROUND='#${config.lib.stylix.colors.base0B}'
           typeset -g POWERLEVEL9K_PROMPT_CHAR_ERROR_VIINS_FOREGROUND='#${config.lib.stylix.colors.base08}'
-          typeset -g POWERLEVEL9K_PROMPT_CHAR_OK_VIINS_CONTENT_EXPANSION='λ '
-          typeset -g POWERLEVEL9K_PROMPT_CHAR_ERROR_VIINS_CONTENT_EXPANSION='λ '
+          typeset -g POWERLEVEL9K_PROMPT_CHAR_OK_VIINS_CONTENT_EXPANSION=' λ '
+          typeset -g POWERLEVEL9K_PROMPT_CHAR_ERROR_VIINS_CONTENT_EXPANSION=' λ '
 
           typeset -g POWERLEVEL9K_STATUS_OK=false
           typeset -g POWERLEVEL9K_STATUS_ERROR=false
@@ -471,11 +511,14 @@
           typeset -g POWERLEVEL9K_PROMPT_ADD_NEWLINE=false
           typeset -g POWERLEVEL9K_ICON_PADDING=none
 
-          # Single space separator
+          # No automatic separators - control spacing via SUFFIX
           typeset -g POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR=""
-          typeset -g POWERLEVEL9K_LEFT_SUBSEGMENT_SEPARATOR=" "
+          typeset -g POWERLEVEL9K_LEFT_SUBSEGMENT_SEPARATOR=""
           typeset -g POWERLEVEL9K_LEFT_PROMPT_FIRST_SEGMENT_START_SYMBOL=""
           typeset -g POWERLEVEL9K_LEFT_PROMPT_LAST_SEGMENT_END_SYMBOL=""
+          # Disable internal segment whitespace
+          typeset -g POWERLEVEL9K_LEFT_LEFT_WHITESPACE=""
+          typeset -g POWERLEVEL9K_LEFT_RIGHT_WHITESPACE=""
 
           # Directory - just the last component
           typeset -g POWERLEVEL9K_DIR_BACKGROUND='none'
@@ -486,12 +529,12 @@
           typeset -g POWERLEVEL9K_DIR_PREFIX=""
           typeset -g POWERLEVEL9K_DIR_SUFFIX=""
 
-          # Lambda prompt
+          # Lambda prompt - leading space separates from dir
           typeset -g POWERLEVEL9K_PROMPT_CHAR_BACKGROUND='none'
           typeset -g POWERLEVEL9K_PROMPT_CHAR_OK_VIINS_FOREGROUND='#${config.lib.stylix.colors.base0B}'
           typeset -g POWERLEVEL9K_PROMPT_CHAR_ERROR_VIINS_FOREGROUND='#${config.lib.stylix.colors.base08}'
-          typeset -g POWERLEVEL9K_PROMPT_CHAR_OK_VIINS_CONTENT_EXPANSION='λ '
-          typeset -g POWERLEVEL9K_PROMPT_CHAR_ERROR_VIINS_CONTENT_EXPANSION='λ '
+          typeset -g POWERLEVEL9K_PROMPT_CHAR_OK_VIINS_CONTENT_EXPANSION=' λ '
+          typeset -g POWERLEVEL9K_PROMPT_CHAR_ERROR_VIINS_CONTENT_EXPANSION=' λ '
 
           typeset -g POWERLEVEL9K_STATUS_OK=false
           typeset -g POWERLEVEL9K_STATUS_ERROR=false
@@ -542,7 +585,10 @@
           typeset -g POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='#${config.lib.stylix.colors.base0A}'
           typeset -g POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND='none'
           typeset -g POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND='#${config.lib.stylix.colors.base09}'
-          typeset -g POWERLEVEL9K_VCS_BRANCH_ICON=" "
+          typeset -g POWERLEVEL9K_VCS_BRANCH_ICON=$'\uF126 '
+          typeset -g POWERLEVEL9K_VCS_STAGED_ICON="+"
+          typeset -g POWERLEVEL9K_VCS_UNSTAGED_ICON="!"
+          typeset -g POWERLEVEL9K_VCS_UNTRACKED_ICON="?"
           typeset -g POWERLEVEL9K_VCS_PREFIX=" %F{#${config.lib.stylix.colors.base04}}on%f"
           typeset -g POWERLEVEL9K_VCS_SUFFIX=""
 
@@ -615,7 +661,10 @@
           typeset -g POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='#${config.lib.stylix.colors.base00}'
           typeset -g POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND='#${config.lib.stylix.colors.base09}'
           typeset -g POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND='#${config.lib.stylix.colors.base00}'
-          typeset -g POWERLEVEL9K_VCS_BRANCH_ICON=" "
+          typeset -g POWERLEVEL9K_VCS_BRANCH_ICON=$'\uF126 '
+          typeset -g POWERLEVEL9K_VCS_STAGED_ICON="+"
+          typeset -g POWERLEVEL9K_VCS_UNSTAGED_ICON="!"
+          typeset -g POWERLEVEL9K_VCS_UNTRACKED_ICON="?"
           typeset -g POWERLEVEL9K_VCS_PREFIX=""
           typeset -g POWERLEVEL9K_VCS_SUFFIX=""
 
@@ -683,7 +732,10 @@
           typeset -g POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='#${config.lib.stylix.colors.base00}'
           typeset -g POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND='#${config.lib.stylix.colors.base09}'
           typeset -g POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND='#${config.lib.stylix.colors.base00}'
-          typeset -g POWERLEVEL9K_VCS_BRANCH_ICON=" "
+          typeset -g POWERLEVEL9K_VCS_BRANCH_ICON=$'\uF126 '
+          typeset -g POWERLEVEL9K_VCS_STAGED_ICON="+"
+          typeset -g POWERLEVEL9K_VCS_UNSTAGED_ICON="!"
+          typeset -g POWERLEVEL9K_VCS_UNTRACKED_ICON="?"
           typeset -g POWERLEVEL9K_VCS_PREFIX=""
           typeset -g POWERLEVEL9K_VCS_SUFFIX=""
 
@@ -749,7 +801,10 @@
           typeset -g POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='#${config.lib.stylix.colors.base0A}'
           typeset -g POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND='none'
           typeset -g POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND='#${config.lib.stylix.colors.base09}'
-          typeset -g POWERLEVEL9K_VCS_BRANCH_ICON=" "
+          typeset -g POWERLEVEL9K_VCS_BRANCH_ICON=$'\uF126 '
+          typeset -g POWERLEVEL9K_VCS_STAGED_ICON="+"
+          typeset -g POWERLEVEL9K_VCS_UNSTAGED_ICON="!"
+          typeset -g POWERLEVEL9K_VCS_UNTRACKED_ICON="?"
           typeset -g POWERLEVEL9K_VCS_PREFIX="%F{#${config.lib.stylix.colors.base04}}on%f "
           typeset -g POWERLEVEL9K_VCS_SUFFIX=""
 
@@ -843,6 +898,9 @@
           typeset -g POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND='none'
           typeset -g POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND='#${config.lib.stylix.colors.base08}'
           typeset -g POWERLEVEL9K_VCS_BRANCH_ICON=""
+          typeset -g POWERLEVEL9K_VCS_STAGED_ICON="+"
+          typeset -g POWERLEVEL9K_VCS_UNSTAGED_ICON="!"
+          typeset -g POWERLEVEL9K_VCS_UNTRACKED_ICON="?"
           typeset -g POWERLEVEL9K_VCS_PREFIX="%F{#${config.lib.stylix.colors.base0B}}::%f "
           typeset -g POWERLEVEL9K_VCS_SUFFIX=""
           typeset -g POWERLEVEL9K_VCS_GIT_HOOKS=()
@@ -908,7 +966,10 @@
           typeset -g POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='#${config.lib.stylix.colors.base0A}'
           typeset -g POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND='none'
           typeset -g POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND='#${config.lib.stylix.colors.base09}'
-          typeset -g POWERLEVEL9K_VCS_BRANCH_ICON=" "
+          typeset -g POWERLEVEL9K_VCS_BRANCH_ICON=$'\uF126 '
+          typeset -g POWERLEVEL9K_VCS_STAGED_ICON="+"
+          typeset -g POWERLEVEL9K_VCS_UNSTAGED_ICON="!"
+          typeset -g POWERLEVEL9K_VCS_UNTRACKED_ICON="?"
           typeset -g POWERLEVEL9K_VCS_PREFIX=""
           typeset -g POWERLEVEL9K_VCS_SUFFIX=""
 
@@ -956,7 +1017,10 @@
           typeset -g POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='#${config.lib.stylix.colors.base0A}'
           typeset -g POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND='none'
           typeset -g POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND='#${config.lib.stylix.colors.base09}'
-          typeset -g POWERLEVEL9K_VCS_BRANCH_ICON=" "
+          typeset -g POWERLEVEL9K_VCS_BRANCH_ICON=$'\uF126 '
+          typeset -g POWERLEVEL9K_VCS_STAGED_ICON="+"
+          typeset -g POWERLEVEL9K_VCS_UNSTAGED_ICON="!"
+          typeset -g POWERLEVEL9K_VCS_UNTRACKED_ICON="?"
           typeset -g POWERLEVEL9K_VCS_PREFIX=""
           typeset -g POWERLEVEL9K_VCS_SUFFIX=""
 
@@ -1029,7 +1093,10 @@
           typeset -g POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='#${config.lib.stylix.colors.base00}'
           typeset -g POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND='#${config.lib.stylix.colors.base09}'
           typeset -g POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND='#${config.lib.stylix.colors.base00}'
-          typeset -g POWERLEVEL9K_VCS_BRANCH_ICON=" "
+          typeset -g POWERLEVEL9K_VCS_BRANCH_ICON=$'\uF126 '
+          typeset -g POWERLEVEL9K_VCS_STAGED_ICON="+"
+          typeset -g POWERLEVEL9K_VCS_UNSTAGED_ICON="!"
+          typeset -g POWERLEVEL9K_VCS_UNTRACKED_ICON="?"
           typeset -g POWERLEVEL9K_VCS_PREFIX=""
           typeset -g POWERLEVEL9K_VCS_SUFFIX=""
 
