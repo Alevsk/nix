@@ -399,7 +399,7 @@
         "$username"
         "[ in](fg:${c "base04"}) "
         "$directory"
-        "[ on](fg:${c "base04"})"
+        "[ on](fg:${c "base04"}) "
         "$git_branch"
         "$git_status"
         "$python"
@@ -431,7 +431,7 @@
 
       git_status = {
         style = "fg:${c "base0A"}";
-        format = "[$staged$modified$untracked$ahead_behind]($style)";
+        format = " [$staged $modified $untracked$ahead_behind]($style)";
         modified = "!";
         staged = "+";
         untracked = "?";
@@ -887,7 +887,7 @@ in {
     enable = true;
     # Only integrate with zsh when starship is the selected engine
     enableZshIntegration = (promptEngine == "starship");
-    # Only set custom settings when starship is the engine
-    settings = lib.mkIf (promptEngine == "starship") selectedStyle;
+    # Apply settings - they're only used when zsh integration is enabled anyway
+    settings = selectedStyle;
   };
 }
