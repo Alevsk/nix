@@ -208,20 +208,20 @@
     powerline = {
       add_newline = true;
       format = lib.concatStrings [
-        "[](fg:${c "base0D"})"
+        "[](fg:${c "base0D"})"
         "$directory"
-        "[](fg:${c "base0D"} bg:${c "base0B"})"
+        "[](fg:${c "base0D"} bg:${c "base0B"})"
         "$git_branch"
         "$git_status"
-        "[](fg:${c "base0B"})"
+        "[](fg:${c "base0B"})"
         "$line_break"
         "$character"
       ];
 
       right_format = lib.concatStrings [
-        "[](fg:${c "base02"})"
+        "[](fg:${c "base02"})"
         "$cmd_duration"
-        "[](fg:${c "base02"})"
+        "[](fg:${c "base02"})"
       ];
 
       directory = {
@@ -265,21 +265,21 @@
     capsule = {
       add_newline = true;
       format = lib.concatStrings [
-        "[](fg:${c "base0C"})"
+        "[](fg:${c "base0C"})"
         "$directory"
-        "[](fg:${c "base0C"} bg:${c "base0B"})"
+        "[](fg:${c "base0C"} bg:${c "base0B"})"
         "$git_branch"
         "$git_status"
-        "[](fg:${c "base0B"})"
+        "[](fg:${c "base0B"})"
         "$python"
         "$line_break"
         "$character"
       ];
 
       right_format = lib.concatStrings [
-        "[](fg:${c "base02"})"
+        "[](fg:${c "base02"})"
         "$cmd_duration"
-        "[](fg:${c "base02"})"
+        "[](fg:${c "base02"})"
       ];
 
       directory = {
@@ -330,20 +330,20 @@
     slanted = {
       add_newline = true;
       format = lib.concatStrings [
-        "[](fg:${c "base0D"})"
+        "[](fg:${c "base0D"})"
         "$directory"
-        "[](fg:${c "base0D"} bg:${c "base0E"})"
+        "[](fg:${c "base0D"} bg:${c "base0E"})"
         "$git_branch"
         "$git_status"
-        "[](fg:${c "base0E"})"
+        "[](fg:${c "base0E"})"
         "$line_break"
         "$character"
       ];
 
       right_format = lib.concatStrings [
-        "[](fg:${c "base03"})"
+        "[](fg:${c "base03"})"
         "$cmd_duration"
-        "[](fg:${c "base03"})"
+        "[](fg:${c "base03"})"
       ];
 
       directory = {
@@ -388,31 +388,31 @@
       add_newline = true;
       format = lib.concatStrings [
         # Magenta start
-        "[](fg:${c "base0E"})"
+        "[](fg:${c "base0E"})"
         "$username"
-        "[](fg:${c "base0E"} bg:${c "base0D"})"
+        "[](fg:${c "base0E"} bg:${c "base0D"})"
         # Blue
         "$directory"
-        "[](fg:${c "base0D"} bg:${c "base0C"})"
+        "[](fg:${c "base0D"} bg:${c "base0C"})"
         # Cyan
         "$git_branch"
-        "[](fg:${c "base0C"} bg:${c "base0B"})"
+        "[](fg:${c "base0C"} bg:${c "base0B"})"
         # Green
         "$git_status"
-        "[](fg:${c "base0B"})"
+        "[](fg:${c "base0B"})"
         "$line_break"
         "$character"
       ];
 
       right_format = lib.concatStrings [
-        "[](fg:${c "base09"})"
+        "[](fg:${c "base09"})"
         "$cmd_duration"
-        "[](fg:${c "base09"})"
+        "[](fg:${c "base09"})"
       ];
 
       username = {
         style_user = "bold fg:${c "base00"} bg:${c "base0E"}";
-        format = "[ $user ]($style_user)";
+        format = "[ $user ]($style)";
         show_always = true;
       };
 

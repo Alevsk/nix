@@ -111,7 +111,7 @@ GIT_ICON=$'\uE0A0'
 # Returns multi-line string for multi-line prompts
 get_prompt_example() {
     local style="$1"
-    # Using cyan for path, green for git info, yellow for status
+    # Foreground colors
     local P_CYAN='\033[0;36m'
     local P_GREEN='\033[0;32m'
     local P_YELLOW='\033[1;33m'
@@ -123,12 +123,33 @@ get_prompt_example() {
     local P_ORANGE='\033[38;5;208m'
     local P_NC='\033[0m'
 
+    # Background colors for filled segments
+    local BG_BLUE='\033[44m'
+    local BG_GREEN='\033[42m'
+    local BG_CYAN='\033[46m'
+    local BG_MAGENTA='\033[45m'
+    local BG_BLACK='\033[40m'
+    local FG_BLACK='\033[30m'
+
+    # Combined styles for powerline segments (black text on colored bg)
+    local SEG_BLUE='\033[1;30;44m'      # Bold black on blue
+    local SEG_GREEN='\033[1;30;42m'     # Bold black on green
+    local SEG_CYAN='\033[1;30;46m'      # Bold black on cyan
+    local SEG_MAGENTA='\033[1;30;45m'   # Bold black on magenta
+
+    # Foreground only (for arrows)
+    local FG_BLUE='\033[34m'
+    local FG_GREEN='\033[32m'
+    local FG_CYAN='\033[36m'
+    local FG_MAGENTA='\033[35m'
+
     # Powerline characters
-    local PL_ARROW=$'\uE0B0'
-    local PL_RARROW=$'\uE0B2'
-    local PL_ROUND_R=$'\uE0B4'
-    local PL_ROUND_L=$'\uE0B6'
-    local PL_SLANT=$'\uE0BC'
+    local PL_ARROW=$'\uE0B0'      # Right arrow (transitions/end)
+    local PL_LARROW=$'\uE0B2'     # Left arrow (opening cap)
+    local PL_ROUND_R=$'\uE0B4'    # Right round (transitions/end)
+    local PL_ROUND_L=$'\uE0B6'    # Left round (opening cap)
+    local PL_SLANT_R=$'\uE0BC'    # Right slant (transitions/end)
+    local PL_SLANT_L=$'\uE0BE'    # Left slant (opening cap)
 
     case "$style" in
         "minimal")
@@ -151,22 +172,22 @@ get_prompt_example() {
             ;;
         "powerline")
             # Powerline with filled arrow segments
-            echo -e "${P_BLUE} ~/nix ${P_NC}${P_GREEN}${PL_ARROW} ${GIT_ICON} main !${P_NC}${PL_ARROW}"
+            echo -e "${FG_BLUE}${PL_LARROW}${SEG_BLUE} ~/nix ${P_NC}${BG_GREEN}${FG_BLUE}${PL_ARROW}${SEG_GREEN} ${GIT_ICON} main ! ${P_NC}${FG_GREEN}${PL_ARROW}${P_NC}"
             echo -e "${P_GREEN}❯${P_NC}"
             ;;
         "capsule")
-            # Rounded pill segments
-            echo -e "${P_CYAN}${PL_ROUND_L} ~/nix ${PL_ROUND_R}${P_NC}${P_GREEN}${PL_ROUND_L} ${GIT_ICON} main !${PL_ROUND_R}${P_NC}"
+            # Rounded pill segments with backgrounds
+            echo -e "${FG_CYAN}${PL_ROUND_L}${SEG_CYAN} ~/nix ${P_NC}${BG_GREEN}${FG_CYAN}${PL_ROUND_R}${SEG_GREEN} ${GIT_ICON} main ! ${P_NC}${FG_GREEN}${PL_ROUND_R}${P_NC}"
             echo -e "${P_GREEN}❯${P_NC}"
             ;;
         "slanted")
-            # Slanted powerline separators
-            echo -e "${P_BLUE} ~/nix ${P_NC}${P_MAGENTA}${PL_SLANT} ${GIT_ICON} main !${P_NC}${PL_SLANT}"
+            # Slanted powerline separators with backgrounds
+            echo -e "${FG_BLUE}${PL_SLANT_L}${SEG_BLUE} ~/nix ${P_NC}${BG_MAGENTA}${FG_BLUE}${PL_SLANT_R}${SEG_MAGENTA} ${GIT_ICON} main ! ${P_NC}${FG_MAGENTA}${PL_SLANT_R}${P_NC}"
             echo -e "${P_MAGENTA}❯${P_NC}"
             ;;
         "rainbow")
-            # Rainbow: spectrum color progression
-            echo -e "${P_MAGENTA}${PL_ROUND_L} user ${PL_ARROW}${P_NC}${P_BLUE} nix ${PL_ARROW}${P_NC}${P_CYAN} ${GIT_ICON} main ${PL_ARROW}${P_NC}${P_GREEN} ! ${PL_ROUND_R}${P_NC}"
+            # Rainbow: spectrum color progression with backgrounds
+            echo -e "${FG_MAGENTA}${PL_LARROW}${SEG_MAGENTA} user ${P_NC}${BG_BLUE}${FG_MAGENTA}${PL_ARROW}${SEG_BLUE} nix ${P_NC}${BG_CYAN}${FG_BLUE}${PL_ARROW}${SEG_CYAN} ${GIT_ICON} main ${P_NC}${BG_GREEN}${FG_CYAN}${PL_ARROW}${SEG_GREEN} ! ${P_NC}${FG_GREEN}${PL_ARROW}${P_NC}"
             echo -e "${P_GREEN}❯${P_NC}"
             ;;
         "hacker")
