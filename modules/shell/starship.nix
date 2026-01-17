@@ -484,7 +484,6 @@
         modified = "*";
         staged = "+";
         untracked = "?";
-        format_no_changes = "";
       };
 
       cmd_duration = {

@@ -14,11 +14,11 @@
   # CHANGE THIS LINE TO SWITCH PROMPT STYLE
   # Available: lean, classic, rainbow, pure, powerline, developer,
   #            unix, minimal, boxed, capsule, slanted, starship, hacker, arrow, soft
-  promptStyle = "slanted";
+  promptStyle = "starship";
 
   # CHANGE THIS LINE TO SWITCH PROMPT ENGINE
   # Available: powerlevel10k, starship
-  promptEngine = "powerlevel10k";
+  promptEngine = "starship";
 
   # CHANGE THIS LINE TO AUTO START TMUX WHEN OPENING A NEW TERMINAL
   autoStartTmux = false;

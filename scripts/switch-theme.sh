@@ -105,7 +105,7 @@ get_engine_desc() {
 }
 
 # Git branch icon
-GIT_ICON=$'\uF126'
+GIT_ICON=$'\uE0A0'
 
 # Function to get visual prompt example
 # Returns multi-line string for multi-line prompts
@@ -120,78 +120,86 @@ get_prompt_example() {
     local P_RED='\033[0;31m'
     local P_WHITE='\033[1;37m'
     local P_GRAY='\033[0;90m'
+    local P_ORANGE='\033[38;5;208m'
     local P_NC='\033[0m'
 
+    # Powerline characters
+    local PL_ARROW=$'\uE0B0'
+    local PL_RARROW=$'\uE0B2'
+    local PL_ROUND_R=$'\uE0B4'
+    local PL_ROUND_L=$'\uE0B6'
+    local PL_SLANT=$'\uE0BC'
+
     case "$style" in
-        "lean")
-            # Single line: ~/nix  main ! λ
-            echo -e "${P_BLUE}~/nix${P_NC}  ${P_GREEN}${GIT_ICON} main${P_NC} ${P_YELLOW}!${P_NC} ${P_MAGENTA}λ${P_NC}"
+        "minimal")
+            # Ultra-minimal: ~ ›
+            echo -e "${P_GRAY}~${P_NC} ${P_GRAY}›${P_NC}"
             ;;
-        "classic")
-            # Two-line: ~/nix  main ! (newline) λ
-            echo -e "${P_BLUE}~/nix${P_NC}  ${P_GREEN}${GIT_ICON} main${P_NC} ${P_YELLOW}!${P_NC}"
-            echo -e "${P_MAGENTA}λ${P_NC}"
+        "lean")
+            # Single line: nix main ❯
+            echo -e "${P_BLUE}nix${P_NC} ${P_MAGENTA}main${P_NC}${P_ORANGE}*${P_NC} ${P_GREEN}❯${P_NC}"
             ;;
         "pure")
-            # Two-line Pure style: ~/nix  main (newline) λ
-            echo -e "${P_BLUE}~/nix${P_NC}  ${P_CYAN}${GIT_ICON} main${P_NC} ${P_YELLOW}!${P_NC}"
-            echo -e "${P_MAGENTA}λ${P_NC}"
+            # Two-line Pure style: ~/nix main * (newline) ❯
+            echo -e "${P_BLUE}~/nix${P_NC} ${P_GRAY}main${P_NC}${P_YELLOW}*${P_NC}"
+            echo -e "${P_MAGENTA}❯${P_NC}"
+            ;;
+        "classic")
+            # Two-line: ~/nix  main (!+?) (newline) ❯
+            echo -e "${P_BLUE}~/nix${P_NC} ${P_GREEN}${GIT_ICON} main${P_NC}${P_YELLOW}(!+?)${P_NC}"
+            echo -e "${P_MAGENTA}❯${P_NC}"
             ;;
         "powerline")
-            # Powerline with filled segments
-            echo -e "${P_BLUE}~/nix ${P_NC}${P_GREEN} ${GIT_ICON} main ! ${P_NC}"
-            echo -e "${P_MAGENTA}λ${P_NC}"
-            ;;
-        "developer")
-            # Developer: dir, git, language versions
-            echo -e "${P_BLUE}~/nix${P_NC}  ${P_GREEN}${GIT_ICON} main${P_NC} ${P_YELLOW}!${P_NC}  ${P_CYAN} 3.11${P_NC}  ${P_GREEN} 20${P_NC}"
-            echo -e "${P_MAGENTA}λ${P_NC}"
-            ;;
-        "unix")
-            # Classic UNIX: user@host dir  branch ! λ
-            echo -e "${P_GREEN}alevsk${P_NC}@${P_CYAN}cloud${P_NC} ${P_BLUE}nix${P_NC}  ${P_GREEN}${GIT_ICON} main${P_NC} ${P_YELLOW}!${P_NC} ${P_MAGENTA}λ${P_NC}"
-            ;;
-        "minimal")
-            # Ultra-minimal: ~ λ
-            echo -e "${P_BLUE}~${P_NC} ${P_MAGENTA}λ${P_NC}"
-            ;;
-        "boxed")
-            # ASCII box frame
-            echo -e "${P_GRAY}┌─${P_NC} ${P_CYAN}alevsk${P_NC} ${P_GRAY}in${P_NC} ${P_BLUE}~/nix${P_NC} ${P_GRAY}on${P_NC} ${P_GREEN}${GIT_ICON} main${P_NC} ${P_YELLOW}!${P_NC}"
-            echo -e "${P_GRAY}└─${P_NC}${P_MAGENTA}λ${P_NC}"
+            # Powerline with filled arrow segments
+            echo -e "${P_BLUE} ~/nix ${P_NC}${P_GREEN}${PL_ARROW} ${GIT_ICON} main !${P_NC}${PL_ARROW}"
+            echo -e "${P_GREEN}❯${P_NC}"
             ;;
         "capsule")
-            # Rounded capsule segments
-            echo -e "${P_BLUE}~/nix ${P_NC}${P_GREEN} ${GIT_ICON} main ! ${P_NC}"
-            echo -e "${P_MAGENTA}λ${P_NC}"
+            # Rounded pill segments
+            echo -e "${P_CYAN}${PL_ROUND_L} ~/nix ${PL_ROUND_R}${P_NC}${P_GREEN}${PL_ROUND_L} ${GIT_ICON} main !${PL_ROUND_R}${P_NC}"
+            echo -e "${P_GREEN}❯${P_NC}"
             ;;
         "slanted")
             # Slanted powerline separators
-            echo -e "${P_BLUE}◢ ~/nix ${P_NC}${P_GREEN}◢ ${GIT_ICON} main ! ${P_NC}"
-            echo -e "${P_MAGENTA}λ${P_NC}"
+            echo -e "${P_BLUE} ~/nix ${P_NC}${P_MAGENTA}${PL_SLANT} ${GIT_ICON} main !${P_NC}${PL_SLANT}"
+            echo -e "${P_MAGENTA}❯${P_NC}"
             ;;
-        "starship")
-            # Starship-style info-rich
-            echo -e "${P_BLUE}~/nix${P_NC} ${P_GRAY}on${P_NC} ${P_GREEN}${GIT_ICON} main${P_NC} ${P_YELLOW}!${P_NC} ${P_GRAY}via${P_NC} ${P_CYAN} v3.11${P_NC}"
+        "rainbow")
+            # Rainbow: spectrum color progression
+            echo -e "${P_MAGENTA}${PL_ROUND_L} user ${PL_ARROW}${P_NC}${P_BLUE} nix ${PL_ARROW}${P_NC}${P_CYAN} ${GIT_ICON} main ${PL_ARROW}${P_NC}${P_GREEN} ! ${PL_ROUND_R}${P_NC}"
             echo -e "${P_GREEN}❯${P_NC}"
             ;;
         "hacker")
-            # Matrix/cyber hacker style
-            echo -e "${P_GREEN}▶${P_NC} ${P_CYAN}nix${P_NC} ${P_GREEN}:: main${P_NC} ${P_YELLOW}!${P_NC} ${P_GREEN}λ${P_NC}"
+            # Terminal operator: [nix:main*] ▸
+            echo -e "${P_GRAY}[${P_NC}${P_CYAN}nix${P_NC}${P_MAGENTA}:main${P_NC}${P_ORANGE}*${P_NC}${P_GRAY}]${P_NC} ${P_CYAN}▸${P_NC}"
             ;;
-        "arrow")
-            # Arrow separators: user@host:dir →  branch ! λ
-            echo -e "${P_GREEN}alevsk${P_NC}@${P_CYAN}cloud${P_NC}:${P_BLUE}~/nix${P_NC} → ${P_GREEN}${GIT_ICON} main${P_NC} ${P_YELLOW}!${P_NC} ${P_MAGENTA}λ${P_NC}"
+        "boxed")
+            # Elegant box drawing
+            echo -e "${P_GRAY}╭─${P_NC} ${P_BLUE}~/nix${P_NC} ${P_GRAY}on${P_NC} ${P_GREEN}${GIT_ICON} main${P_NC}${P_YELLOW}!${P_NC}"
+            echo -e "${P_GRAY}╰─${P_NC} ${P_GREEN}❯${P_NC}"
+            ;;
+        "developer")
+            # IDE status bar: dir  main  v22  v1.21 (newline) λ
+            echo -e "${P_BLUE}~/nix${P_NC} ${P_MAGENTA}${GIT_ICON} main${P_NC}${P_YELLOW}!${P_NC} ${P_GREEN} v22${P_NC} ${P_CYAN} v1.21${P_NC}"
+            echo -e "${P_GREEN}λ${P_NC}"
+            ;;
+        "unix")
+            # Classic PS1: user@host:~/nix (main)$
+            echo -e "${P_GREEN}alevsk${P_NC}@${P_CYAN}cloud${P_NC}:${P_BLUE}~/nix${P_NC} ${P_MAGENTA}(main)${P_NC}${P_YELLOW}*${P_NC}${P_GRAY}\$${P_NC}"
+            ;;
+        "starship")
+            # Official Starship look: nix on  main via  v22
+            echo -e "${P_CYAN}nix${P_NC} ${P_GRAY}on${P_NC} ${P_MAGENTA}${GIT_ICON} main${P_NC}${P_RED}!${P_NC} ${P_GRAY}via${P_NC} ${P_GREEN} v22${P_NC}"
+            echo -e "${P_GREEN}❯${P_NC}"
             ;;
         "soft")
-            # Soft aesthetic with diamond
-            echo -e "${P_MAGENTA}◆${P_NC} ${P_BLUE}~/nix${P_NC}  ${P_GREEN}${GIT_ICON} main${P_NC} ${P_YELLOW}!${P_NC}"
-            echo -e "${P_MAGENTA}λ${P_NC}"
+            # Pastel dreams: ● ~/nix  main
+            echo -e "${P_MAGENTA}●${P_NC} ${P_MAGENTA}~/nix${P_NC} ${P_GREEN}${GIT_ICON} main${P_NC}${P_YELLOW}~${P_NC}"
+            echo -e "${P_MAGENTA}❯${P_NC}"
             ;;
-        "rainbow")
-            # Rainbow colored segments
-            echo -e "${P_BLUE}~/nix ${P_NC}${P_GREEN} ${GIT_ICON} main ! ${P_NC}"
-            echo -e "${P_MAGENTA}λ${P_NC}"
+        "arrow")
+            # Flow state: user → nix → main →
+            echo -e "${P_MAGENTA}alevsk${P_NC} ${P_GRAY}→${P_NC} ${P_BLUE}nix${P_NC} ${P_GRAY}→${P_NC} ${P_GREEN}main${P_NC}${P_YELLOW}*${P_NC} ${P_GREEN}→${P_NC}"
             ;;
         *)
             echo "Unknown prompt style"
