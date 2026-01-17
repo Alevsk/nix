@@ -8,6 +8,9 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TEST_DIR="$SCRIPT_DIR/tests"
 NIX_DIR="$HOME/nix"
 
+# Engine to test (powerlevel10k or starship)
+ENGINE="${ENGINE:-powerlevel10k}"
+
 # All prompt styles to test
 PROMPT_STYLES=(
     "lean"
@@ -39,14 +42,22 @@ mkdir -p "$TEST_DIR"
 # Function to run test commands and capture output
 test_prompt_style() {
     local style="$1"
-    local output_file="$TEST_DIR/${style}.txt"
-    local raw_file="$TEST_DIR/${style}_raw.txt"
+    local engine="${2:-$ENGINE}"
 
-    echo -e "${CYAN}Testing prompt style: ${YELLOW}$style${NC}"
+    # Use engine prefix for starship output files
+    local prefix=""
+    if [[ "$engine" == "starship" ]]; then
+        prefix="starship_"
+    fi
+
+    local output_file="$TEST_DIR/${prefix}${style}.txt"
+    local raw_file="$TEST_DIR/${prefix}${style}_raw.txt"
+
+    echo -e "${CYAN}Testing prompt style: ${YELLOW}$style${NC} (engine: ${YELLOW}$engine${NC})"
 
     # Switch to this prompt style
-    echo -e "  ${GREEN}Switching to $style...${NC}"
-    "$SCRIPT_DIR/switch-theme-test.sh" nord "$style" > /dev/null 2>&1
+    echo -e "  ${GREEN}Switching to $style with $engine engine...${NC}"
+    "$SCRIPT_DIR/switch-theme-test.sh" nord "$style" "$engine" > /dev/null 2>&1
 
     # Wait a moment for the switch to complete
     sleep 1
@@ -114,7 +125,7 @@ TESTCMDS
         sed 's/\x1b\[[0-9;]*[a-zA-Z]//g; s/\x1b\][^\x07]*\x07//g; s/\r//g' "$raw_file" > "$output_file"
 
         # Also create a version with visible escape codes for debugging
-        cat -v "$raw_file" > "$TEST_DIR/${style}_debug.txt"
+        cat -v "$raw_file" > "$TEST_DIR/${prefix}${style}_debug.txt"
     fi
 
     echo -e "  ${GREEN}Saved to: $output_file${NC}"
@@ -124,14 +135,22 @@ TESTCMDS
 # Function to analyze a single prompt output
 analyze_prompt() {
     local style="$1"
-    local output_file="$TEST_DIR/${style}.txt"
+    local engine="${2:-$ENGINE}"
+
+    # Use engine prefix for starship output files
+    local prefix=""
+    if [[ "$engine" == "starship" ]]; then
+        prefix="starship_"
+    fi
+
+    local output_file="$TEST_DIR/${prefix}${style}.txt"
 
     if [[ ! -f "$output_file" ]]; then
-        echo "  ERROR: Output file not found"
+        echo "  ERROR: Output file not found: $output_file"
         return 1
     fi
 
-    echo "Analysis for: $style"
+    echo "Analysis for: $style (engine: $engine)"
     echo "----------------------------------------"
 
     # Count lines
@@ -163,17 +182,19 @@ main() {
     echo -e "${CYAN}========================================${NC}"
     echo -e "${CYAN}   Automated Prompt Style Tester${NC}"
     echo -e "${CYAN}========================================${NC}"
+    echo -e "${CYAN}   Engine: ${YELLOW}$ENGINE${NC}"
+    echo -e "${CYAN}========================================${NC}"
     echo ""
 
     local mode="${1:-test}"
 
     case "$mode" in
         "test")
-            echo -e "${YELLOW}Running tests for all ${#PROMPT_STYLES[@]} prompt styles...${NC}"
+            echo -e "${YELLOW}Running tests for all ${#PROMPT_STYLES[@]} prompt styles with $ENGINE engine...${NC}"
             echo ""
 
             for style in "${PROMPT_STYLES[@]}"; do
-                test_prompt_style "$style"
+                test_prompt_style "$style" "$ENGINE"
             done
 
             echo -e "${GREEN}All tests complete!${NC}"
@@ -181,26 +202,29 @@ main() {
             ;;
 
         "analyze")
-            echo -e "${YELLOW}Analyzing all prompt outputs...${NC}"
+            echo -e "${YELLOW}Analyzing all prompt outputs for $ENGINE engine...${NC}"
             echo ""
 
             for style in "${PROMPT_STYLES[@]}"; do
-                analyze_prompt "$style"
+                analyze_prompt "$style" "$ENGINE"
             done
             ;;
 
         "single")
             local target_style="${2:-lean}"
-            echo -e "${YELLOW}Testing single style: $target_style${NC}"
-            test_prompt_style "$target_style"
-            analyze_prompt "$target_style"
+            echo -e "${YELLOW}Testing single style: $target_style with $ENGINE engine${NC}"
+            test_prompt_style "$target_style" "$ENGINE"
+            analyze_prompt "$target_style" "$ENGINE"
             ;;
 
         *)
-            echo "Usage: $0 [test|analyze|single <style>]"
+            echo "Usage: ENGINE=starship $0 [test|analyze|single <style>]"
             echo "  test    - Run tests for all prompt styles"
             echo "  analyze - Analyze existing test outputs"
             echo "  single  - Test a single style"
+            echo ""
+            echo "Environment variables:"
+            echo "  ENGINE  - Prompt engine to test (powerlevel10k or starship, default: powerlevel10k)"
             exit 1
             ;;
     esac
