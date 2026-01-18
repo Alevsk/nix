@@ -884,14 +884,13 @@
 
   # Select the appropriate style
   selectedStyle = starshipStyles.${promptStyle};
-
 in {
   # Always have starship package available (prevents "no such file" errors)
   # but only enable zsh integration when it's the selected engine
   programs.starship = {
     enable = true;
     # Only integrate with zsh when starship is the selected engine
-    enableZshIntegration = (promptEngine == "starship");
+    enableZshIntegration = promptEngine == "starship";
     # Apply settings - they're only used when zsh integration is enabled anyway
     settings = selectedStyle;
   };

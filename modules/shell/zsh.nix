@@ -51,7 +51,6 @@
       # Each style has a unique visual identity and purpose
       # ═══════════════════════════════════════════════════════════════════════
       promptStyles = {
-
         # ─────────────────────────────────────────────────────────────────────
         # MINIMAL - "Negative Space"
         # The absolute minimum. Just breathe.
