@@ -1126,6 +1126,9 @@
 
       selectedPromptStyle = promptStyles.${promptStyle};
     in ''
+      # Ensure bun and npm global binaries are in PATH
+      export PATH="$HOME/.npm-global/bin:$HOME/.bun/bin:$PATH"
+
       # History settings
       export HISTSIZE=10000
       export SAVEHIST=10000
