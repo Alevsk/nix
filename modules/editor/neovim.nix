@@ -220,7 +220,7 @@
       colorscheme ${sel.colorscheme}
     '';
 
-    extraLuaConfig = let
+    initLua = let
       luaMap = {
         nord = "";
         dracula = "";
