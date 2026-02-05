@@ -77,6 +77,11 @@
     "#[fg=#${config.lib.stylix.colors.base03}]• " # Dot Separator
     "#[fg=#${config.lib.stylix.colors.base0C}] " # Pane Icon
     "#[fg=#${config.lib.stylix.colors.base06}]#{window_panes} " # Pane count
+    "#[fg=#${config.lib.stylix.colors.base03}]• " # Dot Separator
+
+    # --- Current Working Directory ---
+    "#[fg=#${config.lib.stylix.colors.base0B}] " # Folder Icon
+    "#[fg=#${config.lib.stylix.colors.base06}]#{b:pane_current_path} " # Current path (basename only)
     "#[fg=#${config.lib.stylix.colors.base03}]│ " # Separator
   ];
 
@@ -153,7 +158,7 @@ in {
       set -g status-interval 2
       set -g status-position bottom
       set -g status-justify left
-      set -g status-left-length 50
+      set -g status-left-length 100
       set -g status-right-length 150
       set -g status-keys vi
       set -g mode-keys vi

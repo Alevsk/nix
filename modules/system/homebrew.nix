@@ -6,6 +6,7 @@
     enable = true;
 
     brews = [
+      "awscli"
       "dive"
       "duckdb"
       "ffmpeg"
@@ -14,6 +15,7 @@
       "golang-migrate"
       "gopeed"
       "helm"
+      "hugo"
       "imagemagick"
       "iproute2mac"
       "k9s"
@@ -22,6 +24,7 @@
       "kubectx"
       "kubeshark"
       "kustomize"
+      "mactop"
       "mas"
       "minio-mc"
       "node"
@@ -33,6 +36,7 @@
       "qpdf"
       "scoutsuite"
       "trufflehog"
+      "uv"
       "watch"
       "yarn"
     ];
