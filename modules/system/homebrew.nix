@@ -6,6 +6,7 @@
     enable = true;
 
     brews = [
+      "ansible"
       "awscli"
       "dive"
       "duckdb"
@@ -35,6 +36,7 @@
       "python@3.13"
       "qpdf"
       "scoutsuite"
+      "sshpass"
       "trufflehog"
       "uv"
       "watch"
