@@ -208,6 +208,21 @@ in {
       set -g visual-activity off
     '';
 
-    plugins = [];
+    plugins = with pkgs.tmuxPlugins; [
+      {
+        plugin = resurrect;
+        extraConfig = ''
+          # Restore pane contents
+          set -g @resurrect-capture-pane-contents 'on'
+
+          # Restore vim/neovim sessions (if using Session.vim)
+          set -g @resurrect-strategy-vim 'session'
+          set -g @resurrect-strategy-nvim 'session'
+
+          # Restore shell history (optional, can be slow for large histories)
+          # set -g @resurrect-save-shell-history 'on'
+        '';
+      }
+    ];
   };
 }

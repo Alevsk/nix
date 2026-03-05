@@ -6,6 +6,7 @@
     enable = true;
 
     brews = [
+      "ripgrep"
       "ansible"
       "awscli"
       "dive"
@@ -13,6 +14,7 @@
       "ffmpeg"
       "gemini-cli" # better support and maintenance in brew than nix store
       "gitleaks"
+      "gogcli"
       "golang-migrate"
       "gopeed"
       "helm"
@@ -25,6 +27,7 @@
       "kubectx"
       "kubeshark"
       "kustomize"
+      "labctl"
       "mactop"
       "mas"
       "minio-mc"
@@ -41,10 +44,13 @@
       "uv"
       "watch"
       "yarn"
+      "zoxide"
     ];
 
     casks = [
+      "1password-cli"
       "1password"
+      "another-redis-desktop-manager"
       "antigravity"
       "beekeeper-studio"
       "burp-suite"
@@ -58,6 +64,7 @@
       "hammerspoon"
       "iina"
       "inkscape"
+      "karabiner-elements"
       "lm-studio"
       "macdown"
       "neo4j-desktop" # not available on nixpkgs
