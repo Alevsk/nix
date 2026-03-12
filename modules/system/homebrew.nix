@@ -64,6 +64,7 @@
       "hammerspoon"
       "iina"
       "inkscape"
+      "iterm2"
       "karabiner-elements"
       "lm-studio"
       "macdown"
