@@ -48,6 +48,17 @@
       modules = [
         ./darwin-configuration.nix
 
+        # Overlay: fix ast-grep build (test_scan_invalid_rule_id fails in sandbox)
+        {
+          nixpkgs.overlays = [
+            (final: prev: {
+              ast-grep = prev.ast-grep.overrideAttrs (old: {
+                doCheck = false;
+              });
+            })
+          ];
+        }
+
         # Homebrew integration
         nix-homebrew.darwinModules.nix-homebrew
         {

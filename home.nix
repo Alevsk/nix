@@ -160,18 +160,11 @@ in {
   # This is the recommended place for user-facing software
   # e.g. CLI tools, developer utilities, GUI apps (if packaged in Nix), etc.
   home.packages = with pkgs; [
-    alacritty
     bat
     ffuf
-    firefox
-    google-chrome
     grpcurl
     ncurses
-    telegram-desktop
     tmux-mem-cpu-load
-    vscode
-    windsurf
-    zoom-us
   ];
 
   # Let Home Manager install and manage itself.

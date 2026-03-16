@@ -6,7 +6,6 @@
     enable = true;
 
     brews = [
-      "ripgrep"
       "ansible"
       "awscli"
       "dive"
@@ -38,8 +37,10 @@
       "p7zip"
       "python@3.13"
       "qpdf"
+      "ripgrep"
       "scoutsuite"
       "sshpass"
+      "stripe-cli"
       "trufflehog"
       "uv"
       "watch"
@@ -50,6 +51,7 @@
     casks = [
       "1password-cli"
       "1password"
+      "alacritty"
       "another-redis-desktop-manager"
       "antigravity"
       "beekeeper-studio"
@@ -60,12 +62,15 @@
       "discord"
       "docker-desktop"
       "dropbox"
+      "firefox"
+      "google-chrome"
       "google-drive"
       "hammerspoon"
       "iina"
       "inkscape"
       "iterm2"
       "karabiner-elements"
+      "little-snitch"
       "lm-studio"
       "macdown"
       "neo4j-desktop" # not available on nixpkgs
@@ -77,9 +82,13 @@
       "spotify"
       "steam"
       "sublime-text"
+      "telegram"
       "the-unarchiver"
       "utm"
-      "wireshark"
+      "visual-studio-code"
+      "windsurf"
+      "wireshark-app"
+      "zoom"
     ];
 
     onActivation.cleanup = "zap";
