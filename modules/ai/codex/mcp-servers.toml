@@ -1,3 +1,7 @@
 [mcp_servers.context7]
 args = ["-y", "@upstash/context7-mcp", "--api-key", "$CONTEXT7_API_KEY"]
 command = "npx"
+
+[mcp_servers.chrome-devtools]
+args = ["-y", "chrome-devtools-mcp@latest"]
+command = "npx"

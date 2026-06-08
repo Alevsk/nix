@@ -7,16 +7,24 @@
 
     brews = [
       "ansible"
+      "ast-grep"
       "awscli"
+      "cliclick"
       "dive"
       "duckdb"
+      "gentleman-programming/tap/engram"
       "ffmpeg"
       "gemini-cli" # better support and maintenance in brew than nix store
+      "gh"
       "gitleaks"
       "gogcli"
       "golang-migrate"
       "gopeed"
+      "gradle"
+      "git-lfs"
+      "graphviz"
       "helm"
+      "higgsfield-ai/tap/higgsfield"
       "hugo"
       "imagemagick"
       "iproute2mac"
@@ -34,35 +42,46 @@
       "nvm"
       "ollama" # better support via brew on macOS
       "opencode"
+      "openjdk@17"
       "p7zip"
       "python@3.13"
       "qpdf"
       "ripgrep"
+      "rtk"
+      "rustup"
       "scoutsuite"
       "sshpass"
       "stripe-cli"
+      "swiftlint"
       "trufflehog"
       "uv"
       "watch"
+      "xcodegen"
       "yarn"
       "zoxide"
+      "cocoapods"
     ];
 
     casks = [
       "1password-cli"
       "1password"
       "alacritty"
+      "android-commandlinetools"
       "another-redis-desktop-manager"
       "antigravity"
+      "bambu-studio"
       "beekeeper-studio"
       "burp-suite"
       "caido"
       "claude-code"
       "codex"
+      "devin-desktop"
       "discord"
       "docker-desktop"
       "dropbox"
       "firefox"
+      "flutter"
+      "godot"
       "google-chrome"
       "google-drive"
       "hammerspoon"
@@ -75,6 +94,7 @@
       "macdown"
       "neo4j-desktop" # not available on nixpkgs
       "ngrok"
+      "obs"
       "qflipper"
       "raspberry-pi-imager"
       "rectangle"
@@ -84,14 +104,18 @@
       "sublime-text"
       "telegram"
       "the-unarchiver"
+      "typewhisper/tap/typewhisper"
       "utm"
       "visual-studio-code"
-      "windsurf"
       "wireshark-app"
       "zoom"
     ];
 
-    onActivation.cleanup = "zap";
+    # Temporarily "none" — Homebrew 5.1.15 requires --force/--force-cleanup/$HOMEBREW_ASK
+    # for `brew bundle install --cleanup`, but nix-darwin's activation script doesn't pass
+    # them yet. Re-enable once nix-darwin PR #1774 merges:
+    # https://github.com/nix-darwin/nix-darwin/pull/1774
+    onActivation.cleanup = "none";
     onActivation.autoUpdate = true;
     onActivation.upgrade = true;
   };

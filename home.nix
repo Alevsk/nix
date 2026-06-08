@@ -97,8 +97,10 @@ in {
     ./modules/desktop/wallpaper.nix
     ./modules/development/colima.nix
     ./modules/development/docker.nix
+    ./modules/development/golang.nix
     ./modules/development/nodejs.nix
     ./modules/development/protobuf.nix
+    ./modules/development/python.nix
     ./modules/editor/neovim.nix
     ./modules/git/git.nix
     ./modules/multiplexer/tmux.nix

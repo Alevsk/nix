@@ -43,6 +43,7 @@
       nix-gc = "make -C ${config.home.homeDirectory}/nix nix-gc";
       switch-theme = "${config.home.homeDirectory}/nix/scripts/switch-theme.sh";
       tmux-stats = "${config.home.homeDirectory}/nix/scripts/tmux-stats.sh";
+      claudette = "claude --dangerously-skip-permissions";
     };
 
     initContent = let

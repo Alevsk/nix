@@ -31,7 +31,6 @@
     export PATH="${lib.makeBinPath (with pkgs; [nodejs_22 bun playwright-test gawk gnugrep])}:$PATH"
     export NIX_STATE_HOME="${config.xdg.stateHome}"
     $DRY_RUN_CMD ${./setup/install-playwright.sh}
-    $DRY_RUN_CMD ${./setup/install-ccusage.sh}
-    $DRY_RUN_CMD ${./setup/install-googleworkspacecli.sh}
+    $DRY_RUN_CMD ${./setup/install-npm-tools.sh}
   '';
 }

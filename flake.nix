@@ -15,6 +15,8 @@
     nix-colors.url = "github:misterio77/nix-colors";
 
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
+    # Override brew-src to a newer Homebrew version (older pins can't parse newer formulas/casks)
+    nix-homebrew.inputs.brew-src.url = "github:Homebrew/brew/5.1.15";
     # Optional: Declarative tap management
     homebrew-core = {
       url = "github:homebrew/homebrew-core";
@@ -22,6 +24,18 @@
     };
     homebrew-cask = {
       url = "github:homebrew/homebrew-cask";
+      flake = false;
+    };
+    homebrew-typewhisper = {
+      url = "github:typewhisper/homebrew-tap";
+      flake = false;
+    };
+    gentleman-programming-tap = {
+      url = "github:gentleman-programming/homebrew-tap";
+      flake = false;
+    };
+    higgsfield-ai-tap = {
+      url = "github:higgsfield-ai/homebrew-tap";
       flake = false;
     };
   };
@@ -36,6 +50,9 @@
     nix-homebrew,
     homebrew-core,
     homebrew-cask,
+    homebrew-typewhisper,
+    gentleman-programming-tap,
+    higgsfield-ai-tap,
     ...
   }: let
     username = "alevsk";
@@ -66,19 +83,27 @@
             enable = true;
             enableRosetta = true;
             user = username;
-            taps = {
-              "homebrew/homebrew-core" = homebrew-core;
-              "homebrew/homebrew-cask" = homebrew-cask;
-            };
-            mutableTaps = false;
+            # Taps are intentionally NOT provided via Nix:
+            #   - homebrew/homebrew-core and homebrew/homebrew-cask are served by brew's
+            #     JSON API and don't need a local tap.
+            #   - Third-party taps need a real .git checkout, but `flake = false` inputs
+            #     don't carry .git, so nix-homebrew can't materialize them as real taps
+            #     (Homebrew 5.1.15+ rejects symlink-only taps; see nix-darwin #1791).
+            # The third-party taps are declared via `homebrew.taps` so brew taps them
+            # natively during activation.
+            taps = {};
             autoMigrate = true;
           };
         }
 
-        # Align homebrew taps config with nix-homebrew
-        ({config, ...}: {
-          homebrew.taps = builtins.attrNames config.nix-homebrew.taps;
-        })
+        # Third-party Homebrew taps (brew taps these on activation)
+        {
+          homebrew.taps = [
+            "gentleman-programming/tap"
+            "typewhisper/tap"
+            "higgsfield-ai/tap"
+          ];
+        }
       ];
     };
 

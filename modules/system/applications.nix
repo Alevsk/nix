@@ -29,7 +29,8 @@
       # Track processed app names to avoid duplicate aliasing across multiple HM outputs
       SEEN_DIR=$(/usr/bin/mktemp -d 2>/dev/null || mktemp -d)
 
-      # Clean up old Nix aliases in /Applications
+      # Clean up old Nix aliases in /Applications (alias files, not real .app bundles)
+      find /Applications -maxdepth 1 -name "*.app" -not -type d -delete 2>/dev/null || true
       find /Applications -name "Nix-*" -type f -delete 2>/dev/null || true
       rm -rf /Applications/Nix\ Apps
 
@@ -47,12 +48,13 @@
         done
       fi
 
-      # Find Home Manager applications by looking for all home-manager-applications outputs
-      # Iterate all matches using a null-delimited while-read loop (ShellCheck-safe).
-      find /nix/store -name "*home-manager-applications*" -type d -print0 2>/dev/null |
-      while IFS= read -r -d $'\0' hm_apps_dir; do
-        if [ -d "$hm_apps_dir/Applications" ]; then
-          find "$hm_apps_dir/Applications" -maxdepth 1 -name "*.app" -type l -print0 |
+      # Find Home Manager applications from the current profile only
+      HM_PROFILE="/Users/alevsk/.local/state/home-manager/gcroots/current-home"
+      if [ -L "$HM_PROFILE" ]; then
+        hm_gen=$(readlink "$HM_PROFILE")
+        hm_path=$(readlink "$hm_gen/home-path" 2>/dev/null || true)
+        if [ -d "$hm_path/Applications" ]; then
+          find "$hm_path/Applications" -maxdepth 1 -name "*.app" -type l -print0 |
           while IFS= read -r -d $'\0' app_path; do
             app_name=$(basename "$app_path")
             if [ -e "$SEEN_DIR/$app_name" ]; then
@@ -64,7 +66,7 @@
             ${pkgs.mkalias}/bin/mkalias "$src" "/Applications/$app_name" || echo "Failed to create alias for $app_name" >&2
           done
         fi
-      done
+      fi
 
       # Cleanup seen directory
       rm -rf "$SEEN_DIR"

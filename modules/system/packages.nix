@@ -18,7 +18,6 @@
     fastfetch
     fd
     git
-    go
     golangci-lint
     home-manager
     hostctl

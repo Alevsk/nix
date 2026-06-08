@@ -5,7 +5,7 @@
   system.defaults.dock.autohide = false;
   system.defaults.dock.persistent-apps = [
     "/System/Applications/Launchpad.app"
-    "${pkgs.alacritty}/Applications/Alacritty.app"
+    "/Applications/Alacritty.app"
     "${pkgs.telegram-desktop}/Applications/Telegram.app"
     "${pkgs.windsurf}/Applications/Windsurf.app"
     "/Applications/1Password.app"

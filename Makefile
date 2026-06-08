@@ -23,13 +23,13 @@ rebuild-home: ## Rebuild home-manager configuration
 	home-manager switch --flake .#alevsk
 
 rebuild-all: ## Rebuild both Darwin system and home-manager
-	sudo darwin-rebuild switch --flake .#cloud && home-manager switch --flake .#alevsk
+	home-manager switch --flake .#alevsk && sudo darwin-rebuild switch --flake .#cloud
 
 nix-update: ## Update flake inputs
 	nix flake update
 
 nix-upgrade: ## Update flake and rebuild everything
-	nix flake update && sudo darwin-rebuild switch --flake .#cloud && home-manager switch --flake .#alevsk
+	nix flake update && home-manager switch --flake .#alevsk && sudo darwin-rebuild switch --flake .#cloud
 
 nix-gc: ## Garbage collect old generations
 	nix-collect-garbage -d

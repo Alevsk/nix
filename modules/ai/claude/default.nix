@@ -57,4 +57,20 @@
 
     echo "Updated Claude MCP configuration"
   '';
+
+  # Install chrome-for-testing browser for Playwright MCP --isolated mode.
+  # Uses a marker file to avoid re-running npx on every rebuild.
+  # Delete ~/.cache/ms-playwright/.chrome-for-testing-installed to force reinstall.
+  home.activation.installPlaywrightBrowser = lib.hm.dag.entryAfter ["setupClaudeMCP"] ''
+    export PLAYWRIGHT_BROWSERS_PATH="$HOME/.cache/ms-playwright"
+    MARKER="$PLAYWRIGHT_BROWSERS_PATH/.chrome-for-testing-installed"
+    if [ ! -f "$MARKER" ]; then
+      echo "Installing chrome-for-testing for Playwright MCP..."
+      $DRY_RUN_CMD ${pkgs.nodejs}/bin/npx @playwright/mcp install-browser chrome-for-testing && \
+        touch "$MARKER" || \
+        echo "Warning: Failed to install chrome-for-testing browser"
+    else
+      echo "chrome-for-testing already installed (remove $MARKER to force reinstall)"
+    fi
+  '';
 }
