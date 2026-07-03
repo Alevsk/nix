@@ -32,8 +32,8 @@ This document tracks follow‑ups to simplify and harden the nix‑darwin setup 
   - [x] Sort `homebrew.brews` and `homebrew.casks` alphabetically in `modules/system/homebrew.nix`.
 
 - [ ] Align Dock with installs (Homebrew for GUI apps)
-  - [ ] Ensure Homebrew casks include: `google-chrome`, `telegram` (or `telegram-desktop`?), and `windsurf` (confirm cask name).
-  - [ ] Update `system.defaults.dock.persistent-apps` to reference `/Applications/Google Chrome.app`, `/Applications/Telegram.app`, and `/Applications/Windsurf.app` instead of Nix store paths.
+  - [ ] Ensure Homebrew casks include: `google-chrome`, `telegram` (or `telegram-desktop`?), and `devin-desktop` (confirm cask name).
+  - [ ] Update `system.defaults.dock.persistent-apps` to reference `/Applications/Google Chrome.app`, `/Applications/Telegram.app`, and `/Applications/Devin.app` instead of Nix store paths.
   - [ ] Remove any Nix `pkgs.*` Dock app references for these GUI apps.
 
 ## C. Applications Aliasing
