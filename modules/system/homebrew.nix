@@ -30,6 +30,7 @@
       "imagemagick"
       "iproute2mac"
       "k9s"
+      "kimi-code"
       "kind"
       "kubectl"
       "kubectx"
