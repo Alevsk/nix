@@ -25,6 +25,9 @@
         "baseURL": "http://localhost:1234/v1"
       },
       "models": {
+        "zai-org/glm-4.7-flash": {
+          "name": "zai-org/glm-4.7-flash"
+        },
         "qwen/qwen3-vl-30b": {
           "name": "qwen/qwen3-vl-30b"
         },
