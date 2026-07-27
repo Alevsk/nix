@@ -1,20 +1,47 @@
-# Nix
+# Nix and direnv
 result
 result-*
+.direnv/
+.envrc
 
 # Environment and secrets
 .env
-.envrc
 secrets/
 *.secret
 *-secrets.yaml
 *-secrets.json
 
-# direnv
-.direnv/
-
 # macOS
 .DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
 
+# Vim / Neovim
+*.swp
+*.swo
+*.un~
+*~
+.netrwhist
+tags
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.venv/
+venv/
+.poetry/
+
+# Node / JS
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Project Specific
 scripts/tests
 graphify-out/
