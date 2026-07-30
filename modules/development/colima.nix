@@ -4,16 +4,30 @@
   pkgs,
   ...
 }: {
-  # Declarative Colima configuration
-  # Creates a template at ~/.colima/default/colima.yaml.template
-  # and copies it to the actual config location if it doesn't exist
+  # Declarative Colima configuration.
+  # Writes ~/.colima/default/colima.yaml.template; the activation below copies it
+  # to colima.yaml when the template is newer. NOTE: `colima start` rewrites
+  # colima.yaml itself, so the live config had drifted to memory:64 / disk:500
+  # from a past manual `colima start --memory 64 …`. Bumping values here + a
+  # rebuild re-asserts them; then run `colima stop && colima start` (no --memory
+  # flag) so the VM boots from this file.
+  #
+  # SIZING (128 GB M4 Max): memory=32 leaves macOS ~96 GB. The desktop baseline is
+  # ~50-70 GB (Chrome + Antigravity), so a 64 GiB VM oversubscribed RAM and drove
+  # macOS into compressor/swap thrash (load avg 27, 56% sys). 32 GiB fits the
+  # container stack ONLY IF the JVM services are bounded (trino -Xmx, neo4j
+  # heap+pagecache, per-service mem_limit) — an unbounded neo4j/trino OOM-killed
+  # the VM even at 64 GiB, so more RAM is not the fix. Don't exceed ~48 here.
+  # See wiki/cloud-macbookpro/006-colima-memory-oversubscription.md.
   home.file.".colima/default/colima.yaml.template" = {
     text = ''
       cpu: 8
-      disk: 100
-      memory: 50
+      disk: 500
+      memory: 32
       arch: aarch64
       runtime: docker
+      vmType: vz
+      mountType: virtiofs
       autoActivate: true
       network:
         address: false
