@@ -7,7 +7,6 @@
     "/System/Applications/Launchpad.app"
     "/Applications/Alacritty.app"
     "${pkgs.telegram-desktop}/Applications/Telegram.app"
-    "/Applications/Devin.app"
     "/Applications/1Password.app"
     "${pkgs.google-chrome}/Applications/Google Chrome.app"
     "/Applications/Sublime\ Text.app"

@@ -79,7 +79,6 @@
       "caido"
       "claude-code"
       "codex"
-      "devin-desktop"
       "discord"
       "docker-desktop"
       "dropbox"

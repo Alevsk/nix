@@ -6,10 +6,22 @@
 }: let
   gawk = "${pkgs.gawk}/bin/gawk";
 
-  # Script to get CPU usage, now with absolute paths.
+  # Script to get CPU usage.
+  #
+  # Approximated from the 1-minute load average, normalised by core count.
+  # This is effectively free — two sysctl reads, no process-table walk.
+  #
+  # The previous implementation shelled out to `top -l 1`, which walks the
+  # entire process/thread table and takes ~3.5s PER CALL on this machine.
+  # With `status-interval 2` and multiple attached clients, calls piled up
+  # (sampler slower than the refresh rate) and pinned several cores in kernel
+  # time. Rule: never call `top` from a status bar — it is a full-system
+  # profiler, not a metric source. (A single `top -l 1` sample is also not a
+  # correct instantaneous CPU%; that needs two samples for a delta.)
   tmux-cpu-script = pkgs.writeShellScriptBin "tmux-cpu" ''
     #!${pkgs.stdenv.shell}
-    /usr/bin/top -l 1 | /usr/bin/grep 'CPU usage' | ${gawk} '{sub(/%/, "", $7); printf "%.0f%%", 100 - $7}'
+    ncpu=$(/usr/sbin/sysctl -n hw.ncpu)
+    /usr/sbin/sysctl -n vm.loadavg | ${gawk} -v n="$ncpu" '{ p = $2 / n * 100; if (p > 100) p = 100; printf "%.0f%%", p }'
   '';
 
   # Script to get Memory usage, now with absolute paths.
@@ -155,7 +167,11 @@ in {
 
       # Modern status bar configuration
       set -g status on
-      set -g status-interval 2
+      # Refresh cadence for the status bar. All probes are now near-instant
+      # (sysctl / memory_pressure / pmset, each <=0.01s), so this is purely a
+      # cosmetic freshness choice, not a performance knob. Kept lively at 5s;
+      # tmux's default is 15. Do NOT put anything slow behind this timer.
+      set -g status-interval 5
       set -g status-position bottom
       set -g status-justify left
       set -g status-left-length 100
