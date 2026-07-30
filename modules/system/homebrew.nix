@@ -120,6 +120,14 @@
     # https://github.com/nix-darwin/nix-darwin/pull/1774
     onActivation.cleanup = "none";
     onActivation.autoUpdate = true;
-    onActivation.upgrade = true;
+    # upgrade=false: do NOT `brew upgrade` every cask/brew on each rebuild.
+    # Rationale: nix-homebrew runs brew as the non-root user, so upgrading any
+    # cask whose app is root-owned or App-Management-protected forces a per-cask
+    # `sudo`, and sudo's 5-min credential cache expires during the long downloads
+    # between casks -> the rebuild prompts for the password repeatedly. The GUI
+    # apps here self-update anyway. Activation now only INSTALLS missing casks.
+    # To upgrade intentionally, run `brew upgrade` manually (optionally with a
+    # `sudo -v` keepalive loop so one password covers the whole run).
+    onActivation.upgrade = false;
   };
 }

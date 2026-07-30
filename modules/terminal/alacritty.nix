@@ -46,8 +46,31 @@ in {
       multiplier = 3;
     };
 
-    # Font configuration for Powerlevel10k
+    # Font configuration for Powerlevel10k.
+    #
+    # The family MUST be set explicitly here. This alacritty.toml is generated
+    # by hand (xdg.configFile ... .source below), so Stylix does NOT inject a
+    # font into it, and Alacritty otherwise falls back to the macOS default
+    # font — which lacks the Nerd Font private-use glyphs, so the tmux status
+    # bar icons (U+F0000+ Material range) render as tofu (▯).
+    # Removing this block regresses those icons (commit abcbe1b did exactly that).
     font = {
+      normal = {
+        family = "MesloLGS Nerd Font";
+        style = "Regular";
+      };
+      bold = {
+        family = "MesloLGS Nerd Font";
+        style = "Bold";
+      };
+      italic = {
+        family = "MesloLGS Nerd Font";
+        style = "Italic";
+      };
+      bold_italic = {
+        family = "MesloLGS Nerd Font";
+        style = "Bold Italic";
+      };
       size = 14;
     };
 

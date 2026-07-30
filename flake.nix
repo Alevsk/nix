@@ -15,8 +15,12 @@
     nix-colors.url = "github:misterio77/nix-colors";
 
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
-    # Override brew-src to a newer Homebrew version (older pins can't parse newer formulas/casks)
-    nix-homebrew.inputs.brew-src.url = "github:Homebrew/brew/5.1.15";
+    # Override brew-src to a newer Homebrew version (older pins can't parse newer formulas/casks).
+    # Must track upstream Homebrew: the cask JSON API (used in API mode) emits new DSL
+    # stanzas as they ship, and an older brew core throws "undefined method '<stanza>'".
+    # 2026-07-29: bumped 5.1.15 -> 6.0.13; the `firefox` cask started using the
+    # `command_wrapper` artifact (Homebrew/brew#23183), which 6.0.1 does not implement.
+    nix-homebrew.inputs.brew-src.url = "github:Homebrew/brew/6.0.13";
     # Optional: Declarative tap management
     homebrew-core = {
       url = "github:homebrew/homebrew-core";

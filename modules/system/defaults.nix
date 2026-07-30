@@ -8,7 +8,7 @@
     "/Applications/Alacritty.app"
     "${pkgs.telegram-desktop}/Applications/Telegram.app"
     "/Applications/1Password.app"
-    "${pkgs.google-chrome}/Applications/Google Chrome.app"
+    "/Applications/Google Chrome.app"
     "/Applications/Sublime\ Text.app"
     "/Applications/Neo4j\ Desktop\ 2.app"
     "/System/Applications/System\ Settings.app"
