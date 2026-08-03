@@ -24,7 +24,7 @@
   autoStartTmux = false;
 
   # CHANGE THIS LINE TO SWITCH DOCKER RUNTIME
-  dockerRuntime = "colima"; # Available: "colima", "docker-desktop"
+  dockerRuntime = "colima"; # Available: "colima", "docker-desktop", "orbstack"
 
   # Theme mapping for nix-colors schemes
   themeMap = {

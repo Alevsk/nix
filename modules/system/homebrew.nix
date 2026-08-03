@@ -98,6 +98,7 @@
       "neo4j-desktop" # not available on nixpkgs
       "ngrok"
       "obs"
+      "orbstack"
       "qflipper"
       "raspberry-pi-imager"
       "rectangle"

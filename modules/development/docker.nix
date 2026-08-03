@@ -14,6 +14,13 @@
       socketPath = "${config.home.homeDirectory}/.docker/run/docker.sock";
       contextName = "desktop-linux";
     };
+    # OrbStack registers a docker context named "orbstack" and a socket at
+    # ~/.orbstack/run/docker.sock when the app is running. Verify after first
+    # launch with `docker context ls`.
+    orbstack = {
+      socketPath = "${config.home.homeDirectory}/.orbstack/run/docker.sock";
+      contextName = "orbstack";
+    };
   };
 
   selected = runtimeConfigs.${dockerRuntime};
