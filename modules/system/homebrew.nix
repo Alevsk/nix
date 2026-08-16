@@ -10,8 +10,10 @@
       "ast-grep"
       "awscli"
       "cliclick"
+      "cloud-provider-kind"
       "cocoapods"
       "dive"
+      "doctl"
       "duckdb"
       "ffmpeg"
       "gemini-cli" # better support and maintenance in brew than nix store
@@ -34,6 +36,7 @@
       "kind"
       "kubectl"
       "kubectx"
+      "kubectx"
       "kubeshark"
       "kustomize"
       "labctl"
@@ -45,6 +48,7 @@
       "ollama" # better support via brew on macOS
       "opencode"
       "openjdk@17"
+      "openvpn"
       "p7zip"
       "python@3.13"
       "qpdf"
