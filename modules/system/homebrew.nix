@@ -45,6 +45,7 @@
       "minio-mc"
       "node"
       "nvm"
+      "oci-cli"
       "ollama" # better support via brew on macOS
       "opencode"
       "openjdk@17"
