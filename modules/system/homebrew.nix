@@ -51,6 +51,7 @@
       "openjdk@17"
       "openvpn"
       "p7zip"
+      "playwright-cli"
       "python@3.13"
       "qpdf"
       "ripgrep"
