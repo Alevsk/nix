@@ -33,14 +33,26 @@
         "baseURL": "http://localhost:1234/v1"
       },
       "models": {
+        "kimi-dev-72b": {
+          "name": "kimi-dev-72b"
+        },
         "zai-org/glm-4.7-flash": {
           "name": "zai-org/glm-4.7-flash"
         },
-        "qwen/qwen3-vl-30b": {
-          "name": "qwen/qwen3-vl-30b"
+        "meta/muse-glimmer": {
+          "name": "meta/muse-glimmer"
+        },
+        "google/gemma-4-31b-qat": {
+          "name": "google/gemma-4-31b-qat"
+        },
+        "qwen/qwen3.8-27b": {
+          "name": "qwen/qwen3.8-27b"
         },
         "qwen/qwen3.6-35b-a3b": {
           "name": "qwen/qwen3.6-35b-a3b"
+        },
+        "qwen/qwen3-vl-30b": {
+          "name": "qwen/qwen3-vl-30b"
         },
         "txgsync/gpt-oss-120b-Derestricted-mxfp4-mlx": {
           "name": "txgsync/gpt-oss-120b-Derestricted-mxfp4-mlx"

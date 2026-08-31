@@ -101,9 +101,10 @@
       "little-snitch"
       "lm-studio"
       "macdown"
-      "neo4j-desktop" # not available on nixpkgs
+      "neo4j-desktop"
       "ngrok"
       "obs"
+      "obsidian"
       "orbstack"
       "qflipper"
       "raspberry-pi-imager"
@@ -118,6 +119,7 @@
       "utm"
       "visual-studio-code"
       "wireshark-app"
+      "zcode"
       "zoom"
     ];
 
