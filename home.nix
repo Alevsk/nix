@@ -133,12 +133,17 @@ in {
       };
     };
 
-    # Set cursor theme
-    cursor = {
-      package = pkgs.bibata-cursors;
-      name = "Bibata-Modern-Classic";
-      size = 24;
-    };
+    # Cursor theming is Linux-only: stylix maps stylix.cursor to
+    # home.pointerCursor behind an isLinux guard, but its x11/gtk targets
+    # still leak partial home.pointerCursor definitions on darwin, which
+    # breaks evaluation with home-manager >= Sep 2026. Keep this null on
+    # macOS; restore package/name/size only on Linux hosts.
+    # cursor = {
+    #   package = pkgs.bibata-cursors;
+    #   name = "Bibata-Modern-Classic";
+    #   size = 24;
+    # };
+    cursor = null;
   };
 
   # Home Manager needs a bit of information about you and the paths it should manage.

@@ -23,6 +23,14 @@
         "Authorization": "Bearer $COGLEY_API_KEY"
       },
       "enabled": true
+    },
+    "respondent": {
+      "type": "remote",
+      "url": "http://localhost:22080/mcp",
+      "headers": {
+        "Authorization": "Bearer $RESPONDENT_MCP_TOKEN"
+      },
+      "enabled": true
     }
   },
   "provider": {
