@@ -9,3 +9,7 @@ command = "npx"
 [mcp_servers.engram]
 args = ["mcp", "--tools=agent"]
 command = "engram"
+
+[mcp_servers.blender]
+args = ["blender-mcp"]
+command = "uvx"

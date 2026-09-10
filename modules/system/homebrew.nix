@@ -90,6 +90,7 @@
       "caido"
       "claude-code"
       "codex"
+      "comfy"
       "discord"
       "docker-desktop"
       "dropbox"
