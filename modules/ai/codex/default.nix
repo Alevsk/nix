@@ -72,36 +72,8 @@
         .mcp_servers = (($base.mcp_servers // {}) + ($extra.mcp_servers // {}))
       ' "$TEMP_BASE_JSON" "$TEMP_EXTRA_JSON" > "$TEMP_JSON"
 
-      # Convert JSON to TOML format preserving all sections
-      cat "$TEMP_JSON" | ${pkgs.jq}/bin/jq -r '
-        # Output top-level keys (model, model_reasoning_effort, etc.)
-        (to_entries[] |
-          select(.key != "projects" and .key != "mcp_servers") |
-          "\(.key) = \(.value | @json)"
-        ),
-
-        # Output projects section if it exists
-        (if .projects then
-          "",
-          "[projects]"
-        else empty end),
-        (.projects // {} | to_entries[] |
-          "",
-          "[projects.\"\(.key)\"]",
-          (.value | to_entries[] | "\(.key) = \(.value | @json)")
-        ),
-
-        # Output mcp_servers section
-        (if .mcp_servers then
-          "",
-          "[mcp_servers]"
-        else empty end),
-        (.mcp_servers // {} | to_entries[] |
-          "",
-          "[mcp_servers.\(.key)]",
-          (.value | to_entries[] | "\(.key) = \(.value | @json)")
-        )
-      ' > "$TEMP_OUTPUT"
+      # Convert merged JSON back to valid TOML
+      ${pkgs.remarshal}/bin/remarshal --if json --of toml < "$TEMP_JSON" > "$TEMP_OUTPUT"
 
       # Only replace if output is valid and not empty
       if [ -s "$TEMP_OUTPUT" ]; then
