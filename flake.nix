@@ -106,6 +106,7 @@
             "gentleman-programming/tap"
             "typewhisper/tap"
             "higgsfield-ai/tap"
+            "rjyo/moshi"
           ];
         }
       ];
