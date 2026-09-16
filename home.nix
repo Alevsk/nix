@@ -92,6 +92,7 @@ in {
     ./modules/ai/codex
     ./modules/ai/gemini
     ./modules/ai/opencode
+    ./modules/ai/px0
     ./modules/cli/fzf.nix
     ./modules/cli/gcloud.nix
     ./modules/desktop/wallpaper.nix

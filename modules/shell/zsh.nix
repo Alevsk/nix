@@ -44,6 +44,8 @@
       switch-theme = "${config.home.homeDirectory}/nix/scripts/switch-theme.sh";
       tmux-stats = "${config.home.homeDirectory}/nix/scripts/tmux-stats.sh";
       claudette = "claude --dangerously-skip-permissions";
+      wclaude = "CLAUDE_CONFIG_DIR=$HOME/.claude-work claude";
+      wclaudette = "CLAUDE_CONFIG_DIR=$HOME/.claude-work claude --dangerously-skip-permissions";
     };
 
     initContent = let

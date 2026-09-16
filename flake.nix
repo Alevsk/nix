@@ -96,6 +96,7 @@
             # The third-party taps are declared via `homebrew.taps` so brew taps them
             # natively during activation.
             taps = {};
+            mutableTaps = true;
             autoMigrate = true;
           };
         }
@@ -103,10 +104,11 @@
         # Third-party Homebrew taps (brew taps these on activation)
         {
           homebrew.taps = [
+            "alevsk/tap"
             "gentleman-programming/tap"
-            "typewhisper/tap"
             "higgsfield-ai/tap"
             "rjyo/moshi"
+            "typewhisper/tap"
           ];
         }
       ];
