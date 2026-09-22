@@ -21,7 +21,10 @@ Declarative macOS setup using Nix Darwin + Home Manager with integrated theming.
 │   │   ├── fonts.nix          # System fonts
 │   │   ├── applications.nix   # Alias Nix + HM apps into /Applications
 │   │   └── proxychains.nix    # Proxychains (optionized)
-│   ├── cli/fzf.nix            # FZF (Home Manager)
+│   ├── cli/                   # CLI tools (Home Manager)
+│   │   ├── fzf.nix            # FZF
+│   │   ├── gcloud.nix         # Google Cloud SDK
+│   │   └── lf/                # lf file manager (lfrc, icons, preview)
 │   ├── desktop/wallpaper.nix  # Wallpaper setup (Home Manager)
 │   ├── editor/neovim.nix      # Neovim + theme (Home Manager)
 │   ├── git/git.nix            # Git (Home Manager)
@@ -108,6 +111,7 @@ Declarative macOS setup using Nix Darwin + Home Manager with integrated theming.
 - Git: `modules/git/git.nix`
 - Tmux: `modules/multiplexer/tmux.nix`
 - FZF: `modules/cli/fzf.nix`
+- lf: `modules/cli/lf/`
 - Wallpaper: `modules/desktop/wallpaper.nix`
 
 ## 🐛 Troubleshooting

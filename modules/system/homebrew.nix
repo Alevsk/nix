@@ -104,6 +104,8 @@
       "godot"
       "google-chrome"
       "google-drive"
+      "grok-bot"
+      "grok-build"
       "hammerspoon"
       "iina"
       "inkscape"

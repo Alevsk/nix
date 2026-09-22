@@ -95,6 +95,7 @@ in {
     ./modules/ai/px0
     ./modules/cli/fzf.nix
     ./modules/cli/gcloud.nix
+    ./modules/cli/lf
     ./modules/desktop/wallpaper.nix
     ./modules/development/colima.nix
     ./modules/development/docker.nix
